@@ -3,6 +3,10 @@ var http = require('http');
 var express = require('express'); // import express
 var server = express();
 
+// import server modules
+var data = require('./data');
+console.log(`song: ${data.list[0].title} by ${data.list[0].artist}`);
+
 var port = 4000;
 
 // set the view engine to ejs
