@@ -17,7 +17,6 @@ server.get("/json", function(req, res) {
 });
 
 // template pages
-
 server.get("/about", function(req, res) {
     res.render('about');
  });
