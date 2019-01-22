@@ -1,13 +1,16 @@
-// import built-in Node package
+// import built-in Node packages
 var http = require('http');
+var express = require('express'); // import express
+var server = express();
+
 var port = 4000;
 
-var server = http.createServer(function (req, res) { // Callback function
-    // Response header
-    res.writeHead(200, { "Content-Type": "text/html" });
+server.get("/", function(req, res) {
+    res.sendFile(__dirname + '/index.html');
+ });
 
-    // send HTML response to client
-    res.end("<h1>Hello World</h1>");
+server.get("/json", function(req, res) {
+    res.send((JSON.stringify({ name: "Lenny" })));
 });
 
 server.listen(port, function () { // Callback function
