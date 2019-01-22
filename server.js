@@ -4,7 +4,7 @@ var port = 4000;
 
 var server = http.createServer(function (req, res) { // Callback function
     // Response header
-    res.writeHead(200, { "Content-Type": "application/json" });
+    res.writeHead(200, { "Content-Type": "text/html" });
 
     // JSON object
     var song = {
@@ -15,8 +15,8 @@ var server = http.createServer(function (req, res) { // Callback function
         album: "Node EP"
     };
 
-   // send JSON response to client
-   res.end(JSON.stringify(song));      // JSON.stringify({a: 1}) -> '{"a":1}'
+   // send HTML response to client
+   res.end("<h1>Hello World</h1>");
 });
 
 server.listen(port, function () { // Callback function
