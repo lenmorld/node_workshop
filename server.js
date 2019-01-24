@@ -34,6 +34,14 @@ server.get("/items", function(req, res) {
     res.json(data.list);
 });
 
+// get an item identified by id
+server.get("/items/:id", function(req, res) {
+    var item = data.list.find(function(_item) {
+        return _item.id === req.params.id;
+    });
+    res.json(item);
+});
+
 server.listen(port, function () { // Callback function
     console.log(`Server listening at ${port}`);
 });
