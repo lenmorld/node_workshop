@@ -37,7 +37,7 @@ server.get("/items", function(req, res) {
 // get an item identified by id
 server.get("/items/:id", function(req, res) {
     var item = data.list.find(function(_item) {
-        return _item.id === req.params.id;
+        return _item.id === item_id;
     });
     res.json(item);
 });
