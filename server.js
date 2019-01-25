@@ -35,12 +35,12 @@ server.get("/about", function(req, res) {
  // API CRUD routes
 
  // get all items
-server.get("/list", function(req, res) {
+server.get("/items", function(req, res) {
     res.json(data.list);
 });
 
 // get an item identified by id
-server.get("/list/:id", function(req, res) {
+server.get("/items/:id", function(req, res) {
     var item_id = req.params.id;
     var item = data.list.find(function(_item) {
         return _item.id === item_id;
@@ -49,7 +49,7 @@ server.get("/list/:id", function(req, res) {
 });
 
 // create/post new item
-server.post("/list", function(req, res) {
+server.post("/items", function(req, res) {
     var item = req.body;
     console.log('Adding new item: ', item);
 
