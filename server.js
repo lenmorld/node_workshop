@@ -30,7 +30,7 @@ server.get("/about", function(req, res) {
  });
 
  // API CRUD routes
-server.get("/list", function(req, res) {
+server.get("/items", function(req, res) {
     res.json(data.list);
 });
 
