@@ -88,22 +88,6 @@ server.put("/list/:id", function(req, res) {
     res.json(data.list);
 });
 
-// delete item fro list
-server.delete("/list/:id", function(req, res) {
-    var item_id = req.params.id;
-    console.log("Delete item with id: ", item_id);
-
-    // filter list copy, by excluding item to delete
-    var filtered_list = data.list.filter(function(item) {
-        return item.id !== item_id;
-    });
-
-    // replace old list with new one
-    data.list = filtered_list; 
-
-    res.json(data.list);
-});
-
 server.listen(port, function () { // Callback function
     console.log(`Server listening at ${port}`);
 });
