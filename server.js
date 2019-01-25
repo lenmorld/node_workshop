@@ -2,15 +2,18 @@
 var http = require('http');
 var express = require('express'); // import express
 var server = express();
+var body_parser = require('body-parser');
 
 // import server modules
 var data = require('./data');
-console.log(`song: ${data.list[0].title} by ${data.list[0].artist}`);
+// console.log(`song: ${data.list[0].title} by ${data.list[0].artist}`);
 
 var port = 4000;
 
 // set the view engine to ejs
 server.set('view engine', 'ejs');
+
+server.use(body_parser.json()); // parse JSON (application/json content-type)
 
 server.get("/", function(req, res) {
     res.sendFile(__dirname + '/index.html');
@@ -43,6 +46,18 @@ server.get("/list/:id", function(req, res) {
         return _item.id === item_id;
     });
     res.json(item);
+});
+
+// create/post new item
+server.post("/list", function(req, res) {
+    var item = req.body;
+    console.log('Adding new item: ', item);
+
+    // add new item to array
+    data.list.push(item)
+    
+    // return updated list
+    res.json(data.list);
 });
 
 server.listen(port, function () { // Callback function
