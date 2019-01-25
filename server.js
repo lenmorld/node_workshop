@@ -60,6 +60,34 @@ server.post("/list", function(req, res) {
     res.json(data.list);
 });
 
+// update an item
+server.put("/list/:id", function(req, res) {
+    var item_id = req.params.id;
+    var item = req.body;
+
+    console.log("Editing item: ", item_id, " to be ", item);
+
+    // init new list that will hold new items
+    var updated_list_items = [];
+    /*
+        loop through all items
+        if old_item matches id of the updated one, replace it
+        else keep old_item
+    */
+    data.list.forEach(function (old_item) {
+        if (old_item.id === item_id) {
+            updated_list_items.push(item);
+        } else {
+            updated_list_items.push(old_item);
+        }
+    });
+
+    // replace old list with new one
+    data.list = updated_list_items;
+
+    res.json(data.list);
+});
+
 server.listen(port, function () { // Callback function
     console.log(`Server listening at ${port}`);
 });
