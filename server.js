@@ -47,6 +47,19 @@ mongo_db.init_db(db_connection_url).then(function(db_instance) {
             res.json(result);
         });
     });
+
+    // create/post new item
+    server.post("/items", function(req, res) {
+        var item = req.body;
+        db_collection.insertOne(item, function(err, result) {
+            if (err) throw err;
+            // send back entire updated list, to make sure frontend data is up-to-date
+            db_collection.find().toArray(function(_err, _result) {
+                if (_err) throw _err;
+                res.json(_result);
+            });
+        });
+    });
     
 });
 
@@ -68,18 +81,6 @@ server.get("/about", function(req, res) {
  });
 
  // API CRUD routes
-
-// create/post new item
-server.post("/items", function(req, res) {
-    var item = req.body;
-    console.log('Adding new item: ', item);
-
-    // add new item to array
-    data.list.push(item)
-    
-    // return updated list
-    res.json(data.list);
-});
 
 // update an item
 server.put("/items/:id", function(req, res) {
