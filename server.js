@@ -29,9 +29,14 @@ mongo_db.init_db(db_connection_url).then(function(db_instance) {
     var db_object = db_instance.db(db_name);
     var db_collection = db_object.collection(db_collection_name);
 
-    // TEST
-    db_collection.find().toArray(function(err, result) {
-        console.log("[db] items: ", result);
+     // db-based API CRUD routes
+
+     // get all items
+    server.get("/items", function(req, res) {
+        db_collection.find().toArray(function(err, result) {
+            if (err) throw err;
+            res.json(result);
+        })
     });
 });
 
@@ -53,11 +58,6 @@ server.get("/about", function(req, res) {
  });
 
  // API CRUD routes
-
- // get all items
-server.get("/items", function(req, res) {
-    res.json(data.list);
-});
 
 // get an item identified by id
 server.get("/items/:id", function(req, res) {
