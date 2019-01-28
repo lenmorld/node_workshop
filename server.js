@@ -3,6 +3,7 @@ var http = require('http');
 var express = require('express'); // import express
 var server = express();
 var body_parser = require('body-parser');
+var mongo_db = require('./mongo_db');
 
 // import server modules
 var data = require('./data');
@@ -14,6 +15,25 @@ var port = 4000;
 server.set('view engine', 'ejs');
 
 server.use(body_parser.json()); // parse JSON (application/json content-type)
+
+// db connection
+var db_user = "user1";
+var db_pass = "pass1234";
+var db_host = "ds113765.mlab.com:13765";
+var db_name = "node_workshop_db";
+var db_collection_name = "items";
+var db_connection_url = `mongodb://${db_user}:${db_pass}@${db_host}/${db_name}`;
+// console.log(db_connection_url);
+
+mongo_db.init_db(db_connection_url).then(function(db_instance) {
+    var db_object = db_instance.db(db_name);
+    var db_collection = db_object.collection(db_collection_name);
+
+    // TEST
+    db_collection.find().toArray(function(err, result) {
+        console.log("[db] items: ", result);
+    });
+});
 
 server.get("/", function(req, res) {
     res.sendFile(__dirname + '/index.html');
