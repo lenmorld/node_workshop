@@ -38,6 +38,16 @@ mongo_db.init_db(db_connection_url).then(function(db_instance) {
             res.json(result);
         })
     });
+
+    // get an item identified by id
+    server.get("/items/:id", function(req, res) {
+        var item_id = req.params.id;
+        db_collection.findOne({ id: item_id }, function(err, result) {
+            if (err) throw err;
+            res.json(result);
+        });
+    });
+    
 });
 
 server.get("/", function(req, res) {
@@ -58,15 +68,6 @@ server.get("/about", function(req, res) {
  });
 
  // API CRUD routes
-
-// get an item identified by id
-server.get("/items/:id", function(req, res) {
-    var item_id = req.params.id;
-    var item = data.list.find(function(_item) {
-        return _item.id === item_id;
-    });
-    res.json(item);
-});
 
 // create/post new item
 server.post("/items", function(req, res) {
