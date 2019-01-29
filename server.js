@@ -60,6 +60,21 @@ mongo_db.init_db(db_connection_url).then(function(db_instance) {
             });
         });
     });
+
+    // update an item
+    server.put("/items/:id", function(req, res) {
+        var item_id = req.params.id;
+        var item = req.body;
+
+        db_collection.updateOne({ id: item_id }, { $set: item }, function(err, result) {
+            if (err) throw err;
+            // send back entire updated list, to make sure frontend data is up-to-date
+            db_collection.find().toArray(function(_err, _result) {
+                if (_err) throw _err;
+                res.json(_result);
+            });
+        });
+    });
     
 });
 
@@ -81,34 +96,6 @@ server.get("/about", function(req, res) {
  });
 
  // API CRUD routes
-
-// update an item
-server.put("/items/:id", function(req, res) {
-    var item_id = req.params.id;
-    var item = req.body;
-
-    console.log("Editing item: ", item_id, " to be ", item);
-
-    // init new list that will hold new items
-    var updated_list_items = [];
-    /*
-        loop through all items
-        if old_item matches id of the updated one, replace it
-        else keep old_item
-    */
-    data.list.forEach(function (old_item) {
-        if (old_item.id === item_id) {
-            updated_list_items.push(item);
-        } else {
-            updated_list_items.push(old_item);
-        }
-    });
-
-    // replace old list with new one
-    data.list = updated_list_items;
-
-    res.json(data.list);
-});
 
 // delete item from list
 server.delete("/items/:id", function(req, res) {
