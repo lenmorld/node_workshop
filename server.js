@@ -53,7 +53,7 @@ mongo_db.init_db(db_connection_url).then(function(db_instance) {
         var item = req.body;
         db_collection.insertOne(item, function(err, result) {
             if (err) throw err;
-            // send back entire updated list, to make sure frontend data is up-to-date
+            // send back entire updated list after successful request
             db_collection.find().toArray(function(_err, _result) {
                 if (_err) throw _err;
                 res.json(_result);
