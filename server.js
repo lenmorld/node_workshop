@@ -4,6 +4,7 @@ var express = require('express'); // import express
 var server = express();
 var body_parser = require('body-parser');
 var mongo_db = require('./mongo_db');
+var axios = require('axios');
 
 // import server modules
 var data = require('./data');
@@ -106,6 +107,23 @@ server.get("/about", function(req, res) {
 
  server.get("/info", function(req, res) {
     res.render('info', { message: 'Hello world' });
+ });
+
+ // external API routes
+ server.get("/fakedata", function(req, res) {
+    axios('https://jsonplaceholder.typicode.com/users/1').then(response => {
+        res.json(response.data);
+    }).catch(err => {
+        throw err;
+    });;
+ });
+
+ server.get("/jobs", function(req, res) {
+    axios('https://jobs.github.com/positions.json?description=javascript&location=montreal').then(response => {
+        res.json(response.data);
+    }).catch(err => {
+        throw err;
+    });;
  });
 
 server.listen(port, function () { // Callback function
