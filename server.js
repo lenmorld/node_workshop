@@ -68,7 +68,20 @@ mongo_db.init_db(db_connection_url).then(function(db_instance) {
 
         db_collection.updateOne({ id: item_id }, { $set: item }, function(err, result) {
             if (err) throw err;
-            // send back entire updated list, to make sure frontend data is up-to-date
+            // send back entire updated list after successful request
+            db_collection.find().toArray(function(_err, _result) {
+                if (_err) throw _err;
+                res.json(_result);
+            });
+        });
+    });
+
+    // delete item from list
+    server.delete("/items/:id", function(req, res) {
+        var item_id = req.params.id;
+        db_collection.deleteOne({ id: item_id }, function(err, result) {
+            if (err) throw err;
+            // send back entire updated list after successful request
             db_collection.find().toArray(function(_err, _result) {
                 if (_err) throw _err;
                 res.json(_result);
@@ -94,24 +107,6 @@ server.get("/about", function(req, res) {
  server.get("/info", function(req, res) {
     res.render('info', { message: 'Hello world' });
  });
-
- // API CRUD routes
-
-// delete item from list
-server.delete("/items/:id", function(req, res) {
-    var item_id = req.params.id;
-    console.log("Delete item with id: ", item_id);
-
-    // filter list copy, by excluding item to delete
-    var filtered_list = data.list.filter(function(item) {
-        return item.id !== item_id;
-    });
-
-    // replace old list with new one
-    data.list = filtered_list; 
-
-    res.json(data.list);
-});
 
 server.listen(port, function () { // Callback function
     console.log(`Server listening at ${port}`);
