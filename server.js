@@ -9,7 +9,9 @@ var mongo_db = require('./mongo_db');
 var data = require('./data');
 // console.log(`song: ${data.list[0].title} by ${data.list[0].artist}`);
 
+// import routes
 var crud = require('./routes/crud');
+var main = require('./routes/main');
 
 var port = 4000;
 
@@ -38,18 +40,8 @@ server.get("/", function(req, res) {
     res.sendFile(__dirname + '/index.html');
  });
 
-server.get("/json", function(req, res) {
-    res.send((JSON.stringify({ name: "Lenny" })));
-});
-
-// template pages
-server.get("/about", function(req, res) {
-    res.render('about');
- });
-
- server.get("/info", function(req, res) {
-    res.render('info', { message: 'Hello world' });
- });
+server.use('/', main);     // localhost:4000/info
+//  server.use('/pages', main);     // localhost:4000/pages
 
 server.listen(port, function () { // Callback function
     console.log(`Server listening at ${port}`);
