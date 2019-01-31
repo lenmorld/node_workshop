@@ -6,6 +6,7 @@ var body_parser = require('body-parser');
 var mongo_db = require('./mongo_db');
 
 var api1 = require('./routes/api1');
+var api2 = require('./routes/api2');
 
 // import server modules
 var data = require('./data');
@@ -46,6 +47,7 @@ server.use('/', main);     // localhost:4000/info
 //  server.use('/pages', main);     // localhost:4000/pages
 
 server.use('/', api1);      // localhost:4000/users/:id
+server.use('/', api2);
 
 server.listen(port, function () { // Callback function
     console.log(`Server listening at ${port}`);
