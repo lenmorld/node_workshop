@@ -13,4 +13,14 @@ api1.get("/users/:id", function (req, res) {
 	});
 });
 
+api1.get("/jobs", function (req, res) {
+	var description = req.query.description;
+	var location = req.query.location;
+	axios(`https://jobs.github.com/positions.json?description=${description}&location=${location}`).then(response => {
+		res.json(response.data);
+	}).catch(err => {
+		throw err;
+	});
+});
+
 module.exports = api1;
