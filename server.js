@@ -4,7 +4,8 @@ var express = require('express'); // import express
 var server = express();
 var body_parser = require('body-parser');
 var mongo_db = require('./mongo_db');
-var axios = require('axios');
+
+var api1 = require('./routes/api1');
 
 // import server modules
 var data = require('./data');
@@ -44,22 +45,9 @@ server.get("/", function(req, res) {
 server.use('/', main);     // localhost:4000/info
 //  server.use('/pages', main);     // localhost:4000/pages
 
- // external API routes
- server.get("/fakedata", function(req, res) {
-    axios('https://jsonplaceholder.typicode.com/users/1').then(response => {
-        res.json(response.data);
-    }).catch(err => {
-        throw err;
-    });;
- });
-
- server.get("/jobs", function(req, res) {
-    axios('https://jobs.github.com/positions.json?description=javascript&location=montreal').then(response => {
-        res.json(response.data);
-    }).catch(err => {
-        throw err;
-    });;
- });
+ // load api1 routes
+server.use('/', api1);      // localhost:4000/jobs
+// server.use('/api1', api1);      // localhost:4000/api1/jobs
 
 server.listen(port, function () { // Callback function
     console.log(`Server listening at ${port}`);
