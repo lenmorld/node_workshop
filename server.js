@@ -10,6 +10,10 @@ var axios = require('axios');
 var data = require('./data');
 // console.log(`song: ${data.list[0].title} by ${data.list[0].artist}`);
 
+// import routes
+var crud = require('./routes/crud');
+var main = require('./routes/main');
+
 var port = 4000;
 
 // set the view engine to ejs
@@ -30,84 +34,15 @@ mongo_db.init_db(db_connection_url).then(function(db_instance) {
     var db_object = db_instance.db(db_name);
     var db_collection = db_object.collection(db_collection_name);
 
-     // db-based API CRUD routes
-
-     // get all items
-    server.get("/items", function(req, res) {
-        db_collection.find().toArray(function(err, result) {
-            if (err) throw err;
-            res.json(result);
-        })
-    });
-
-    // get an item identified by id
-    server.get("/items/:id", function(req, res) {
-        var item_id = req.params.id;
-        db_collection.findOne({ id: item_id }, function(err, result) {
-            if (err) throw err;
-            res.json(result);
-        });
-    });
-
-    // create/post new item
-    server.post("/items", function(req, res) {
-        var item = req.body;
-        db_collection.insertOne(item, function(err, result) {
-            if (err) throw err;
-            // send back entire updated list after successful request
-            db_collection.find().toArray(function(_err, _result) {
-                if (_err) throw _err;
-                res.json(_result);
-            });
-        });
-    });
-
-    // update an item
-    server.put("/items/:id", function(req, res) {
-        var item_id = req.params.id;
-        var item = req.body;
-
-        db_collection.updateOne({ id: item_id }, { $set: item }, function(err, result) {
-            if (err) throw err;
-            // send back entire updated list after successful request
-            db_collection.find().toArray(function(_err, _result) {
-                if (_err) throw _err;
-                res.json(_result);
-            });
-        });
-    });
-
-    // delete item from list
-    server.delete("/items/:id", function(req, res) {
-        var item_id = req.params.id;
-        db_collection.deleteOne({ id: item_id }, function(err, result) {
-            if (err) throw err;
-            // send back entire updated list after successful request
-            db_collection.find().toArray(function(_err, _result) {
-                if (_err) throw _err;
-                res.json(_result);
-            });
-        });
-    });
-    
+    crud.init_db_routes(server, db_collection);
 });
 
 server.get("/", function(req, res) {
     res.sendFile(__dirname + '/index.html');
  });
 
-server.get("/json", function(req, res) {
-    res.send((JSON.stringify({ name: "Lenny" })));
-});
-
-// template pages
-server.get("/about", function(req, res) {
-    res.render('about');
- });
-
- server.get("/info", function(req, res) {
-    res.render('info', { message: 'Hello world' });
- });
+server.use('/', main);     // localhost:4000/info
+//  server.use('/pages', main);     // localhost:4000/pages
 
  // external API routes
  server.get("/fakedata", function(req, res) {
