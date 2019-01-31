@@ -1,22 +1,22 @@
- var axios = require('axios');
- var express = require('express');
- var api1 = express.Router();
+var axios = require('axios');
+var express = require('express');
+var api1 = express.Router();
 
- // external API routes
- 
- api1.get("/fakedata", function(req, res) {
+// external API routes
+
+api1.get("/fakedata", function (req, res) {
 	axios('https://jsonplaceholder.typicode.com/users/1').then(response => {
-			res.json(response.data);
+		res.json(response.data);
 	}).catch(err => {
-			throw err;
-	});;
+		throw err;
+	});
 });
 
-api1.get("/jobs", function(req, res) {
+api1.get("/jobs", function (req, res) {
 	axios('https://jobs.github.com/positions.json?description=javascript&location=montreal').then(response => {
-			res.json(response.data);
+		res.json(response.data);
 	}).catch(err => {
-			throw err;
+		throw err;
 	});
 });
 
