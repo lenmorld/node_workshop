@@ -45,7 +45,7 @@ server.get("/", function(req, res) {
 server.use('/', main);     // localhost:4000/info
 //  server.use('/pages', main);     // localhost:4000/pages
 
-server.use('/', api1);      // localhost:4000/jobs
+server.use('/', api1);      // localhost:4000/users/:id
 
 server.listen(port, function () { // Callback function
     console.log(`Server listening at ${port}`);
