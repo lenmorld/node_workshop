@@ -46,6 +46,10 @@ api3.get("/songs", function (req, res) {
 	var search = req.query.search;
 	console.log(`[SPOTIFY] : searching ${search}...`);
 	getAccessToken().then(function(access_token) {
+			// TODO: send a GET request for search, attaching the access_token
+			//				to prove we are verified API user
+			
+			// testing: send search, access_token to client
 			res.send({ search: search, access_token: access_token });
 	});
 });
