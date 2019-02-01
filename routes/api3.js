@@ -45,12 +45,29 @@ function getAccessToken() {
 api3.get("/songs", function (req, res) {
 	var search = req.query.search;
 	console.log(`[SPOTIFY] : searching ${search}...`);
-	getAccessToken().then(function(access_token) {
-			// TODO: send a GET request for search, attaching the access_token
-			//				to prove we are verified API user
-			
-			// testing: send search, access_token to client
-			res.send({ search: search, access_token: access_token });
+	getAccessToken().then(function (access_token) {
+		// send a GET request for search, attaching the access_token
+		//				to prove we are verified API user
+
+		var _url = `https://api.spotify.com/v1/search?query=${search}&type=track`;
+
+		axios({
+			method: 'GET',
+			url: _url,
+			headers: {
+				"Authorization": `Bearer ${access_token}`,
+				"Accept": "application/json"
+			}
+		}).then(function (_res) {
+			// inspect response data
+			console.log(`search response: ${JSON.stringify(_res.data)}`);
+			res.send(_res.data.tracks.items);
+		}).catch(function (err) {
+			throw err;
+		});
+
+		// testing: send search, access_token to client
+		// res.send({ search: search, access_token: access_token });
 	});
 });
 
