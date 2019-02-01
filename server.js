@@ -7,6 +7,7 @@ var mongo_db = require('./mongo_db');
 
 var api1 = require('./routes/api1');
 var api2 = require('./routes/api2');
+var api3 = require('./routes/api3');
 
 // import server modules
 var data = require('./data');
@@ -48,6 +49,7 @@ server.use('/', main);     // localhost:4000/info
 
 server.use('/', api1);      // localhost:4000/users/:id
 server.use('/', api2);
+server.use('/', api3);
 
 server.listen(port, function () { // Callback function
     console.log(`Server listening at ${port}`);
