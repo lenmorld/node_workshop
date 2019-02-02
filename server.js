@@ -11,12 +11,13 @@ var api3 = require('./routes/api3');
 var methodOverride = require('method-override');
 
 // import server modules
-var data = require('./data');
+// var data = require('./data');
 // console.log(`song: ${data.list[0].title} by ${data.list[0].artist}`);
 
 // import routes
 var crud = require('./routes/crud');
 var main = require('./routes/main');
+var playlist = require('./routes/playlist');
 
 var port = 4000;
 
@@ -44,51 +45,11 @@ mongo_db.init_db(db_connection_url).then(function(db_instance) {
     var db_collection = db_object.collection(db_collection_name);
 
     crud.init_db_routes(server, db_collection);
+    playlist.init_playlist_routes(server, db_collection);
 });
 
 server.use('/', main);     // localhost:4000/info
 //  server.use('/pages', main);     // localhost:4000/pages
-
-server.use('/', api1);      // localhost:4000/users/:id
-server.use('/', api2);
-server.use('/', api3);
-
-// PLAYLIST ROUTES
-server.get("/playlist", function(req, res) {
-    res.render("playlist", { items: data.list });
-});
-
-server.get("/create", function(req, res) {
-    res.render("create");
-});
-
-server.get("/edit/:id", function(req, res) {
-    var item_id = req.params.id;
-    var item = data.list.find(function(_item) {
-        return _item.id === item_id;
-    });
-
-    res.render("edit", { item: item });
-});
-
-// we don't need a form for Delete, so no need for method-override
-// what we do is a GET request but replicaing the logic in server.delete()
-server.get("/delete/:id", function(req, res) {
-    var item_id = req.params.id;
-    console.log("Delete item with id: ", item_id);
-
-    // filter list copy, by excluding item to delete
-    var filtered_list = data.list.filter(function(item) {
-        return item.id !== item_id;
-    });
-
-    // replace old list with new one
-    data.list = filtered_list; 
-
-    // this is only used by the PLaylist page for now
-    res.render("playlist", {items: data.list});
-});
-
 
 server.listen(port, function () { // Callback function
     console.log(`Server listening at ${port}`);
