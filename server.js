@@ -7,7 +7,7 @@ var mongo_db = require('./mongo_db');
 var methodOverride = require('method-override');
 
 // import server modules
-var data = require('./data');
+// var data = require('./data');
 // console.log(`song: ${data.list[0].title} by ${data.list[0].artist}`);
 
 // import routes
@@ -41,12 +41,11 @@ mongo_db.init_db(db_connection_url).then(function(db_instance) {
     var db_collection = db_object.collection(db_collection_name);
 
     crud.init_db_routes(server, db_collection);
+    playlist.init_playlist_routes(server, db_collection);
 });
 
 server.use('/', main);     // localhost:4000/info
 //  server.use('/pages', main);     // localhost:4000/pages
-
-server.use('/', playlist);     // localhost:4000/info
 
 server.listen(port, function () { // Callback function
     console.log(`Server listening at ${port}`);
