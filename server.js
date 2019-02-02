@@ -8,6 +8,7 @@ var mongo_db = require('./mongo_db');
 var api1 = require('./routes/api1');
 var api2 = require('./routes/api2');
 var api3 = require('./routes/api3');
+var methodOverride = require('method-override');
 
 // import server modules
 var data = require('./data');
@@ -22,6 +23,11 @@ var port = 4000;
 // set the view engine to ejs
 server.set('view engine', 'ejs');
 
+
+// method override to allow PUT, DELETE in EJS forms
+server.use(methodOverride('_method'))
+
+server.use(body_parser.urlencoded({ extended: false })); // parse form data
 server.use(body_parser.json()); // parse JSON (application/json content-type)
 
 // db connection
@@ -40,16 +46,49 @@ mongo_db.init_db(db_connection_url).then(function(db_instance) {
     crud.init_db_routes(server, db_collection);
 });
 
-server.get("/", function(req, res) {
-    res.sendFile(__dirname + '/index.html');
- });
-
 server.use('/', main);     // localhost:4000/info
 //  server.use('/pages', main);     // localhost:4000/pages
 
 server.use('/', api1);      // localhost:4000/users/:id
 server.use('/', api2);
 server.use('/', api3);
+
+// PLAYLIST ROUTES
+server.get("/playlist", function(req, res) {
+    res.render("playlist", { items: data.list });
+});
+
+server.get("/create", function(req, res) {
+    res.render("create");
+});
+
+server.get("/edit/:id", function(req, res) {
+    var item_id = req.params.id;
+    var item = data.list.find(function(_item) {
+        return _item.id === item_id;
+    });
+
+    res.render("edit", { item: item });
+});
+
+// we don't need a form for Delete, so no need for method-override
+// what we do is a GET request but replicaing the logic in server.delete()
+server.get("/delete/:id", function(req, res) {
+    var item_id = req.params.id;
+    console.log("Delete item with id: ", item_id);
+
+    // filter list copy, by excluding item to delete
+    var filtered_list = data.list.filter(function(item) {
+        return item.id !== item_id;
+    });
+
+    // replace old list with new one
+    data.list = filtered_list; 
+
+    // this is only used by the PLaylist page for now
+    res.render("playlist", {items: data.list});
+});
+
 
 server.listen(port, function () { // Callback function
     console.log(`Server listening at ${port}`);
