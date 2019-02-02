@@ -3,6 +3,7 @@ var http = require('http');
 var express = require('express'); // import express
 var server = express();
 var body_parser = require('body-parser');
+var methodOverride = require('method-override');
 
 // import server modules
 var data = require('./data');
@@ -12,6 +13,10 @@ var port = 4000;
 
 // set the view engine to ejs
 server.set('view engine', 'ejs');
+
+
+// method override to allow PUT, DELETE in EJS forms
+server.use(methodOverride('_method'))
 
 server.use(body_parser.urlencoded({ extended: false })); // parse form data
 server.use(body_parser.json()); // parse JSON (application/json content-type)
@@ -91,7 +96,12 @@ server.put("/items/:id", function(req, res) {
     // replace old list with new one
     data.list = updated_list_items;
 
-    res.json(data.list);
+    if (item.mode === "form") {
+        // redirect to /playlist page
+        res.redirect('/playlist');
+    } else {
+        res.json(data.list);
+    }
 });
 
 // delete item from list
@@ -117,6 +127,15 @@ server.get("/playlist", function(req, res) {
 
 server.get("/create", function(req, res) {
     res.render("create");
+});
+
+server.get("/edit/:id", function(req, res) {
+    var item_id = req.params.id;
+    var item = data.list.find(function(_item) {
+        return _item.id === item_id;
+    });
+
+    res.render("edit", { item: item });
 });
 
 server.listen(port, function () { // Callback function
