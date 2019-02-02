@@ -57,8 +57,13 @@ server.post("/items", function(req, res) {
     // add new item to array
     data.list.push(item)
     
-    // return updated list
-    res.json(data.list);
+    if (item.mode === "form") {
+        // redirect to /playlist page
+        res.redirect('/playlist');
+    } else {
+        // return updated list
+        res.json(data.list);
+    }
 });
 
 // update an item
