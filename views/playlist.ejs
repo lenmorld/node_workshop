@@ -1,0 +1,22 @@
+
+<h2>Milestone activity: Playlist</h2>
+<ul>
+	<%for(var i=0; i < items.length; i++) { %>
+		<li>
+			<%= items[i].id %><br/>
+			<%= items[i].artist %><br/>
+			<%= items[i].album %><br/>
+			<%= items[i].title %><br/>
+			<div>
+				<iframe src="https://open.spotify.com/embed/track/<%= items[i].id %>"
+						width="80" height="80" frameBorder="0" allowtransparency="true" allow="encrypted-media">
+				</iframe>
+			</div>
+		</li>
+	<% } %>
+</ul>
+<div>
+	<form>
+
+	</form>
+</div>

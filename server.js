@@ -104,6 +104,11 @@ server.delete("/items/:id", function(req, res) {
     res.json(data.list);
 });
 
+// PLAYLIST ROUTES
+server.get("/playlist", function(req, res) {
+    res.render("playlist", { items: data.list });
+});
+
 server.listen(port, function () { // Callback function
     console.log(`Server listening at ${port}`);
 });
