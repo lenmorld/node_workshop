@@ -13,6 +13,7 @@ var port = 4000;
 // set the view engine to ejs
 server.set('view engine', 'ejs');
 
+server.use(body_parser.urlencoded({ extended: false })); // parse form data
 server.use(body_parser.json()); // parse JSON (application/json content-type)
 
 server.get("/", function(req, res) {
