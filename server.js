@@ -110,6 +110,10 @@ server.get("/playlist", function(req, res) {
     res.render("playlist", { items: data.list });
 });
 
+server.get("/create", function(req, res) {
+    res.render("create");
+});
+
 server.listen(port, function () { // Callback function
     console.log(`Server listening at ${port}`);
 });
