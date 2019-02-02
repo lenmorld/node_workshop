@@ -25,7 +25,13 @@ exports.init_db_routes = function (server, db_collection) {
 			// send back entire updated list after successful request
 			db_collection.find().toArray(function (_err, _result) {
 				if (_err) throw _err;
-				res.json(_result);
+
+				if (item.mode === "form") {
+					// redirect to /playlist page
+					res.redirect('/playlist');
+				} else {
+					res.json(_result);
+				}
 			});
 		});
 	});
@@ -40,7 +46,13 @@ exports.init_db_routes = function (server, db_collection) {
 			// send back entire updated list after successful request
 			db_collection.find().toArray(function (_err, _result) {
 				if (_err) throw _err;
-				res.json(_result);
+
+				if (item.mode === "form") {
+					// redirect to /playlist page
+					res.redirect('/playlist');
+				} else {
+					res.json(_result);
+				}
 			});
 		});
 	});

@@ -4,6 +4,7 @@ var express = require('express'); // import express
 var server = express();
 var body_parser = require('body-parser');
 var mongo_db = require('./mongo_db');
+var methodOverride = require('method-override');
 
 // import server modules
 var data = require('./data');
@@ -12,12 +13,18 @@ var data = require('./data');
 // import routes
 var crud = require('./routes/crud');
 var main = require('./routes/main');
+var playlist = require('./routes/playlist');
 
 var port = 4000;
 
 // set the view engine to ejs
 server.set('view engine', 'ejs');
 
+
+// method override to allow PUT, DELETE in EJS forms
+server.use(methodOverride('_method'))
+
+server.use(body_parser.urlencoded({ extended: false })); // parse form data
 server.use(body_parser.json()); // parse JSON (application/json content-type)
 
 // db connection
@@ -36,12 +43,10 @@ mongo_db.init_db(db_connection_url).then(function(db_instance) {
     crud.init_db_routes(server, db_collection);
 });
 
-server.get("/", function(req, res) {
-    res.sendFile(__dirname + '/index.html');
- });
-
 server.use('/', main);     // localhost:4000/info
 //  server.use('/pages', main);     // localhost:4000/pages
+
+server.use('/', playlist);     // localhost:4000/info
 
 server.listen(port, function () { // Callback function
     console.log(`Server listening at ${port}`);
