@@ -69,7 +69,7 @@ exports.searchTrack = function (search) {
 						title: track.name
 					};
 				});
-				console.log(squashed_results);
+				// console.log(squashed_results);
 				// res.send(_res.data.tracks.items);
 				// res.json(squashed_results);
 
