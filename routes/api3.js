@@ -60,8 +60,22 @@ api3.get("/songs", function (req, res) {
 			}
 		}).then(function (_res) {
 			// inspect response data
-			console.log(`search response: ${JSON.stringify(_res.data)}`);
-			res.send(_res.data.tracks.items);
+			// console.log(`search response: ${JSON.stringify(_res.data)}`);
+			
+			// prepare data so we only get the attributes we need
+			var search_results = _res.data.tracks.items;
+			var squashed_results = search_results.map(function(track) {
+					return {
+							id: track.id,
+							artist: track.artists[0].name,
+							album: track.album.name,
+							title: track.name
+					};
+			});
+			console.log(squashed_results);
+			// res.send(_res.data.tracks.items);
+			res.json(squashed_results);
+			
 		}).catch(function (err) {
 			throw err;
 		});
