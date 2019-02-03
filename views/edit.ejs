@@ -1,0 +1,13 @@
+<div>
+	<h3>Edit item <%= item.id %>:</h3>
+	<%# since EJS doesnt support PUT, DELETE, we need this along with methodOverride %>
+	<form method="POST" action="/items/<%= item.id %>?_method=PUT">
+		<input type="text" name="id" required placeholder="id" value="<%= item.id %>" /><br/>
+		<input type="text" name="title" required placeholder="title" value="<%= item.title %>"/><br/>
+		<input type="text" name="artist" required placeholder="artist" value="<%= item.artist %>"/><br/>
+		<input type="text" name="album" required placeholder="album" value="<%= item.album %>"/><br/>
+		<input type="hidden" name="mode" value="form"  />
+
+		<input type="submit" value="Edit" />
+	</form>
+</div>
