@@ -1,3 +1,5 @@
+var SpotifyHelper = require('../utils/SpotifyHelper');
+
 // PLAYLIST ROUTES
 
 exports.init_playlist_routes = function (server, db_collection) {
@@ -35,4 +37,20 @@ exports.init_playlist_routes = function (server, db_collection) {
 		});
 	});
 
+	server.get("/search", function (req, res) {
+		res.render("search", { items: [], search: '' });
+	});
+
+	// form-submitted search
+	server.post("/songs/search", function (req, res) {
+		console.log(req.body);
+
+		var search = req.body.search;
+		SpotifyHelper.searchTrack(search).then(_res => {
+			// res.json(_res);
+			res.render("search", { items: _res, search: search });
+		}).catch(err => {
+			throw err;
+		});
+	});
 }
