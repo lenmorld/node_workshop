@@ -9,10 +9,19 @@ var methodOverride = require('method-override');
 // websocket setup
 var WebSocket = require('ws');
 var wss = new WebSocket.Server({ port: 8080});
+var client_ctr = 0;
 
 wss.on('connection', function (ws) {
+    client_ctr++;
+    console.log(`CLIENT ${client_ctr} connected`);
     ws.on('message', function(message) {
-        console.log(`Received message > ${message}`);
+        console.log(`CLIENT ${client_ctr} said: ${message}`);
+
+        if (message === "HELLO") {
+            ws.send("WELCOME to the WS server!")
+        } else {
+            ws.send(`${message.toUpperCase()}`);
+        }
     });
 });
 
