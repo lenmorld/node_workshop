@@ -6,6 +6,16 @@ var body_parser = require('body-parser');
 var mongo_db = require('./mongo_db');
 var methodOverride = require('method-override');
 
+// websocket setup
+var WebSocket = require('ws');
+var wss = new WebSocket.Server({ port: 8080});
+
+wss.on('connection', function (ws) {
+    ws.on('message', function(message) {
+        console.log(`Received message > ${message}`);
+    });
+});
+
 var api1 = require('./routes/api1');
 var api2 = require('./routes/api2');
 var api3 = require('./routes/api3');
