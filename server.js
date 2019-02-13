@@ -4,11 +4,11 @@ var express = require('express'); // import express
 var server = express();
 var body_parser = require('body-parser');
 var mongo_db = require('./mongo_db');
+var methodOverride = require('method-override');
 
 var api1 = require('./routes/api1');
 var api2 = require('./routes/api2');
 var api3 = require('./routes/api3');
-var methodOverride = require('method-override');
 
 // import server modules
 // var data = require('./data');
@@ -50,6 +50,10 @@ mongo_db.init_db(db_connection_url).then(function(db_instance) {
 
 server.use('/', main);     // localhost:4000/info
 //  server.use('/pages', main);     // localhost:4000/pages
+
+server.use('/', api1);      // localhost:4000/users/:id
+server.use('/', api2);
+server.use('/', api3);
 
 server.listen(port, function () { // Callback function
     console.log(`Server listening at ${port}`);
