@@ -45,7 +45,7 @@ var crud = require('./routes/crud');
 var main = require('./routes/main');
 var playlist = require('./routes/playlist');
 
-var port = 4000;
+var port = 80;
 
 // set the view engine to ejs
 server.set('view engine', 'ejs');
