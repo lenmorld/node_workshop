@@ -16,14 +16,10 @@ console.log(`WS SERVER started`);
 wss.on('connection', function (ws) {
     client_ctr++;
     console.log(`CLIENT ${client_ctr} connected`);
+    ws.send("WELCOME to the WS server!");
     ws.on('message', function(message) {
         console.log(`CLIENT ${client_ctr} said: ${message}`);
-
-        if (message === "HELLO") {
-            ws.send("WELCOME to the WS server!")
-        } else {
-            ws.send(`${message.toUpperCase()}`);
-        }
+        ws.send(`${message.toUpperCase()}`);
     });
 });
 
