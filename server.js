@@ -19,11 +19,8 @@ wss.on('connection', function (ws) {
     ws.id = client_ctr; // add an id to ws client
     clients.push(ws);   // add client to list
     console.log(`CLIENT ${client_ctr} connected`);
+    ws.send("WELCOME to the WS server!");
     ws.on('message', function(message) {
-        if (message === "HELLO") {
-            ws.send("WELCOME to the WS server!")
-        } 
-
         sendAll(message, ws.id);
     });
 });
