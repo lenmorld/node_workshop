@@ -10,22 +10,30 @@ var methodOverride = require('method-override');
 var WebSocket = require('ws');
 var wss = new WebSocket.Server({ port: 8080});
 var client_ctr = 0;
+var clients = [];
 
 console.log(`WS SERVER started`);
 
 wss.on('connection', function (ws) {
     client_ctr++;
+    ws.id = client_ctr; // add an id to ws client
+    clients.push(ws);   // add client to list
     console.log(`CLIENT ${client_ctr} connected`);
     ws.on('message', function(message) {
-        console.log(`CLIENT ${client_ctr} said: ${message}`);
-
         if (message === "HELLO") {
             ws.send("WELCOME to the WS server!")
-        } else {
-            ws.send(`${message.toUpperCase()}`);
-        }
+        } 
+
+        sendAll(message, ws.id);
     });
 });
+
+function sendAll (message, sender_id) {
+    console.log(`CLIENT ${sender_id} said: ${message}`);
+    clients.forEach(function(client) {
+        client.send(`CLIENT ${sender_id} said: ${message}`);
+    });
+}
 
 var api1 = require('./routes/api1');
 var api2 = require('./routes/api2');
