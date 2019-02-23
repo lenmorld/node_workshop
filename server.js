@@ -29,11 +29,6 @@ server.get("/about", function(req, res) {
     res.render('info', { message: 'Hello world' });
  });
 
- // API CRUD routes
-server.get("/list", function(req, res) {
-    res.json(data.list);
-});
-
 server.listen(port, function () { // Callback function
     console.log(`Server listening at ${port}`);
 });
