@@ -2,14 +2,11 @@
 const express = require('express'); // import express
 const server = express();
 
-// import server modules
-const data = require('./data');
-console.log(`song: ${data.list[0].title} by ${data.list[0].artist}`);
-
-const port = 4000;
-
 // import route modules
 const pages = require('./routes/pages');
+const crud = require('./routes/crud');
+
+const port = 4000;
 
 // set the view engine to ejs
 server.set('view engine', 'ejs');
@@ -24,6 +21,9 @@ server.get("/json", ({ res }) => {
 
 // template pages
 server.use("/pages", pages);
+
+// crud
+server.use("/", crud);
 
 server.listen(port, () => { // Callback function in ES6
 	console.log(`Server listening at ${port}`);
