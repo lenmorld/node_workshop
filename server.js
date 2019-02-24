@@ -1,48 +1,30 @@
 // import built-in Node packages
-var http = require('http');
-var express = require('express'); // import express
-var server = express();
+const express = require('express'); // import express
+const server = express();
 
-// import server modules
-var data = require('./data');
-console.log(`song: ${data.list[0].title} by ${data.list[0].artist}`);
+// import route modules
+const pages = require('./routes/pages');
+const crud = require('./routes/crud');
 
-var port = 4000;
+const port = 4000;
 
 // set the view engine to ejs
 server.set('view engine', 'ejs');
 
-server.get("/", function(req, res) {
-    res.sendFile(__dirname + '/index.html');
- });
+server.get("/", (req, res) => {
+	res.sendFile(__dirname + '/index.html');
+});
 
-server.get("/json", function(req, res) {
-    res.send((JSON.stringify({ name: "Lenny" })));
+server.get("/json", ({ res }) => {
+	res.send((JSON.stringify({ name: "Lenny" })));
 });
 
 // template pages
-server.get("/about", function(req, res) {
-    res.render('about');
- });
+server.use("/pages", pages);
 
- server.get("/info", function(req, res) {
-    res.render('info', { message: 'Hello world' });
- });
+// crud
+server.use("/", crud);
 
- // API CRUD routes
-server.get("/items", function(req, res) {
-    res.json(data.list);
-});
-
-// get an item identified by id
-server.get("/items/:id", function(req, res) {
-    var item_id = req.params.id;
-    var item = data.list.find(function(_item) {
-        return _item.id === item_id;
-    });
-    res.json(item);
-});
-
-server.listen(port, function () { // Callback function
-    console.log(`Server listening at ${port}`);
+server.listen(port, () => { // Callback function in ES6
+	console.log(`Server listening at ${port}`);
 });
