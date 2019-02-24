@@ -1,17 +1,17 @@
 // import built-in Node packages
-var express = require('express'); // import express
-var server = express();
+const express = require('express'); // import express
+const server = express();
 
-var port = 4000;
+const port = 4000;
 
-server.get("/", (req, res) => {
+server.get("/", ({res}) => {
     res.sendFile(__dirname + '/index.html');
  });
 
-server.get("/json", (req, res) => {
+server.get("/json", ({res}) => {
     res.send((JSON.stringify({ name: "Lenny" })));
 });
 
-server.listen(port, function () { // Callback function
+server.listen(port, () => { // Callback function
 	console.log(`Server listening at ${port}`);
 });
