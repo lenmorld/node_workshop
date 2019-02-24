@@ -5,11 +5,11 @@ const server = express();
 const port = 4000;
 
 server.get("/", (req, res) => {
-    res.sendFile(__dirname + '/index.html');
- });
+	res.sendFile(__dirname + '/index.html');
+});
 
-server.get("/json", ({res}) => {
-    res.send((JSON.stringify({ name: "Lenny" })));
+server.get("/json", ({ res }) => {
+	res.send((JSON.stringify({ name: "Lenny" })));
 });
 
 server.listen(port, () => { // Callback function in ES6
