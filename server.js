@@ -2,6 +2,9 @@
 const express = require('express'); // import express
 const server = express();
 
+// import route modules
+const pages = require('./routes/pages');
+
 const port = 4000;
 
 // set the view engine to ejs
@@ -16,13 +19,7 @@ server.get("/json", ({ res }) => {
 });
 
 // template pages
-server.get("/about", (req, res) => {
-	res.render('about');
-});
-
-server.get("/info", (req, res) => {
-	res.render('info', { message: 'Hello world' });
-});
+server.use("/", pages);
 
 server.listen(port, () => { // Callback function in ES6
 	console.log(`Server listening at ${port}`);
