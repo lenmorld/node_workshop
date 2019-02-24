@@ -19,7 +19,7 @@ server.get("/json", ({ res }) => {
 });
 
 // template pages
-server.use("/", pages);
+server.use("/pages", pages);
 
 server.listen(port, () => { // Callback function in ES6
 	console.log(`Server listening at ${port}`);
