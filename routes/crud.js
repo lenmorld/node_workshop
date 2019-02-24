@@ -13,11 +13,9 @@ server.get("/items", (req, res) => {
 });
 
 // get an item identified by id
-server.get("/items/:id", function (req, res) {
-	var itemId = req.params.id;
-	var item = data.list.find(function (_item) {
-		return _item.id === itemId;
-	});
+server.get("/items/:id", (req, res) => {
+	const itemId = req.params.id;
+	const item = data.list.find( _item => _item.id === itemId );
 	res.json(item);
 });
 
