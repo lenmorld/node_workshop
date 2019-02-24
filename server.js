@@ -4,7 +4,7 @@ const server = express();
 
 const port = 4000;
 
-server.get("/", ({res}) => {
+server.get("/", (req, res) => {
     res.sendFile(__dirname + '/index.html');
  });
 
@@ -12,6 +12,6 @@ server.get("/json", ({res}) => {
     res.send((JSON.stringify({ name: "Lenny" })));
 });
 
-server.listen(port, () => { // Callback function
+server.listen(port, () => { // Callback function in ES6
 	console.log(`Server listening at ${port}`);
 });
