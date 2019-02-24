@@ -16,11 +16,11 @@ server.get("/json", ({ res }) => {
 });
 
 // template pages
-server.get("/about", function (req, res) {
+server.get("/about", (req, res) => {
 	res.render('about');
 });
 
-server.get("/info", function (req, res) {
+server.get("/info", (req, res) => {
 	res.render('info', { message: 'Hello world' });
 });
 
