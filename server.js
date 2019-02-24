@@ -4,6 +4,7 @@ const server = express();
 
 // import route modules
 const pages = require('./routes/pages');
+const crud = require('./routes/crud');
 
 const port = 4000;
 
@@ -20,6 +21,9 @@ server.get("/json", ({ res }) => {
 
 // template pages
 server.use("/pages", pages);
+
+// crud
+server.use("/", crud);
 
 server.listen(port, () => { // Callback function in ES6
 	console.log(`Server listening at ${port}`);
