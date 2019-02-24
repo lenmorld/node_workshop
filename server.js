@@ -8,11 +8,11 @@ const port = 4000;
 server.set('view engine', 'ejs');
 
 server.get("/", (req, res) => {
-    res.sendFile(__dirname + '/index.html');
- });
+	res.sendFile(__dirname + '/index.html');
+});
 
-server.get("/json", ({res}) => {
-    res.send((JSON.stringify({ name: "Lenny" })));
+server.get("/json", ({ res }) => {
+	res.send((JSON.stringify({ name: "Lenny" })));
 });
 
 // template pages
