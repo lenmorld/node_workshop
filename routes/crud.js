@@ -21,7 +21,7 @@ server.get("/items/:id", (req, res) => {
 
 // create/post new item
 server.post("/items", (req, res) => {
-	var item = req.body;
+	const item = req.body;
 	console.log('Adding new item: ', item);
 
 	// add new item to array
