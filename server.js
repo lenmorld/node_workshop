@@ -7,6 +7,7 @@ const methodOverride = require('method-override');
 // import route modules
 const pages = require('./routes/pages');
 const crud = require('./routes/crud');
+const playlist = require('./routes/playlist');
 
 const port = 4000;
 
@@ -29,9 +30,11 @@ server.get("/json", ({ res }) => {
 
 // template pages
 server.use("/pages", pages);
-
 // crud
 server.use("/", crud);
+// playlist app
+server.use("/playlist", playlist);
+
 
 server.listen(port, () => { // Callback function in ES6
 	console.log(`Server listening at ${port}`);
