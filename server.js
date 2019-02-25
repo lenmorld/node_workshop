@@ -1,4 +1,5 @@
 // import built-in Node packages
+<<<<<<< .merge_file_a18268
 var http = require('http');
 var express = require('express'); // import express
 var server = express();
@@ -46,14 +47,30 @@ var main = require('./routes/main');
 var playlist = require('./routes/playlist');
 
 var port = 4000;
+=======
+const express = require('express'); // import express
+const server = express();
+const bodyParser = require('body-parser');
+const methodOverride = require('method-override');
+
+// import route modules
+const pages = require('./routes/pages');
+const crud = require('./routes/crud');
+const playlist = require('./routes/playlist');
+
+const port = 4000;
+>>>>>>> .merge_file_a22792
 
 // set the view engine to ejs
 server.set('view engine', 'ejs');
-
-
+// parse JSON (application/json content-type)
+server.use(bodyParser.json());
+// parse form data
+server.use(bodyParser.urlencoded({ extended: false }));
 // method override to allow PUT, DELETE in EJS forms
 server.use(methodOverride('_method'))
 
+<<<<<<< .merge_file_a18268
 server.use(body_parser.urlencoded({ extended: false })); // parse form data
 server.use(body_parser.json()); // parse JSON (application/json content-type)
 
@@ -76,11 +93,27 @@ mongo_db.init_db(db_connection_url).then(function(db_instance) {
 
 server.use('/', main);     // localhost:4000/info
 //  server.use('/pages', main);     // localhost:4000/pages
+=======
+server.get("/", (req, res) => {
+	res.sendFile(__dirname + '/index.html');
+});
+
+server.get("/json", ({ res }) => {
+	res.send((JSON.stringify({ name: "Lenny" })));
+});
+
+// template pages
+server.use("/pages", pages);
+// crud
+server.use("/", crud);
+// playlist app
+server.use("/playlist", playlist);
+>>>>>>> .merge_file_a22792
 
 server.use('/', api1);      // localhost:4000/users/:id
 server.use('/', api2);
 server.use('/', api3);
 
-server.listen(port, function () { // Callback function
-    console.log(`Server listening at ${port}`);
+server.listen(port, () => { // Callback function in ES6
+	console.log(`Server listening at ${port}`);
 });
