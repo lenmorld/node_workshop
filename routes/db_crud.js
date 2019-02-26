@@ -69,6 +69,19 @@ mongo_db.initDb2(collectionName).then(dbCollection => {
 		});
 	});
 
+	// delete item from list
+	server.delete("/items/:id", (req, res) => {
+		var item_id = req.params.id;
+		dbCollection.deleteOne({ id: item_id }, (err, result) => {
+			if (err) throw err;
+			// send back entire updated list after successful request
+			dbCollection.find().toArray(function (_err, _result) {
+				if (_err) throw _err;
+				res.json(_result);
+			});
+		});
+	});
+
 }).catch(err => {
 	throw (err);
 });
