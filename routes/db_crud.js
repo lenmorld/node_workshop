@@ -40,6 +40,20 @@ mongo_db.initDb2(collectionName).then(dbCollection => {
 			res.json(result);
 		});
 	});
+
+	// create/post new item
+	server.post("/items", (req, res) => {
+		var item = req.body;
+		dbCollection.insertOne(item, (err, result) => {
+			if (err) throw err;
+			// send back entire updated list after successful request
+			dbCollection.find().toArray((_err, _result) => {
+				if (_err) throw _err;
+				res.json(_result);
+			});
+		});
+	});
+
 }).catch(err => {
 	throw (err);
 });
