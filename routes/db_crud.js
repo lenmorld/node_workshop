@@ -54,6 +54,21 @@ mongo_db.initDb2(collectionName).then(dbCollection => {
 		});
 	});
 
+	// update an item
+	server.put("/items/:id", (req, res) => {
+		const item_id = req.params.id;
+		const item = req.body;
+
+		dbCollection.updateOne({ id: item_id }, { $set: item }, (err, result) => {
+			if (err) throw err;
+			// send back entire updated list, to make sure frontend data is up-to-date
+			dbCollection.find().toArray( (_err, _result) => {
+				if (_err) throw _err;
+				res.json(_result);
+			});
+		});
+	});
+
 }).catch(err => {
 	throw (err);
 });
