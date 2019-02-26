@@ -2,73 +2,82 @@ const express = require('express');
 const server = express.Router();
 
 // import data and controllers
-const data = require('../data');
+// const data = require('../data');
+const mongo_db = require('../mongo_db');
+// mongoDB connection
+const collectionName = 'items';
 
-// PLAYLIST ROUTES
-server.get("/", (req, res) => {
-	res.render("playlist/home", { items: data.list });
-});
+// TODO: some route handlers same logic as db_crud.js
+//			refactor into a helper module
 
-server.get("/create", (req, res) => {
-	res.render("playlist/create");
-});
-
-server.get("/edit/:id", (req, res) => {
-	const itemId = req.params.id;
-	const item = data.list.find( _item => _item.id === itemId );
-
-	res.render("playlist/edit", { item: item });
-});
-
-// playlist/items/:id
-server.put("/items/:id", (req, res) => {
-	// same as PUT /items/:id logic
-	// TODO: refactor into a helper module
-
-	const itemId = req.params.id;
-	const item = req.body;
-	const updatedListItems = [];
-	data.list.forEach(oldItem => {
-		if (oldItem.id === itemId) {
-			updatedListItems.push(item);
-		} else {
-			updatedListItems.push(oldItem);
-		}
-	});
-	data.list = updatedListItems;
-	
-	// redirect to playlist home page
-	res.render("playlist/home", { items: data.list });
-});
-
-// playlist/items
-server.post("/items", (req, res) => {
-	// same as POST /items logic
-	// TODO: refactor into a helper module
-
-	const item = req.body;
-	data.list.push(item);
-
-	// redirect to playlist home page
-	res.render("playlist/home", { items: data.list });
-});
-
-// we don't need a form for Delete, so no need for method-override
-// what we do is a GET request but replicaing the logic in server.delete()
-server.get("/delete/:id", (req, res) => {
-	const itemId = req.params.id;
-	console.log("Delete item with id: ", itemId);
-
-	// filter list copy, by excluding item to delete
-	const filteredList = data.list.filter(function (item) {
-		return item.id !== itemId;
+mongo_db.initDb2(collectionName).then(dbCollection => {
+	// PLAYLIST ROUTES
+	server.get("/", (req, res) => {
+		dbCollection.find().toArray((err, result) => {
+			if (err) throw err;
+			// res.json(result);
+			res.render("playlist/home", { items: result });
+		});
 	});
 
-	// replace old list with new one
-	data.list = filteredList;
+	server.get("/create", (req, res) => {
+		res.render("playlist/create");
+	});
 
-	// this is only used by the PLaylist page for now
-	res.render("playlist/home", { items: data.list });
+	server.get("/edit/:id", (req, res) => {
+		const itemId = req.params.id;
+		dbCollection.findOne({ id: itemId }, function (err, result) {
+			if (err) throw err;
+			// res.json(result);
+			res.render("playlist/edit", { item: result });
+		});
+	});
+
+	// // playlist/items/:id
+	server.put("/items/:id", (req, res) => {
+		const item_id = req.params.id;
+		const item = req.body;
+
+		dbCollection.updateOne({ id: item_id }, { $set: item }, (err, result) => {
+			if (err) throw err;
+			// send back entire updated list, to make sure frontend data is up-to-date
+			dbCollection.find().toArray( (_err, _result) => {
+				if (_err) throw _err;
+				// res.json(_result);
+				res.render("playlist/home", { items: _result });
+			});
+		});
+	});
+
+	// playlist/items
+	server.post("/items", (req, res) => {
+		const item = req.body;
+		dbCollection.insertOne(item, (err, result) => {
+			if (err) throw err;
+			// send back entire updated list after successful request
+			dbCollection.find().toArray((_err, _result) => {
+				if (_err) throw _err;
+				// res.json(_result);
+				res.render("playlist/home", { items: _result });
+			});
+		});
+	});
+
+	// we don't need a form for Delete, so no need for method-override
+	// what we do is a GET request but replicaing the logic in server.delete()
+	server.get("/delete/:id", (req, res) => {
+		const item_id = req.params.id;
+		dbCollection.deleteOne({ id: item_id }, (err, result) => {
+			if (err) throw err;
+			// send back entire updated list after successful request
+			dbCollection.find().toArray(function (_err, _result) {
+				if (_err) throw _err;
+				// res.json(_result);
+				res.render("playlist/home", { items: _result });
+			});
+		});
+	});
+
 });
 
 module.exports = server;
