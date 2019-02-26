@@ -31,6 +31,15 @@ mongo_db.initDb2(collectionName).then(dbCollection => {
 			res.json(result);
 		});
 	});
+
+	// get an item identified by id
+	server.get("/items/:id", (req, res) => {
+		const itemId = req.params.id;
+		dbCollection.findOne({ id: itemId }, function (err, result) {
+			if (err) throw err;
+			res.json(result);
+		});
+	});
 }).catch(err => {
 	throw (err);
 });
