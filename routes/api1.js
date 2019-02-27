@@ -4,7 +4,7 @@ var api1 = express.Router();
 
 // external API routes
 
-api1.get("/users/:id", function (req, res) {
+api1.get("/users/:id", (req, res) => {
 	var id = req.params.id;
 	axios(`https://jsonplaceholder.typicode.com/users/${id}`).then(response => {
 		res.json(response.data);

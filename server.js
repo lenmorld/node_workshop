@@ -9,6 +9,7 @@ const pages = require('./routes/pages');
 const crud = require('./routes/crud');
 const playlist = require('./routes/playlist');
 const db_crud = require('./routes/db_crud');
+const api1 = require('./routes/api1');
 
 const port = 4000;
 
@@ -37,6 +38,8 @@ server.use("/pages", pages);
 server.use("/", db_crud);
 // playlist app
 server.use("/playlist", playlist);
+// APIs
+server.use("/api1", api1);
 
 server.listen(port, () => { // Callback function in ES6
 	console.log(`Server listening at ${port}`);
