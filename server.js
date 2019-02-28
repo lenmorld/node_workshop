@@ -1,56 +1,50 @@
 // import built-in Node packages
-var http = require('http');
-var express = require('express'); // import express
-var server = express();
-var body_parser = require('body-parser');
-var mongo_db = require('./mongo_db');
+const express = require('express'); // import express
+const server = express();
+const bodyParser = require('body-parser');
+const methodOverride = require('method-override');
 
-var api1 = require('./routes/api1');
-var api2 = require('./routes/api2');
-var api3 = require('./routes/api3');
+// import route modules
+const pages = require('./routes/pages');
+const crud = require('./routes/crud');
+const playlist = require('./routes/playlist');
+const db_crud = require('./routes/db_crud');
+const api1 = require('./routes/api1');
+const api2 = require('./routes/api2');
+const api3 = require('./routes/api3');
 
-// import server modules
-var data = require('./data');
-// console.log(`song: ${data.list[0].title} by ${data.list[0].artist}`);
-
-// import routes
-var crud = require('./routes/crud');
-var main = require('./routes/main');
-
-var port = 4000;
+const port = 4000;
 
 // set the view engine to ejs
 server.set('view engine', 'ejs');
+// parse JSON (application/json content-type)
+server.use(bodyParser.json());
+// parse form data
+server.use(bodyParser.urlencoded({ extended: false }));
+// method override to allow PUT, DELETE in EJS forms
+server.use(methodOverride('_method'))
 
-server.use(body_parser.json()); // parse JSON (application/json content-type)
-
-// db connection
-var db_user = "user1";
-var db_pass = "pass1234";
-var db_host = "ds113765.mlab.com:13765";
-var db_name = "node_workshop_db";
-var db_collection_name = "items";
-var db_connection_url = `mongodb://${db_user}:${db_pass}@${db_host}/${db_name}`;
-// console.log(db_connection_url);
-
-mongo_db.init_db(db_connection_url).then(function(db_instance) {
-    var db_object = db_instance.db(db_name);
-    var db_collection = db_object.collection(db_collection_name);
-
-    crud.init_db_routes(server, db_collection);
+server.get("/", (req, res) => {
+	res.sendFile(__dirname + '/index.html');
 });
 
-server.get("/", function(req, res) {
-    res.sendFile(__dirname + '/index.html');
- });
+server.get("/json", ({ res }) => {
+	res.send((JSON.stringify({ name: "Lenny" })));
+});
 
-server.use('/', main);     // localhost:4000/info
-//  server.use('/pages', main);     // localhost:4000/pages
+// template pages
+server.use("/pages", pages);
+// crud
+// server.use("/", crud);
+// db crud
+server.use("/", db_crud);
+// playlist app
+server.use("/playlist", playlist);
+// APIs
+server.use("/api1", api1);
+server.use("/api2", api2);
+server.use('/', api3);	// localhost:4000/
 
-server.use('/', api1);      // localhost:4000/users/:id
-server.use('/', api2);
-server.use('/', api3);
-
-server.listen(port, function () { // Callback function
-    console.log(`Server listening at ${port}`);
+server.listen(port, () => { // Callback function in ES6
+	console.log(`Server listening at ${port}`);
 });
