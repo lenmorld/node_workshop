@@ -13,7 +13,7 @@ api1.get("/users/:id", (req, res) => {
 	});
 });
 
-
+//?description=javascript&location=montreal
 api1.get("/jobs", function (req, res) {
 	const { description, location } = req.query;
 	let requestUrl = "https://jobs.github.com/positions.json";
@@ -27,6 +27,32 @@ api1.get("/jobs", function (req, res) {
 	console.log(`Request: ${requestUrl}`);
 	axios(requestUrl).then(response => {
 		res.json(response.data);
+	}).catch(err => {
+		throw err;
+	});
+});
+
+//?description=javascript&location=montreal&titleContains=developer&year=2019
+api1.get("/jobs2", function (req, res) {
+	const { description, location, titleContains, year } = req.query;
+	let requestUrl = "https://jobs.github.com/positions.json";
+
+	if (description || location) {
+		const descriptionParam = description ? `description=${description}&` : '';
+		const locationParam = location ? `location=${location}&` : '';
+		requestUrl = `${requestUrl}?${descriptionParam}${locationParam}`;
+	}
+
+	axios(requestUrl).then(response => {
+		// psot-processing of results
+		const results = response.data;
+		const matches = results.filter(r => {
+			const { title, created_at } = r;
+			const titleParam = titleContains ? titleContains.toLowerCase() : '';
+			const yearParam = year || '';
+			return title.toLowerCase().includes(titleParam) && created_at.includes(yearParam);
+		});
+		res.json(matches);
 	}).catch(err => {
 		throw err;
 	});
