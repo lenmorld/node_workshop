@@ -1,11 +1,11 @@
-var axios = require('axios');
-var express = require('express');
-var api1 = express.Router();
+const axios = require('axios');
+const express = require('express');
+const api1 = express.Router();
 
 // external API routes
 
-api1.get("/users/:id", function (req, res) {
-	var id = req.params.id;
+api1.get("/users/:id", (req, res) => {
+	const id = req.params.id;
 	axios(`https://jsonplaceholder.typicode.com/users/${id}`).then(response => {
 		res.json(response.data);
 	}).catch(err => {
@@ -14,21 +14,19 @@ api1.get("/users/:id", function (req, res) {
 });
 
 
-//?description=____&location=_____&titleContains=___&companyContains=___
 api1.get("/jobs", function (req, res) {
-	var description = req.query.description;
-	var location = req.query.location;
-	var titleContains = req.query.titleContains;
-	var year = req.query.year;
+	const { description, location } = req.query;
+	let requestUrl = "https://jobs.github.com/positions.json";
+	
+	if (description || location) {
+		const descriptionParam = description ? `description=${description}&` : '';
+		const	locationParam = location ? `location=${location}&` : '';
+		requestUrl = `${requestUrl}?${descriptionParam}${locationParam}`;
+	}
 
-	axios(`https://jobs.github.com/positions.json?description=${description}&location=${location}`).then(response => {
-		var results = response.data;
-
-		var matches = results.filter(r => {
-			return r.title.toLowerCase().includes(titleContains.toLowerCase()) && r.created_at.includes(year);
-		})
-
-		res.json(matches);
+	console.log(`Request: ${requestUrl}`);
+	axios(requestUrl).then(response => {
+		res.json(response.data);
 	}).catch(err => {
 		throw err;
 	});
