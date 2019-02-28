@@ -10,6 +10,11 @@ const crud = require('./routes/crud');
 const playlist = require('./routes/playlist');
 const db_crud = require('./routes/db_crud');
 const api1 = require('./routes/api1');
+<<<<<<< HEAD
+=======
+const api2 = require('./routes/api2');
+const api3 = require('./routes/api3');
+>>>>>>> c4.7
 
 const port = 4000;
 
@@ -40,6 +45,8 @@ server.use("/", db_crud);
 server.use("/playlist", playlist);
 // APIs
 server.use("/api1", api1);
+server.use("/api2", api2);
+server.use('/', api3);	// localhost:4000/
 
 server.listen(port, () => { // Callback function in ES6
 	console.log(`Server listening at ${port}`);
