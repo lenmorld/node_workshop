@@ -14,9 +14,17 @@ api1.get("/users/:id", (req, res) => {
 });
 
 api1.get("/jobs", function (req, res) {
-	var description = req.query.description;
-	var location = req.query.location;
-	axios(`https://jobs.github.com/positions.json?description=${description}&location=${location}`).then(response => {
+	const { description, location } = req.query;
+	let requestUrl = "https://jobs.github.com/positions.json";
+	
+	if (description || location) {
+		const descriptionParam = description ? `description=${description}&` : '';
+		const	locationParam = location ? `location=${location}&` : '';
+		requestUrl = `${requestUrl}?${descriptionParam}${locationParam}`;
+	}
+
+	console.log(`Request: ${requestUrl}`);
+	axios(requestUrl).then(response => {
 		res.json(response.data);
 	}).catch(err => {
 		throw err;
