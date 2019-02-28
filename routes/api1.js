@@ -1,11 +1,11 @@
-var axios = require('axios');
-var express = require('express');
-var api1 = express.Router();
+const axios = require('axios');
+const express = require('express');
+const api1 = express.Router();
 
 // external API routes
 
-api1.get("/users/:id", function (req, res) {
-	var id = req.params.id;
+api1.get("/users/:id", (req, res) => {
+	const id = req.params.id;
 	axios(`https://jsonplaceholder.typicode.com/users/${id}`).then(response => {
 		res.json(response.data);
 	}).catch(err => {
@@ -13,21 +13,45 @@ api1.get("/users/:id", function (req, res) {
 	});
 });
 
-
-//?description=____&location=_____&titleContains=___&companyContains=___
+//?description=javascript&location=montreal
 api1.get("/jobs", function (req, res) {
-	var description = req.query.description;
-	var location = req.query.location;
-	var titleContains = req.query.titleContains;
-	var year = req.query.year;
+	const { description, location } = req.query;
+	let requestUrl = "https://jobs.github.com/positions.json";
+	
+	if (description || location) {
+		const descriptionParam = description ? `description=${description}&` : '';
+		const	locationParam = location ? `location=${location}&` : '';
+		requestUrl = `${requestUrl}?${descriptionParam}${locationParam}`;
+	}
 
-	axios(`https://jobs.github.com/positions.json?description=${description}&location=${location}`).then(response => {
-		var results = response.data;
+	console.log(`Request: ${requestUrl}`);
+	axios(requestUrl).then(response => {
+		res.json(response.data);
+	}).catch(err => {
+		throw err;
+	});
+});
 
-		var matches = results.filter(r => {
-			return r.title.toLowerCase().includes(titleContains.toLowerCase()) && r.created_at.includes(year);
-		})
+//?description=javascript&location=montreal&titleContains=developer&year=2019
+api1.get("/jobs2", function (req, res) {
+	const { description, location, titleContains, year } = req.query;
+	let requestUrl = "https://jobs.github.com/positions.json";
 
+	if (description || location) {
+		const descriptionParam = description ? `description=${description}&` : '';
+		const locationParam = location ? `location=${location}&` : '';
+		requestUrl = `${requestUrl}?${descriptionParam}${locationParam}`;
+	}
+
+	axios(requestUrl).then(response => {
+		// psot-processing of results
+		const results = response.data;
+		const matches = results.filter(r => {
+			const { title, created_at } = r;
+			const titleParam = titleContains ? titleContains.toLowerCase() : '';
+			const yearParam = year || '';
+			return title.toLowerCase().includes(titleParam) && created_at.includes(yearParam);
+		});
 		res.json(matches);
 	}).catch(err => {
 		throw err;
