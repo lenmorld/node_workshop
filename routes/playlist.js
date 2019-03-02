@@ -80,17 +80,18 @@ mongo_db.initDb2(collectionName).then(dbCollection => {
 		});
 	});
 
-	server.get("/search",  (req, res) => {
-		res.render("playlist/search", { items: [], search: '' });
+	// route for rendering "find" page
+	server.get("/find",  (req, res) => {
+		res.render("playlist/find", { items: [], search: '' });
 	});
 
-	// form-submitted search
-	server.post("/songs/search", function (req, res) {
+	// route for the actual search, submitted by the form in "find" page
+	server.post("/search", function (req, res) {
 		console.log(req.body);
 
 		const search = req.body.search;
 		SpotifyHelper.searchTrack(search).then(result => {
-			res.render("search", { items: result, search: search });
+			res.render("playlist/find", { items: result, search: search });
 		}).catch(err => {
 			throw err;
 		});
