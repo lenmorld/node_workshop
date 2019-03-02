@@ -49,7 +49,15 @@ mongo_db.initDb2(collectionName).then(dbCollection => {
 			// send back entire updated list after successful request
 			dbCollection.find().toArray((_err, _result) => {
 				if (_err) throw _err;
-				res.json(_result);
+
+				// redirect to playlist EJS page if request came from a form
+				// otherwise just return the JSON
+				if (item.mode === "form") {
+					res.redirect('/playlist/home');
+				} else {
+					res.json(_result);
+				}
+
 			});
 		});
 	});
@@ -64,7 +72,15 @@ mongo_db.initDb2(collectionName).then(dbCollection => {
 			// send back entire updated list, to make sure frontend data is up-to-date
 			dbCollection.find().toArray( (_err, _result) => {
 				if (_err) throw _err;
-				res.json(_result);
+
+				// redirect to playlist EJS page if request came from a form
+				// otherwise just return the JSON
+				if (item.mode === "form") {
+					res.redirect('/playlist/home');
+				} else {
+					res.json(_result);
+				}
+
 			});
 		});
 	});

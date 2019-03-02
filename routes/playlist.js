@@ -7,6 +7,8 @@ const mongo_db = require('../mongo_db');
 // mongoDB connection
 const collectionName = 'items';
 
+const SpotifyHelper = require('../utils/SpotifyHelper');
+
 // TODO: some route handlers same logic as db_crud.js
 //			refactor into a helper module
 
@@ -75,6 +77,22 @@ mongo_db.initDb2(collectionName).then(dbCollection => {
 				// res.json(_result);
 				res.render("playlist/home", { items: _result });
 			});
+		});
+	});
+
+	server.get("/search",  (req, res) => {
+		res.render("playlist/search", { items: [], search: '' });
+	});
+
+	// form-submitted search
+	server.post("/songs/search", function (req, res) {
+		console.log(req.body);
+
+		const search = req.body.search;
+		SpotifyHelper.searchTrack(search).then(result => {
+			res.render("search", { items: result, search: search });
+		}).catch(err => {
+			throw err;
 		});
 	});
 
