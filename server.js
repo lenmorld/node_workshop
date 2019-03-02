@@ -11,7 +11,7 @@ let client_ctr = 0;
 
 console.log(`WS SERVER started`);
 
-wss.on('connection', function (ws) {
+wss.on('connection', ws => {
     console.log(`WS SERVER started`);
     client_ctr++;
     console.log(`CLIENT ${client_ctr} connected`);
