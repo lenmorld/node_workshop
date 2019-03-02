@@ -10,19 +10,13 @@ const crud = require('./routes/crud');
 const playlist = require('./routes/playlist');
 const db_crud = require('./routes/db_crud');
 const api1 = require('./routes/api1');
-<<<<<<< HEAD
-=======
 const api2 = require('./routes/api2');
 const api3 = require('./routes/api3');
->>>>>>> c4.7
 
 const port = 4000;
-<<<<<<< HEAD
-=======
 
 // serve static files like images, stylesheets, javascript
 server.use(express.static(__dirname + '/public'));
->>>>>>> m4
 
 // set the view engine to ejs
 server.set('view engine', 'ejs');

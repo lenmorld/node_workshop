@@ -80,21 +80,6 @@ mongo_db.initDb2(collectionName).then(dbCollection => {
 		});
 	});
 
-<<<<<<< HEAD
-	// form-submitted search
-	server.post("/songs/search", function (req, res) {
-		console.log(req.body);
-
-		var search = req.body.search;
-		SpotifyHelper.searchTrack(search).then(_res => {
-			// res.json(_res);
-			res.render("search", { items: _res, search: search });
-		}).catch(err => {
-			throw err;
-		});
-	});
-});
-=======
 	// route for rendering "find" page
 	server.get("/find",  (req, res) => {
 		res.render("playlist/find", { items: [], search: '' });
@@ -115,4 +100,3 @@ mongo_db.initDb2(collectionName).then(dbCollection => {
 });
 
 module.exports = server;
->>>>>>> m4
