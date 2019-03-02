@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 var axios = require('axios');
 var express = require('express');
 var api3 = express.Router();
@@ -14,50 +15,17 @@ api3.get("/songs", function (req, res) {
 		throw err;
 =======
 const axios = require('axios');
+=======
+>>>>>>> m4
 const express = require('express');
 const api3 = express.Router();
-const qs = require('qs');
 
-// generated from Spotify Dev account Client ID, secret
-const base64_auth_string = "NmNhYTc4N2YzZWY4NGQ0M2I1ZDVhYmQ0ZWY4ZjUyMjg6MjRlYjI4MzFiNjI0NDM3OGI2ODliOTc4OGEyZjhkMDc=";
-let saved_access_token = null;
-
-// ES5 version: function getAccessToken() {...
-const getAccessToken = () => {
-
-	return new Promise((resolve, reject) => {
-		if (saved_access_token) {
-			console.log("[SPOTIFY] Using saved access token: ", saved_access_token);
-			resolve(saved_access_token);
-		} else {
-			console.log("[SPOTIFY] Requesting a new access token... ");
-
-			const url = 'https://accounts.spotify.com/api/token';
-			const auth_data = {
-				grant_type: 'client_credentials'
-			};
-
-			axios({
-				method: 'POST',
-				url: url,
-				data: qs.stringify(auth_data),
-				headers: {
-					"Authorization": `Basic ${base64_auth_string}`,
-					"Accept": "application/json",
-					"Content-Type": "application/x-www-form-urlencoded",
-				}
-			}).then(response => {
-				console.log("[SPOTIFY] Access token: ", response.data.access_token);
-				saved_access_token = response.data.access_token;
-				resolve(saved_access_token);
-			}).catch(err => reject(err));
-		}
-	});
-}
+const SpotifyHelper = require('../utils/SpotifyHelper');
 
 // /songs?search=eastside
 api3.get("/songs", (req, res) => {
 	const search = req.query.search;
+<<<<<<< HEAD
 	console.log(`[SPOTIFY] : searching ${search}...`);
 	getAccessToken().then( access_token => {
 		// send a GET request for search, attaching the access_token
@@ -98,6 +66,13 @@ api3.get("/songs", (req, res) => {
 		// testing: send search, access_token to client
 		// res.send({ search: search, access_token: access_token });
 >>>>>>> c4.7
+=======
+	SpotifyHelper.searchTrack(search).then(result => {
+		res.json(result);
+	}).catch(err => {
+		console.log(`[SPOTIFY ERROR]: ${err}`);
+		throw err;
+>>>>>>> m4
 	});
 });
 

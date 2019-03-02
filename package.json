@@ -23,8 +23,8 @@
     "body-parser": "^1.18.3",
     "ejs": "^2.6.1",
     "express": "^4.16.4",
-    "method-override": "^3.0.0",
     "mongodb": "^3.1.13",
+    "method-override": "^3.0.0",
     "nodemon": "^1.18.10"
   }
 }

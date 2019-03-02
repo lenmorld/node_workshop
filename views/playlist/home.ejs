@@ -1,6 +1,9 @@
-
+<link href="/styles.css" rel="stylesheet" type="text/css">
 <h2>Milestone activity: Playlist</h2>
-<h3><a href="/">< Back to Pages Home</a></h3>
+<h3><a href="/">App Home Page</a></h3>
+<a href="/playlist/create">Create new</a><br/><br/>
+<a href="/playlist/find">Search songs from Spotify</a><br/><br/>
+<hr/>
 <ul>
 	<%for(var i=0; i < items.length; i++) { %>
 		<li>
@@ -17,6 +20,10 @@
 			<a href="/playlist/delete/<%= items[i].id %>">Delete Item</a>
 		</li>
 	<% } %>
+<<<<<<< HEAD
 </ul>
 
 <a href="/playlist/create">Create new</a>
+=======
+</ul>
+>>>>>>> m4

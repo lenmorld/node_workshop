@@ -1,23 +1,27 @@
-<form method="POST" action="/songs/search" >
-	<input type="text" name="search" placeholder="Search songs in Spotify" value="<%= search %>" />
-	<input type="submit" value="SEARCH" />
-</form>
+<link href="/styles.css" rel="stylesheet" type="text/css">
 
-<ul>
+<h3><a href="/playlist">◀️🎵🏠 Playlist Home</a></h3>
+
+<div class="search">
+	<form method="POST" action="/playlist/search" >
+		<input type="text" name="search" placeholder="Search songs in Spotify" value="<%= search %>" />
+		<input type="submit" value="SEARCH" />
+	</form>
+</div>
+
+ <ul>
 	<%for(var i=0; i < items.length; i++) { %>
-		<li>
+		<li class="flex">
 			<div>
 				<iframe src="https://open.spotify.com/embed/track/<%= items[i].id %>"
 						width="80" height="80" frameBorder="0" allowtransparency="true" allow="encrypted-media">
 				</iframe>
 			</div>
-
-			<form method="POST" action="/items" id="<%= items[i].id %>">
+ 			<form class="form" method="POST" action="/playlist/items" id="<%= items[i].id %>">
 				<input type="text" name="id" placeholder="id" readonly value="<%= items[i].id %>" />
 				<input type="text" name="title" placeholder="title" readonly value="<%= items[i].title %>" />
 				<input type="text" name="artist" placeholder="artist" readonly  value="<%= items[i].artist %>" />
 				<input type="text" name="album" placeholder="album" readonly value="<%= items[i].album %>" />
-				<input type="hidden" name="mode" value="form"  />
 				<input type="submit" value="Add to Playlist" form="<%= items[i].id %>" />
 			</form>
 		</li>

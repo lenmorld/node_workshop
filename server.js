@@ -17,6 +17,12 @@ const api3 = require('./routes/api3');
 >>>>>>> c4.7
 
 const port = 4000;
+<<<<<<< HEAD
+=======
+
+// serve static files like images, stylesheets, javascript
+server.use(express.static(__dirname + '/public'));
+>>>>>>> m4
 
 // set the view engine to ejs
 server.set('view engine', 'ejs');
