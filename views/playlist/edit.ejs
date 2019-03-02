@@ -1,5 +1,7 @@
+<link href="/styles.css" rel="stylesheet" type="text/css">
+
 <div>
-	<h2><a href="/playlist">Playlist Home</a></h2>
+	<h2><a href="/playlist">◀️🎵🏠 Playlist Home</a></h2>
 	<h3>Edit item <%= item.id %>:</h3>
 	<%# since EJS doesnt support PUT, DELETE, we need this along with methodOverride %>
 	<form method="POST" action="/playlist/items/<%= item.id %>?_method=PUT">

@@ -1,0 +1,94 @@
+body {
+	font-family: Helvetica, Arial, sans-sans-serif;
+	background-color: black;
+	color: limegreen;
+	background-image: linear-gradient(rgb(30, 50, 100), rgb(4, 6, 12) 85%);
+	background-size: cover;
+	background-repeat: no-repeat;
+	width: 90%;
+	height: 97vh;
+	overflow: auto;
+	margin: 0 auto;
+}
+
+/* CSS Grid */
+ul {
+	margin-top: 75px;
+
+	display: grid;
+	grid-column-gap: 20px;
+	grid-row-gap: 20px;
+	grid-template-columns: auto auto auto;
+	align-content: center;
+	justify-content: center;
+}
+
+ul li {
+	list-style: none;
+}
+
+a {
+	color: lightblue;
+	padding: 5px;
+	border: 1px solid white;
+	/* margin: 5px; */
+	display: inline-block;
+	text-decoration: none;
+}
+
+a:hover {
+	background-color: darkblue
+}
+.search {
+	margin: 20px;
+}
+
+.form, .flex {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+}
+
+.search {
+	margin-top: 20px;
+}
+
+.search input[type="text"] {
+	width: 50% !important;
+}
+
+.flex {
+	border: 1px solid limegreen;
+	padding-top: 10px;
+}
+
+input[type="text"] {
+	padding: 5px;
+	font-weight: bold;
+	background-color: black;
+	color: white;
+	/* margin: 20px 0; */
+	/* width: 100%; */
+	padding: 5px;
+	font-weight: bold;
+	/* flex-grow: 2; */
+	width: 240px;
+	margin: 0 20px;
+	min-width: 240px;
+}
+
+input[type="submit"] {
+	padding: 5px;
+	font-weight: bold;
+	background-color: darkblue;
+	color: white;
+	/* margin: 20px 0; */
+	/* width: 100%; */
+	padding: 5px;
+	font-weight: bold;
+	/* flex-grow: 2; */
+	width: 240px;
+	margin: 0 20px;
+	min-width: 240px;
+}
