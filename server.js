@@ -8,18 +8,28 @@ const port = 4000;
 const WebSocket = require('ws');
 const wss = new WebSocket.Server({ port: 8080 });
 let client_ctr = 0;
+const clients = [];
 
 console.log(`WS SERVER started`);
+
+const sendAll = (message, sender_id) => {
+    console.log(`CLIENT ${sender_id} said: ${message}`);
+    clients.forEach( client => {
+        client.send(`CLIENT ${sender_id} said: ${message}`);
+    });
+}
 
 wss.on('connection', ws => {
     console.log(`WS SERVER started`);
     client_ctr++;
+    ws.id = client_ctr; // add an id to ws client
+    clients.push(ws);   // add client to list
+
     console.log(`CLIENT ${client_ctr} connected`);
 
     ws.send("WELCOME to the WS server!");
     ws.on('message', message => {
-        console.log(`CLIENT ${client_ctr} said: ${message}`);
-        ws.send(`${message.toUpperCase()}`);
+        sendAll(message, ws.id);
     });
 });
 
