@@ -6,9 +6,11 @@
   </head>
   <body>
       <div class="container">
-        <%= message %>
+        <div class="card card-body text-white bg-primary">
+          <%= message %>
+        </div>
+        <br/>
         <h3>LOGIN</h3>
-
         <form action="/login" method="post">
           <div class="form-group">
             <label for="username">Username</label>
