@@ -15,8 +15,6 @@ server.get('/register_page', (req, res) => {
 
 server.get('/secret_page', (req, res) => {
 	if (req.session.username) {
-		// render secret_page and pass session data
-		// res.render('secret', { user_id: req.session.userId, views: req.session.views });
 		res.render('secret', { username: req.session.username });
 	} else {
 		// NOT LOGGED IN YET, redirect to /login
