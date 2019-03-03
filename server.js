@@ -2,7 +2,6 @@
 const express = require('express'); // import express
 const server = express();
 const bodyParser = require('body-parser');
-<<<<<<< HEAD
 const methodOverride = require('method-override');
 
 // import route modules
@@ -19,19 +18,16 @@ const port = 4000;
 // serve static files like images, stylesheets, javascript
 server.use(express.static(__dirname + '/public'));
 
-=======
 const cookieSession = require('cookie-session');
 
 const port = 4000;
 
->>>>>>> a2.1
 // set the view engine to ejs
 server.set('view engine', 'ejs');
 // parse JSON (application/json content-type)
 server.use(bodyParser.json());
 // parse form data
 server.use(bodyParser.urlencoded({ extended: false }));
-<<<<<<< HEAD
 // method override to allow PUT, DELETE in EJS forms
 server.use(methodOverride('_method'))
 
@@ -67,7 +63,6 @@ wss.on('connection', ws => {
 // routes
 server.get("/", (req, res) => {
     res.sendFile(__dirname + '/index.html');
-=======
 
 // > cookie-session
 server.set('trust proxy', 1) // trust first proxy
@@ -141,7 +136,6 @@ server.get('/logout', (req, res) => {
 		console.log("Successful logout");
 		return res.render('index');
 	}
->>>>>>> a2.1
 });
 
 server.get("/json", ({ res }) => {
