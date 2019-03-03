@@ -1,12 +1,16 @@
 const express = require('express');
 const server = express.Router();
 
+const data = require('../data');
+// users in data.users
+console.log(data.users);
+
 server.get("/", (req, res) => {
 	res.render("index");
 });
 
 server.get('/login_page', (req, res) => {
-	res.render("login", { message: '' });
+	res.render("login", { message: '', bg: 'bg-primary' });
 });
 
 server.get('/register_page', (req, res) => {
@@ -18,7 +22,7 @@ server.get('/secret_page', (req, res) => {
 		res.render('secret', { username: req.session.username });
 	} else {
 		// NOT LOGGED IN YET, redirect to /login
-		res.render("login", { message: "Login required to see secret page" } );
+		res.render("login", { message: "Login required to see secret page", bg: "bg-warning" } );
 	}
 });
 
@@ -32,8 +36,17 @@ server.post('/register', (req, res) => {
 		res.render("register", { message: "Passwords don't match", bg: 'bg-warning' } );
 	}
 
-	if (email && username && password && passwordConf) {
-		res.render("login", { message: "Register success" } );
+	if (email && username && password) {
+		// add new user
+		const newUser = {
+			email: email,
+			username: username,
+			password: password
+		};
+		data.users.push(newUser);
+
+		// redirect to login
+		res.render("login", { message: "Register success", bg: 'bg-success' } );
 	} else {
 		res.render("register", { message: 'Please fill in all the fields', bg: 'bg-warning' } );
 	}
@@ -43,11 +56,13 @@ server.post('/register', (req, res) => {
 server.post('/login', (req, res) => {
 	const { username, password } = req.body;
 
-	if (username === 'lenny' && password === '1234') {
+	const found = data.users.filter(user => user.username === username && user.password === password);
+
+	if (found.length) {
 		req.session.username = username;
 		res.redirect('/secret_page');
 	} else {
-		res.render("login", { message: "Login failed" } );
+		res.render("login", { message: "Login failed", bg: "bg-danger" } );
 	}
 });
 
