@@ -1,9 +1,19 @@
 const express = require('express');
 const server = express.Router();
 
-const data = require('../data');
-// users in data.users
-console.log(data.users);
+const bcrypt = require('bcrypt');
+
+const users = [
+	{
+		id: 1,
+		username: "lenny",
+		password: "$2b$10$YK8Wgy5xIgb/mWVrSPFpS.Dpp28tACXCVIwO15qZo8Lxgza1Tc0/W",	// hashed password
+		email: "lenmorld@example.com"
+	},
+];
+
+// users in users
+console.log(users);
 
 server.get("/", (req, res) => {
 	res.render("index");
@@ -37,13 +47,20 @@ server.post('/register', (req, res) => {
 	}
 
 	if (email && username && password) {
+		// hash password so we don't store it plaintext
+		// perform sync. to simplify example
+
+		// hashSync(plaintext, saltRounds)
+		let hashedPassword = bcrypt.hashSync(password, 10);
+
 		// add new user
 		const newUser = {
 			email: email,
 			username: username,
-			password: password
+			password: hashedPassword
 		};
-		data.users.push(newUser);
+
+		users.push(newUser);
 
 		// redirect to login
 		res.render("login", { message: "Register success", bg: 'bg-success' } );
@@ -56,7 +73,15 @@ server.post('/register', (req, res) => {
 server.post('/login', (req, res) => {
 	const { username, password } = req.body;
 
-	const found = data.users.filter(user => user.username === username && user.password === password);
+	const found = users.filter(user => {
+		if (user.username === username) {
+			// compare incoming password with saved hashed password
+			if (bcrypt.compareSync(password, user.password)) {
+				return true;
+			} 
+		}
+		return false;
+	});
 
 	if (found.length) {
 		req.session.username = username;
