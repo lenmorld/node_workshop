@@ -1,9 +1,17 @@
 const express = require('express');
 const server = express.Router();
 
-const data = require('../data');
-// users in data.users
-console.log(data.users);
+const users = [
+	{
+		id: 1,
+		username: "lenny",
+		password: "1234",
+		email: "lenmorld@example.com"
+	},
+];
+
+// users in users
+console.log(users);
 
 server.get("/", (req, res) => {
 	res.render("index");
@@ -43,7 +51,7 @@ server.post('/register', (req, res) => {
 			username: username,
 			password: password
 		};
-		data.users.push(newUser);
+		users.push(newUser);
 
 		// redirect to login
 		res.render("login", { message: "Register success", bg: 'bg-success' } );
@@ -56,7 +64,7 @@ server.post('/register', (req, res) => {
 server.post('/login', (req, res) => {
 	const { username, password } = req.body;
 
-	const found = data.users.filter(user => user.username === username && user.password === password);
+	const found = users.filter(user => user.username === username && user.password === password);
 
 	if (found.length) {
 		req.session.username = username;
