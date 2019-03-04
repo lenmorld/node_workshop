@@ -1,19 +1,9 @@
 const express = require('express');
 const server = express.Router();
 
-const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 
-const users = [
-	{
-		id: 1,
-		username: "lenny",
-		password: "$2b$10$YK8Wgy5xIgb/mWVrSPFpS.Dpp28tACXCVIwO15qZo8Lxgza1Tc0/W",	// hashed password
-		email: "lenmorld@example.com"
-	},
-];
-
-// users in users
-console.log(users);
+const JWT_SECRET = 'ssshhhhitsasecret';
 
 server.get("/", (req, res) => {
 	res.render("index");
@@ -28,12 +18,7 @@ server.get('/register_page', (req, res) => {
 });
 
 server.get('/secret_page', (req, res) => {
-	if (req.session.username) {
-		res.render('secret', { username: req.session.username });
-	} else {
-		// NOT LOGGED IN YET, redirect to /login
-		res.render("login", { message: "Login required to see secret page", bg: "bg-warning" } );
-	}
+	res.render("login", { message: "Token in headers required to see secret page", bg: "bg-warning" } );
 });
 
 // POST - register user
@@ -47,22 +32,14 @@ server.post('/register', (req, res) => {
 	}
 
 	if (email && username && password) {
-		// hash password so we don't store it plaintext
-		// perform sync. to simplify example
+		// JWT: [1] create token from user details
+		const payload = { username: username };
+		const token = jwt.sign(payload, JWT_SECRET, {
+			expiresIn: '24h'
+		});
 
-		// hashSync(plaintext, saltRounds)
-		let hashedPassword = bcrypt.hashSync(password, 10);
-
-		// add new user
-		const newUser = {
-			email: email,
-			username: username,
-			password: hashedPassword
-		};
-		users.push(newUser);
-
-		// redirect to login
-		res.render("login", { message: "Register success", bg: 'bg-success' } );
+		// JWT: [2] send token to user
+		res.render("token", { token: token });
 	} else {
 		res.render("register", { message: 'Please fill in all the fields', bg: 'bg-warning' } );
 	}
@@ -70,35 +47,48 @@ server.post('/register', (req, res) => {
 
 // POST - login
 server.post('/login', (req, res) => {
-	const { username, password } = req.body;
+	const { tokenFromUserForm } = req.body;
 
-	const found = users.filter(user => {
-		if (user.username === username) {
-			// compare incoming password with saved hashed password
-			if (bcrypt.compareSync(password, user.password)) {
-				return true;
-			} 
-		}
-		return false;
-	});
+	// JWT: [3] verify token sent by user
+	// if verified, grant access to secret page
 
-	if (found.length) {
-		req.session.username = username;
-		res.redirect('/secret_page');
+	let token;
+
+	// >> when using cURL or Postman, token must be attached in these headers
+	// console.log(req.headers);
+	const tokenFromHeaders = req.headers['x-access-token'] || req.headers['authorization'];
+
+	// since we're allowing user to log-in via supplied token when they registered
+	// get token from form
+	if (tokenFromHeaders) {
+		const tokenString = tokenFromHeaders.split("Bearer ")[1];
+		token = tokenString;
 	} else {
-		res.render("login", { message: "Login failed", bg: "bg-danger" } );
+		token = tokenFromUserForm;
 	}
+	console.log(token);
+
+	jwt.verify(token, JWT_SECRET, (err, decoded) => {
+		if (err) {
+			res.status(401);
+			res.render("login", { message: "Login failed. Token not valid", bg: "bg-danger" });
+		} else {
+			// iat is "Issued At", exp is "Expires In"
+			const expiresIn = new Date(Number(decoded.exp) * 1000);
+			console.log(JSON.stringify(decoded));
+			res.render("secret", { expiry: expiresIn });
+		}
+	});
 });
 
 
 // GET - logout
 server.get('/logout', (req, res) => {
-	if (req.session) {
-		// destroy cookie-session
-		req.session = null;
-		console.log("Successful logout");
-		return res.render('index');
-	}
+	res.render("login", { message: 'No need to logout when using tokens.' + 
+												'As long as token is valid, its fine' + 
+												'However, it is possible to save token in localStorage and delete it on logout' + 
+												' for use cases of token-based access to multiple pages or a webapp',
+				bg: 'bg-primary' });
 });
 
 module.exports = server;
