@@ -59,7 +59,6 @@ server.post('/register', (req, res) => {
 			username: username,
 			password: hashedPassword
 		};
-
 		users.push(newUser);
 
 		// redirect to login
