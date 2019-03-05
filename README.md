@@ -17,3 +17,5 @@ $ npm start
 
 Up-to-date slides:
 https://goo.gl/tkjYf9
+
+PDF version (less up-to-date):
