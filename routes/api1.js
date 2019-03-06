@@ -24,8 +24,8 @@ api1.get("/jobs", function (req, res) {
 	}
 
 	console.log(`Request: ${requestUrl}`);
-	axios(requestUrl).then(response => {
-		res.json(response.data);
+	axios(requestUrl).then(result => {
+		res.json(result.data);
 	}).catch(err => {
 		throw err;
 	});
