@@ -57,12 +57,12 @@ api3.get("/songs", (req, res) => {
 				"Authorization": `Bearer ${access_token}`,
 				"Accept": "application/json"
 			}
-		}).then( _res => {
+		}).then( result => {
 			// inspect response data
 			// console.log(`search response: ${JSON.stringify(_res.data)}`);
 
 			// "massage" data so we only get the attributes we need
-			const search_results = _res.data.tracks.items;
+			const search_results = result.data.tracks.items;
 			const squashed_results = search_results.map( track => {
 				return {
 					id: track.id,
