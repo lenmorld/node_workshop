@@ -43,9 +43,9 @@ api1.get("/jobs2", function (req, res) {
 		requestUrl = `${requestUrl}?${descriptionParam}${locationParam}`;
 	}
 
-	axios(requestUrl).then(response => {
+	axios(requestUrl).then(result => {
 		// psot-processing of results
-		const results = response.data;
+		const results = result.data;
 		const matches = results.filter(r => {
 			const { title, created_at } = r;
 			const titleParam = titleContains ? titleContains.toLowerCase() : '';
