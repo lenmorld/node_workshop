@@ -57,10 +57,10 @@ api3.get("/songs", (req, res) => {
 				"Authorization": `Bearer ${access_token}`,
 				"Accept": "application/json"
 			}
-		}).then( _res => {
+		}).then( result => {
 			// inspect response data
-			console.log(`search response: ${JSON.stringify(_res.data)}`);
-			res.send(_res.data.tracks.items);
+			console.log(`search response: ${JSON.stringify(result.data)}`);
+			res.send(result.data.tracks.items);
 		}).catch( err => {
 			console.log(`[SPOTIFY ERROR]: ${err}`);
 			throw err;
