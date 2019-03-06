@@ -6,8 +6,8 @@ const api1 = express.Router();
 
 api1.get("/users/:id", (req, res) => {
 	const id = req.params.id;
-	axios(`https://jsonplaceholder.typicode.com/users/${id}`).then(response => {
-		res.json(response.data);
+	axios(`https://jsonplaceholder.typicode.com/users/${id}`).then(result => {
+		res.json(result.data);
 	}).catch(err => {
 		throw err;
 	});
@@ -25,8 +25,8 @@ api1.get("/jobs", function (req, res) {
 	}
 
 	console.log(`Request: ${requestUrl}`);
-	axios(requestUrl).then(response => {
-		res.json(response.data);
+	axios(requestUrl).then(result => {
+		res.json(result.data);
 	}).catch(err => {
 		throw err;
 	});
