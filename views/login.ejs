@@ -1,22 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <title>Node authentication</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
-  </head>
-  <body>
+  <%- include _head.ejs %>
+  <body onclick="sample()">
       <div class="container">
-        <%= message %>
+        <nav class="m-2">
+          <a href="/">🏠 back to home</a>
+        </nav>
+        <div class="card card-body text-white <%= bg %>">
+          <%= message %>
+        </div>
+        <br/>
         <h3>LOGIN</h3>
-
         <form action="/login" method="post">
           <div class="form-group">
-            <label for="username">Username</label>
-            <input type="input" class="form-control" id="username" name="username" placeholder="Username">
-          </div>
-          <div class="form-group">
-            <label for="password">Password</label>
-            <input type="password" class="form-control" id="password" name="password" placeholder="Password">
+            <label for="token">Token</label>
+            <input type="text" class="form-control" id="tokenFromUserForm" name="tokenFromUserForm" placeholder="Token">
           </div>
           <button type="submit" class="btn btn-primary">Submit</button>
         </form>

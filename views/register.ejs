@@ -1,13 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <title>Node authentication</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
-  </head>
-  <body>
+  <%- include _head.ejs %>
+  <body onclick="sample()">
       <div class="container">
+        <nav class="m-2">
+          <a href="/">🏠 back to home</a>
+        </nav>
+        <div class="card card-body text-white <%= bg ? bg : '' %>">
+          <%= message %>
+        </div>
+        <br/>
         <h3>Register</h3>
-
         <form action="/register" method="post">
           <div class="form-group">
             <label for="email">Email address</label>

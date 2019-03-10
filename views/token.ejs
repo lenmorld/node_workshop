@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+	<%- include _head.ejs %>
+  <body>
+      <div class="container">
+        <nav class="m-2">
+          <a href="/">🏠 back to home</a>
+        </nav>
+
+			<p>Here's your token</p>
+
+			<div class="w-75 p-3" style="overflow: scroll;">
+				<code>
+					<%= token %>
+				</code>
+			</div>
+
+			<p>
+				Attach this to all of your requests
+			</p>
+
+			<p>
+				or login here and supply the token
+				<a href="/login_page"> Login</a>
+			</p>
+      </div>
+  </body>
+</html>
