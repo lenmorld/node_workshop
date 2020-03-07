@@ -15,6 +15,8 @@ const server = http.createServer((req, res) => { // Callback function in ES6
 		album: "Node EP"
 	};
 
+	console.log(`${song.title} by ${song.artist}`);
+
 	// send JSON response to client
 	res.end(JSON.stringify(song));      // JSON.stringify({a: 1}) -> '{"a":1}'
 });
