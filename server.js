@@ -12,6 +12,21 @@ server.get("/json", ({ res }) => {
 	res.send((JSON.stringify({ name: "Lenny" })));
 });
 
+server.get("/products", (req, res) => {
+	res.sendFile(__dirname + '/products.html');
+});
+
+server.get("/api/items", ({ res }) => {
+	res.send(
+		JSON.stringify(
+			[
+				{ id: 1, name: "toilet paper", price: 199.99 },
+				{ id: 2, name: "hand sanitizer", price: 299.99 }
+			]
+		)
+	);
+});
+
 server.listen(port, () => { // Callback function in ES6
 	console.log(`Server listening at ${port}`);
 });
