@@ -27,6 +27,33 @@ server.get("/api/items", ({ res }) => {
 	);
 });
 
+server.get("/api/foods", ({ res }) => {
+	res.send(
+		JSON.stringify(
+			[
+				{
+					"id": 1,
+					"name": "burger",
+					"picture": "🍔",
+					"price": "$4.50"
+				},
+				{
+					"id": 2,
+					"name": "pizza",
+					"picture": "🍕",
+					"price": "$2.50"
+				},
+				{
+					"id": 3,
+					"name": "ramen",
+					"picture": "🍜",
+					"price": "$5.50"
+				}
+			]
+		)
+	)
+})
+
 server.listen(port, () => { // Callback function in ES6
 	console.log(`Server listening at ${port}`);
 });
