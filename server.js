@@ -20,8 +20,8 @@ server.get("/api/items", ({ res }) => {
 	res.send(
 		JSON.stringify(
 			[
-				{ id: 1, name: "toilet paper", price: 199.99 },
-				{ id: 2, name: "hand sanitizer", price: 299.99 }
+				{ id: 1, name: "toilet paper", brand: "X", price: 199.99 },
+				{ id: 2, name: "hand sanitizer", brand: "Y", price: 299.99 }
 			]
 		)
 	);
