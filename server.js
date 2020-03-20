@@ -2,6 +2,10 @@
 const express = require('express'); // import express
 const server = express();
 
+const clients = require('./clients');
+
+console.log(clients[0]);
+
 const port = 4000;
 
 server.get("/", (req, res) => {

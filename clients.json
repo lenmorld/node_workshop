@@ -1,0 +1,20 @@
+[
+	{
+		"id": "1",
+		"name": "John Doe",
+		"email": "johnd@gmail.com",
+		"phone": "123-456-7890"
+	},
+	{
+		"id": "2",
+		"name": "Mickey Mouse",
+		"email": "mickeym@gmail.com",
+		"phone": "111-222-3333"
+	},
+	{
+		"id": "3",
+		"name": "Ronald McDonald",
+		"email": "ronaldm@gmail.com",
+		"phone": "222-333-4567"
+	}
+]
