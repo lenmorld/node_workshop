@@ -58,6 +58,11 @@ server.get("/api/foods", ({ res }) => {
 	)
 })
 
+// Users CRUD
+server.get("/users", (req, res) => {
+	res.json(clients);
+});
+
 server.listen(port, () => { // Callback function in ES6
 	console.log(`Server listening at ${port}`);
 });
