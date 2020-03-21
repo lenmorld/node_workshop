@@ -9,16 +9,16 @@ server.get("/", (req, res) => {
 	res.sendFile(__dirname + '/index.html');
 });
 
+server.get("/page/products", (req, res) => {
+	res.sendFile(__dirname + '/products.html');
+});
+
 // JSON routes
 server.get("/json", ({ res }) => {
 	res.send((JSON.stringify({ name: "Lenny" })));
 });
 
-server.get("/products", (req, res) => {
-	res.sendFile(__dirname + '/products.html');
-});
-
-server.get("/api/items", ({ res }) => {
+server.get("/products", ({ res }) => {
 	res.send(
 		JSON.stringify(
 			[
