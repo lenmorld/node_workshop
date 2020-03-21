@@ -71,6 +71,13 @@ server.get("/users", (req, res) => {
 	res.json(users);
 });
 
+// GET one user identified by id
+server.get("/users/:id", (req, res) => {
+	const userId = req.params.id;
+	const user = users.find(_user => _user.id === userId);
+	res.json(user);
+});
+
 server.listen(port, () => { // Callback function in ES6
 	console.log(`Server listening at ${port}`);
 });
