@@ -13,6 +13,10 @@ server.get("/page/products", (req, res) => {
 	res.sendFile(__dirname + '/products.html');
 });
 
+server.get("/page/about", (req, res) => {
+	res.sendFile(__dirname + '/about.html');
+});
+
 // JSON routes
 server.get("/json", ({ res }) => {
 	res.send((JSON.stringify({ name: "Lenny" })));
@@ -29,7 +33,7 @@ server.get("/products", ({ res }) => {
 	);
 });
 
-server.get("/api/foods", ({ res }) => {
+server.get("/foods", ({ res }) => {
 	res.send(
 		JSON.stringify(
 			[
