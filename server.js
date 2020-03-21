@@ -64,9 +64,11 @@ server.get("/foods", ({ res }) => {
 	)
 })
 
-// Users REST API
+// # Users REST API
+
+// GET all users
 server.get("/users", (req, res) => {
-	res.json(clients);
+	res.json(users);
 });
 
 server.listen(port, () => { // Callback function in ES6
