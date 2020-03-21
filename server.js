@@ -58,7 +58,7 @@ server.get("/api/foods", ({ res }) => {
 	)
 })
 
-// Users CRUD
+// Users REST API
 server.get("/users", (req, res) => {
 	res.json(clients);
 });
