@@ -2,25 +2,31 @@
 const express = require('express'); // import express
 const server = express();
 
-const clients = require('./clients');
+const users = require('./users');
 
-console.log(clients[0]);
+console.log(users[0]);
 
 const port = 4000;
 
+// HTML routes
 server.get("/", (req, res) => {
 	res.sendFile(__dirname + '/index.html');
 });
 
+server.get("/page/products", (req, res) => {
+	res.sendFile(__dirname + '/products.html');
+});
+
+server.get("/page/about", (req, res) => {
+	res.sendFile(__dirname + '/about.html');
+});
+
+// JSON routes
 server.get("/json", ({ res }) => {
 	res.send((JSON.stringify({ name: "Lenny" })));
 });
 
-server.get("/products", (req, res) => {
-	res.sendFile(__dirname + '/products.html');
-});
-
-server.get("/api/items", ({ res }) => {
+server.get("/products", ({ res }) => {
 	res.send(
 		JSON.stringify(
 			[
@@ -31,7 +37,7 @@ server.get("/api/items", ({ res }) => {
 	);
 });
 
-server.get("/api/foods", ({ res }) => {
+server.get("/foods", ({ res }) => {
 	res.send(
 		JSON.stringify(
 			[
