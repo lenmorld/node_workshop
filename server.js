@@ -2,9 +2,9 @@
 const express = require('express'); // import express
 const server = express();
 
-const clients = require('./clients');
+const users = require('./users');
 
-console.log(clients[0]);
+console.log(users[0]);
 
 const port = 4000;
 
