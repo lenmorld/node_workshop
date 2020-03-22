@@ -73,7 +73,7 @@ server.get("/users", (req, res) => {
 
 // GET one user identified by id
 server.get("/users/:id", (req, res) => {
-	const userId = req.params.id;
+	const userId = Number(req.params.id);
 	const user = users.find(_user => _user.id === userId);
 	res.json(user);
 });
