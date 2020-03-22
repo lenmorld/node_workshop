@@ -1,6 +1,8 @@
 // import built-in Node packages
 const express = require('express'); // import express
 const server = express();
+const body_parser = require('body-parser');
+server.use(body_parser.json()); // parse JSON (application/json content-type)
 
 const users = require('./users');
 
@@ -76,6 +78,18 @@ server.get("/users/:id", (req, res) => {
 	const userId = req.params.id;
 	const user = users.find(_user => _user.id === userId);
 	res.json(user);
+});
+
+// POST (create) a user 
+server.post("/users", (req, res) => {
+	const user = req.body;
+	console.log('Adding new user: ', user);
+
+	// add new user to users array
+	users.push(user)
+
+	// return updated list
+	res.json(users);
 });
 
 server.listen(port, () => { // Callback function in ES6
