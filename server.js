@@ -2,7 +2,7 @@
 const express = require('express'); // import express
 const server = express();
 
-const users = require('./users');
+let users = require('./users');
 
 console.log(users[0]);
 
