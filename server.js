@@ -92,6 +92,35 @@ server.post("/users", (req, res) => {
 	res.json(users);
 });
 
+// PUT (update) a user
+server.put("/users/:id", (req, res) => {
+	const userId = Number(req.params.id);
+	const updatedUser = req.body;
+	console.log("Editing user ", userId, " to be ", updatedUser);
+
+	const updatedListUsers = [];
+	// loop through list to find and replace one user
+	users.forEach(oldUser => {
+		if (oldUser.id === userId) {
+			// spread oldUser properties
+			// then overwrite with user properties
+			const modifiedUser = {
+				...oldUser,
+				...updatedUser
+			};
+			updatedListUsers.push(modifiedUser);
+		} else {
+			updatedListUsers.push(oldUser);
+		}
+	});
+
+	// replace old list with new one
+	users = updatedListUsers;
+
+	// return updated list
+	res.json(users);
+});
+
 server.listen(port, () => { // Callback function in ES6
 	console.log(`Server listening at ${port}`);
 });
