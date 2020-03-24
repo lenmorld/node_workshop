@@ -30,6 +30,7 @@ server.get("/json", ({ res }) => {
 
 // # Products REST API
 
+// GET all products
 server.get("/products", ({ res }) => {
 	res.send(
 		JSON.stringify(
@@ -43,6 +44,8 @@ server.get("/products", ({ res }) => {
 
 // # Foods REST API
 
+
+// GET all foods
 server.get("/foods", ({ res }) => {
 	res.send(
 		JSON.stringify(
