@@ -75,7 +75,13 @@ server.get("/users", (req, res) => {
 server.get("/users/:id", (req, res) => {
 	const userId = Number(req.params.id);
 	const user = users.find(_user => _user.id === userId);
-	res.json(user);
+	if (!user) {
+		res.status(404).json({
+			error: "User not found"
+		})
+	} else {
+		res.json(user);
+	}
 });
 
 server.listen(port, () => { // Callback function in ES6
