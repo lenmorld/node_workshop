@@ -155,9 +155,17 @@ server.delete("/users/:id", (req, res) => {
 	console.log("Delete user with id: ", userId);
 
 	// filter list copy, by excluding item to delete
-	users = users.filter(_user => _user.id !== userId);
+	const filteredList = users.filter(_user => _user.id !== userId);
 
-	res.json(users);
+	if (filteredList.length === users.length) {
+		res.json({
+			error: 'User not found'
+		})
+	} else {
+		// SUCCESS!
+		users = filteredList;
+		res.json(users);
+	}
 });
 
 
