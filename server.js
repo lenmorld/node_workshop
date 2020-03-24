@@ -117,9 +117,12 @@ server.put("/users/:id", (req, res) => {
 	console.log("Editing user ", userId, " to be ", updatedUser);
 
 	const updatedListUsers = [];
+	let found = false;
+
 	// loop through list to find and replace one user
 	users.forEach(oldUser => {
 		if (oldUser.id === userId) {
+			found = true;
 			// spread oldUser properties
 			// then overwrite with user properties
 			const modifiedUser = {
@@ -132,11 +135,17 @@ server.put("/users/:id", (req, res) => {
 		}
 	});
 
-	// replace old list with new one
-	users = updatedListUsers;
+	if (!found) {
+		res.json({
+			error: 'User not found'
+		});
+	} else {
+		// replace old list with new one
+		users = updatedListUsers;
 
-	// return updated list
-	res.json(users);
+		// return updated list
+		res.json(users);
+	}
 });
 
 server.listen(port, () => { // Callback function in ES6
