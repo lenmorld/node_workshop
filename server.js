@@ -5,7 +5,7 @@ const body_parser = require('body-parser');
 server.use(body_parser.json()); // parse JSON (application/json content-type)
 
 let users = require('./users');
-let products;
+let products = require('./products');
 
 console.log(users[0]);
 
