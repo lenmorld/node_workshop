@@ -76,10 +76,11 @@ server.get("/users/:id", (req, res) => {
 	const userId = Number(req.params.id);
 	const user = users.find(_user => _user.id === userId);
 	if (!user) {
-		res.status(404).json({
+		res.json({
 			error: "User not found"
 		})
 	} else {
+		// SUCCESS!
 		res.json(user);
 	}
 });
