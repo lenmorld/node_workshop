@@ -10,7 +10,7 @@ console.log(users[0]);
 
 const port = 4000;
 
-// HTML routes
+// ### HTML routes ###
 server.get("/", (req, res) => {
 	res.sendFile(__dirname + '/index.html');
 });
@@ -23,10 +23,12 @@ server.get("/page/about", (req, res) => {
 	res.sendFile(__dirname + '/about.html');
 });
 
-// JSON routes
+// ### JSON routes ### 
 server.get("/json", ({ res }) => {
 	res.send((JSON.stringify({ name: "Lenny" })));
 });
+
+// # Products REST API
 
 server.get("/products", ({ res }) => {
 	res.send(
@@ -38,6 +40,8 @@ server.get("/products", ({ res }) => {
 		)
 	);
 });
+
+// # Foods REST API
 
 server.get("/foods", ({ res }) => {
 	res.send(
