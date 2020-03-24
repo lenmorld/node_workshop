@@ -84,7 +84,14 @@ server.get("/users", (req, res) => {
 server.get("/users/:id", (req, res) => {
 	const userId = Number(req.params.id);
 	const user = users.find(_user => _user.id === userId);
-	res.json(user);
+	if (!user) {
+		res.json({
+			error: "User not found"
+		})
+	} else {
+		// SUCCESS!
+		res.json(user);
+	}
 });
 
 // POST (create) a user 
@@ -92,11 +99,22 @@ server.post("/users", (req, res) => {
 	const user = req.body;
 	console.log('Adding new user: ', user);
 
-	// add new user to users array
-	users.push(user)
+	if (!user.id) {
+		res.json({
+			error: "id required"
+		})
+	} else if (users.find(_user => _user.id === user.id)) {
+		res.json({
+			error: "User already exists"
+		})
+	} else {
+		// SUCCESS!
+		// add new user to users array
+		users.push(user)
 
-	// return updated list
-	res.json(users);
+		// return updated list
+		res.json(users);
+	}
 });
 
 // PUT (update) a user
@@ -106,9 +124,12 @@ server.put("/users/:id", (req, res) => {
 	console.log("Editing user ", userId, " to be ", updatedUser);
 
 	const updatedListUsers = [];
+	let found = false;
+
 	// loop through list to find and replace one user
 	users.forEach(oldUser => {
 		if (oldUser.id === userId) {
+			found = true;
 			// spread oldUser properties
 			// then overwrite with user properties
 			const modifiedUser = {
@@ -121,11 +142,18 @@ server.put("/users/:id", (req, res) => {
 		}
 	});
 
-	// replace old list with new one
-	users = updatedListUsers;
+	if (!found) {
+		res.json({
+			error: 'User not found'
+		});
+	} else {
+		// SUCCESS!!
+		// replace old list with new one
+		users = updatedListUsers;
 
-	// return updated list
-	res.json(users);
+		// return updated list
+		res.json(users);
+	}
 });
 
 // DELETE a user
@@ -134,9 +162,17 @@ server.delete("/users/:id", (req, res) => {
 	console.log("Delete user with id: ", userId);
 
 	// filter list copy, by excluding item to delete
-	users = users.filter(_user => _user.id !== userId);
+	const filteredList = users.filter(_user => _user.id !== userId);
 
-	res.json(users);
+	if (filteredList.length === users.length) {
+		res.json({
+			error: 'User not found'
+		})
+	} else {
+		// SUCCESS!
+		users = filteredList;
+		res.json(users);
+	}
 });
 
 
