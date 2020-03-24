@@ -91,11 +91,22 @@ server.post("/users", (req, res) => {
 	const user = req.body;
 	console.log('Adding new user: ', user);
 
-	// add new user to users array
-	users.push(user)
+	if (!user.id) {
+		res.json({
+			error: "id required"
+		})
+	} else if (users.find(_user => _user.id === user.id)) {
+		res.json({
+			error: "User already exists"
+		})
+	} else {
+		// SUCCESS!
+		// add new user to users array
+		users.push(user)
 
-	// return updated list
-	res.json(users);
+		// return updated list
+		res.json(users);
+	}
 });
 
 server.listen(port, () => { // Callback function in ES6
