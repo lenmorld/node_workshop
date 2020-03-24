@@ -5,6 +5,7 @@ const body_parser = require('body-parser');
 server.use(body_parser.json()); // parse JSON (application/json content-type)
 
 let users = require('./users');
+let products;
 
 console.log(users[0]);
 
@@ -32,14 +33,7 @@ server.get("/json", ({ res }) => {
 
 // GET all products
 server.get("/products", ({ res }) => {
-	res.send(
-		JSON.stringify(
-			[
-				{ id: 1, name: "toilet paper", brand: "X", price: 199.99 },
-				{ id: 2, name: "hand sanitizer", brand: "Y", price: 299.99 }
-			]
-		)
-	);
+	res.json(products);
 });
 
 // GET one product identified by id
