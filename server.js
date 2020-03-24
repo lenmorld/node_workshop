@@ -124,14 +124,10 @@ server.put("/users/:id", (req, res) => {
 // DELETE a user
 server.delete("/users/:id", (req, res) => {
 	const userId = Number(req.params.id);
-
 	console.log("Delete user with id: ", userId);
 
 	// filter list copy, by excluding item to delete
-	const filteredList = users.filter(_user => _user.id !== userId);
-
-	// replace old list with new one
-	users = filteredList;
+	users = users.filter(_user => _user.id !== userId);
 
 	res.json(users);
 });
