@@ -10,25 +10,11 @@ let foods = require('./foods');
 
 const productsRouter = require('./routes/products');
 
+const crudHelper = require('./utils/crudHelper');
+
 console.log(users[0]);
 
 const port = 4000;
-
-const getNextId = () => {
-	// solution 1: based on users length
-	// return users.length + 1;
-
-	// solution 2: based on max user.id
-	let maxId = 1;
-
-	users.forEach(_user => {
-		if (_user.id > maxId) {
-			maxId = _user.id;
-		}
-	});
-
-	return maxId + 1;
-}
 
 // ### HTML routes ###
 server.get("/", (req, res) => {
@@ -189,7 +175,7 @@ server.post("/users", (req, res) => {
 		// add new user to users array
 		users.push({
 			...user,
-			id: getNextId(),
+			id: crudHelper.getNextId(users),
 		})
 
 		// return updated list
