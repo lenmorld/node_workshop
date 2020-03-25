@@ -4,13 +4,16 @@ const server = express();
 const body_parser = require('body-parser');
 server.use(body_parser.json()); // parse JSON (application/json content-type)
 
+// import JSON files
 let users = require('./users');
 // let products = require('./products');
 let foods = require('./foods');
 
-const productsRouter = require('./routes/products');
-
+// import modules
 const crudHelper = require('./utils/crudHelper');
+
+// import routers
+const productsRouter = require('./routes/products');
 
 console.log(users[0]);
 
