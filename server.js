@@ -261,18 +261,17 @@ server.post("/users", (req, res) => {
 	const user = req.body;
 	console.log('Adding new user: ', user);
 
-	if (!user.id) {
-		res.json({
-			error: "id required"
-		})
-	} else if (users.find(_user => _user.id === user.id)) {
+	if (users.find(_user => _user.id === user.id)) {
 		res.json({
 			error: "User already exists"
 		})
 	} else {
 		// SUCCESS!
 		// add new user to users array
-		users.push(user)
+		users.push({
+			...user,
+			id: users.length + 1, // get new ID from number of current users + 1 (since we start at 1)
+		})
 
 		// return updated list
 		res.json(users);
