@@ -6,6 +6,7 @@ server.use(body_parser.json()); // parse JSON (application/json content-type)
 
 let users = require('./users');
 let products;
+let foods;
 
 console.log(users[0]);
 
@@ -41,30 +42,7 @@ server.get("/products", ({ res }) => {
 
 // GET all foods
 server.get("/foods", ({ res }) => {
-	res.send(
-		JSON.stringify(
-			[
-				{
-					"id": 1,
-					"name": "burger",
-					"picture": "🍔",
-					"price": "$4.50"
-				},
-				{
-					"id": 2,
-					"name": "pizza",
-					"picture": "🍕",
-					"price": "$2.50"
-				},
-				{
-					"id": 3,
-					"name": "ramen",
-					"picture": "🍜",
-					"price": "$5.50"
-				}
-			]
-		)
-	)
+	res.json(foods);
 })
 
 // # Users REST API
