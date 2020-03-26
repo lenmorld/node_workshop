@@ -20,6 +20,7 @@
 	"homepage": "https://github.com/lenmorld/node_workshop#readme",
 	"dependencies": {
 		"express": "^4.16.4",
+		"mongodb": "^3.5.5",
 		"nodemon": "^1.18.10"
 	},
 	"nodemonConfig": {
