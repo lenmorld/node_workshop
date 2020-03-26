@@ -1,6 +1,10 @@
 const express = require('express');
 const router = express.Router();
 
+// import modules
+const dateTimeHelper = require('../utils/dateTimeHelper');
+
+// import data
 let products = require('../products');
 
 // GET all products
@@ -38,7 +42,10 @@ router.post("/products", (req, res) => {
 	} else {
 		// SUCCESS!
 		// add new product to products array
-		products.push(product)
+		products.push({
+			...product,
+			createdAt: dateTimeHelper.getTimeStamp()
+		})
 
 		// return updated list
 		res.json(products);
@@ -64,7 +71,11 @@ router.put("/products/:id", (req, res) => {
 				...oldProduct,
 				...updatedProduct
 			};
-			updatedListProducts.push(modifiedProduct);
+			// updatedListProducts.push(modifiedProduct);
+			updatedListProducts.push({
+				...modifiedProduct,
+				updatedAt: dateTimeHelper.getTimeStamp()
+			});
 		} else {
 			updatedListProducts.push(oldProduct);
 		}
