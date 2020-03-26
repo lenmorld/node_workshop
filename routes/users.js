@@ -6,6 +6,8 @@ const crudHelper = require('../utils/crudHelper');
 
 let users = require('../users');
 
+console.log(users[0]);
+
 // GET all users
 router.get("/users", (req, res) => {
 	res.json(users);
