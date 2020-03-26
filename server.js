@@ -6,7 +6,6 @@ server.use(body_parser.json()); // parse JSON (application/json content-type)
 
 // import JSON files
 let users = require('./users');
-// let products = require('./products');
 let foods = require('./foods');
 
 // import modules
