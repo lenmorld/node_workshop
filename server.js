@@ -177,11 +177,7 @@ server.post("/users", (req, res) => {
 		// add new user to users array
 		users.push({
 			...user,
-<<<<<<< HEAD
 			id: crudHelper.getNextId(users),
-=======
-			id: getNextId(users),
->>>>>>> c2_solution
 		})
 
 		// return updated list
