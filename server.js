@@ -4,12 +4,13 @@ const server = express();
 const body_parser = require('body-parser');
 server.use(body_parser.json()); // parse JSON (application/json content-type)
 
+// import JSON files
+let foods = require('./foods');
+
 // import routers
 const productsRouter = require('./routes/products');
 const usersRouter = require('./routes/users');
 const foodsRouter = require('./routes/foods');
-
-// console.log(users[0]);
 
 const port = 4000;
 
