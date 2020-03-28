@@ -9,29 +9,17 @@ const server = express();
 const body_parser = require('body-parser');
 server.use(body_parser.json()); // parse JSON (application/json content-type)
 
+// import JSON files
 let users = require('./users');
 let products = require('./products');
 let foods = require('./foods');
 
+// import modules
+const crudHelper = require('./utils/crudHelper');
+
 console.log(users[0]);
 
 const port = process.env.PORT;
-
-const getNextId = (_users) => {
-	// solution 1: based on users length
-	// return users.length + 1;
-
-	// solution 2: based on max user.id
-	let maxId = 1;
-
-	_users.forEach(_user => {
-		if (_user.id > maxId) {
-			maxId = _user.id;
-		}
-	});
-
-	return maxId + 1;
-}
 
 // ### HTML routes ###
 server.get("/", (req, res) => {
@@ -291,7 +279,7 @@ server.post("/users", (req, res) => {
 		// add new user to users array
 		users.push({
 			...user,
-			id: getNextId(users),
+			id: crudHelper.getNextId(users),
 		})
 
 		// return updated list
