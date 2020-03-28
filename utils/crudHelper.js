@@ -14,5 +14,4 @@ const getNextId = (_users) => {
 	return maxId + 1;
 }
 
-
 exports.getNextId = getNextId;

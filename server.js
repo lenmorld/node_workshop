@@ -16,7 +16,7 @@ let foods = require('./foods');
 const productsRouter = require('./routes/products');
 const usersRouter = require('./routes/users');
 
-const port = 4000;
+const port = process.env.PORT;
 
 // ### HTML routes ###
 server.get("/", (req, res) => {
