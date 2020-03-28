@@ -4,7 +4,7 @@ const router = express.Router();
 let products = require('../products');
 
 // GET all products
-router.get("/products", ({ res }) => {
+router.get("/products", (req, res) => {
 	res.json(products);
 });
 

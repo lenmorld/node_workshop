@@ -32,7 +32,7 @@ server.get("/page/about", (req, res) => {
 });
 
 // ### JSON routes ### 
-server.get("/json", ({ res }) => {
+server.get("/json", (req, res) => {
 	res.send((JSON.stringify({ name: "Lenny" })));
 });
 
@@ -43,7 +43,7 @@ server.use("/", productsRouter);
 
 
 // GET all foods
-server.get("/foods", ({ res }) => {
+server.get("/foods", (req, res) => {
 	res.json(foods);
 })
 
