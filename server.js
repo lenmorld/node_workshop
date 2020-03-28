@@ -25,14 +25,14 @@ server.get("/page/about", (req, res) => {
 });
 
 // ### JSON routes ### 
-server.get("/json", ({ res }) => {
+server.get("/json", (req, res) => {
 	res.send((JSON.stringify({ name: "Lenny" })));
 });
 
 // # Products REST API
 
 // GET all products
-server.get("/products", ({ res }) => {
+server.get("/products", (req, res) => {
 	res.json(products);
 });
 
@@ -40,7 +40,7 @@ server.get("/products", ({ res }) => {
 
 
 // GET all foods
-server.get("/foods", ({ res }) => {
+server.get("/foods", (req, res) => {
 	res.send(
 		JSON.stringify(
 			[
