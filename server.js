@@ -1,3 +1,8 @@
+// init. environment variables
+const dotenv = require('dotenv');
+dotenv.config();
+console.log(`**ENV PORT: ${process.env.PORT} **`);
+
 // import built-in Node packages
 const express = require('express'); // import express
 const server = express();
