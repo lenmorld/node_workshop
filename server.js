@@ -2,6 +2,7 @@
 const dotenv = require('dotenv');
 dotenv.config();
 console.log(`**ENV PORT: ${process.env.PORT} **`);
+console.log(`**ENV NODE_ENV: ${process.env.NODE_ENV} **`);
 
 // import built-in Node packages
 const express = require('express'); // import express
