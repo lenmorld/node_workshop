@@ -21,6 +21,6 @@ const server = http.createServer((req, res) => { // Callback function in ES6
 	res.end(JSON.stringify(song));      // JSON.stringify({a: 1}) -> '{"a":1}'
 });
 
-server.listen(port, function () { // Callback function
+server.listen(port, () => { // Callback function in ES6
 	console.log(`Server listening at ${port}`);
 });
