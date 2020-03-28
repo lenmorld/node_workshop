@@ -10,6 +10,6 @@ const server = http.createServer((req, res) => { // Callback function in ES6
 	res.end("<h1>Hello World</h1>");
 });
 
-server.listen(port, function () { // Callback function
+server.listen(port, () => { // Callback function in ES6
 	console.log(`Server listening at ${port}`);
 });
