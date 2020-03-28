@@ -1,7 +1,17 @@
 // mongodb driver
 const MongoClient = require("mongodb").MongoClient;
 
-const dbConnectionUrl = "CONNECTION_STRING_FROM_ATLAS";
+// PUT CONNECTION STRING FROM MONGODB HERE
+const dbConnectionUrl = "";
+
+if (!dbConnectionUrl) {
+	throw Error("⚠ ⚠ ⚠ Put connection string from MongoDB Atlas in dbConnectionUrl ⚠ ⚠ ⚠")
+}
+
+const dbOptions = {
+	useNewUrlParser: true,
+	useUnifiedTopology: true
+};
 
 const initialize = (
 	dbName,
@@ -9,7 +19,7 @@ const initialize = (
 	successCallback,
 	failureCallback
 ) => {
-	MongoClient.connect(dbConnectionUrl, function (err, dbInstance) {
+	MongoClient.connect(dbConnectionUrl, dbOptions, (err, dbInstance) => {
 		if (err) {
 			console.log(`[MongoDB connection] ERROR: ${err}`);
 			failureCallback(err); // this should be "caught" by the calling function

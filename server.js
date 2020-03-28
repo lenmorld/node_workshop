@@ -4,14 +4,6 @@ const server = express();
 const body_parser = require('body-parser');
 server.use(body_parser.json()); // parse JSON (application/json content-type)
 
-// db setup
-const db = require('./db');
-const dbName = "data";
-const collectionName = "movies";
-
-// <db init>>
-
-
 // import routers
 const productsRouter = require('./routes/products');
 const usersRouter = require('./routes/users');
@@ -19,6 +11,12 @@ const foodsRouter = require('./routes/foods');
 
 const port = 4000;
 
+// db setup
+const db = require('./db');
+const dbName = "data";
+const collectionName = "products";
+
+// db init
 db.initialize(dbName, collectionName, function (dbCollection) { // successCallback
 	// get all items
 	dbCollection.find().toArray(function (err, result) {
