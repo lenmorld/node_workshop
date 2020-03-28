@@ -1,3 +1,8 @@
+// init. environment variables
+const dotenv = require('dotenv');
+dotenv.config();
+console.log(`**ENV PORT: ${process.env.PORT} **`);
+
 // import built-in Node packages
 const express = require('express'); // import express
 const server = express();
@@ -10,7 +15,7 @@ let foods = require('./foods');
 
 console.log(users[0]);
 
-const port = 4000;
+const port = process.env.PORT;
 
 const getNextId = (_users) => {
 	// solution 1: based on users length
