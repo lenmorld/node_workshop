@@ -18,7 +18,7 @@ server.get("/json", (req, res) => {
 	res.send((JSON.stringify({ name: "Lenny" })));
 });
 
-server.get("/products", ({ res }) => {
+server.get("/products", (req, res) => {
 	res.send(
 		JSON.stringify(
 			[
