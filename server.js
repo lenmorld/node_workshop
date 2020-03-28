@@ -17,7 +17,7 @@ const dbName = "data";
 const collectionName = "products";
 
 // db init
-db.initialize(dbName, collectionName, (dbCollection) => { // successCallback
+db.initialize(dbName, collectionName, dbCollection => { // successCallback
 	// get all items
 	dbCollection.find().toArray(function (err, result) {
 		if (err) throw err;
@@ -26,7 +26,7 @@ db.initialize(dbName, collectionName, (dbCollection) => { // successCallback
 
 	// << db CRUD routes >>
 
-}, function (err) { // failureCallback
+}, err => { // failureCallback
 	throw (err);
 });
 

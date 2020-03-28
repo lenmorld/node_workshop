@@ -1,8 +1,8 @@
 // mongodb driver
 const MongoClient = require("mongodb").MongoClient;
 
-// PUT CONNECTION STRING FROM MONGODB HERE
-const dbConnectionUrl = "";
+// PUT CONNECTION STRING FROM MONGODB INSIDE THE ""
+const dbConnectionUrl = "mongodb+srv://user2:abcd1234@cluster0-md8sj.mongodb.net/test?retryWrites=true&w=majority";
 
 if (!dbConnectionUrl) {
 	throw Error("⚠ ⚠ ⚠ Put connection string from MongoDB Atlas in dbConnectionUrl ⚠ ⚠ ⚠")
