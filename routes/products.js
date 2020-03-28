@@ -8,7 +8,7 @@ const dateTimeHelper = require('../utils/dateTimeHelper');
 let products = require('../products');
 
 // GET all products
-router.get("/products", ({ res }) => {
+router.get("/products", (req, res) => {
 	res.json(products);
 });
 
