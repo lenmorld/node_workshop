@@ -33,7 +33,7 @@ server.get("/products", (req, res) => {
 	);
 });
 
-server.get("/foods", ({ res }) => {
+server.get("/foods", (req, res) => {
 	res.send(
 		JSON.stringify(
 			[
