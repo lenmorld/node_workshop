@@ -10,7 +10,7 @@ server.get("/", (req, res) => {
 });
 
 // JSON routes
-server.get("/json", ({ res }) => {
+server.get("/json", (req, res) => {
 	res.send((JSON.stringify({ name: "Lenny" })));
 });
 
