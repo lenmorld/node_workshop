@@ -17,7 +17,7 @@ const dbName = "data";
 const collectionName = "products";
 
 // db init
-db.initialize(dbName, collectionName, function (dbCollection) { // successCallback
+db.initialize(dbName, collectionName, (dbCollection) => { // successCallback
 	// get all items
 	dbCollection.find().toArray(function (err, result) {
 		if (err) throw err;
