@@ -1,3 +1,9 @@
+// init. environment variables
+const dotenv = require('dotenv');
+dotenv.config();
+console.log(`**ENV PORT: ${process.env.PORT} **`);
+console.log(`**ENV NODE_ENV: ${process.env.NODE_ENV} **`);
+
 // import built-in Node packages
 const express = require('express'); // import express
 const server = express();
@@ -9,7 +15,7 @@ const productsRouter = require('./routes/products');
 const usersRouter = require('./routes/users');
 const foodsRouter = require('./routes/foods');
 
-const port = 4000;
+const port = process.env.PORT;
 
 // db setup
 const db = require('./db');
