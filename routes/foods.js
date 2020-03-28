@@ -4,7 +4,7 @@ const router = express.Router();
 let foods = require('../foods');
 
 // GET all foods
-router.get("/foods", ({ res }) => {
+router.get("/foods", (req, res) => {
 	res.json(foods);
 })
 
