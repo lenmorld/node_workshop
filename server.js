@@ -19,9 +19,7 @@ const crudHelper = require('./utils/crudHelper');
 // import routers
 const productsRouter = require('./routes/products');
 
-console.log(users[0]);
-
-const port = 4000;
+const port = process.env.PORT;
 
 // ### HTML routes ###
 server.get("/", (req, res) => {
