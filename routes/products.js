@@ -9,17 +9,23 @@ const DbConnection = require('../db');
 
 // GET all products
 router.get("/products", async (req, res) => {
-	let dbCollection = await DbConnection.getCollection("products");
-	let products = await dbCollection.find().toArray();
+	const dbCollection = await DbConnection.getCollection("products");
+	const products = await dbCollection.find().toArray();
 	res.json(products);
 });
 
 // GET one product identified by id
-router.get("/products/:id", async (req, res) => {
+router.get("/products/:id", (req, res) => {
 	const productId = Number(req.params.id);
-	const dbCollection = await DbConnection.getCollection("products");
-	const product = await dbCollection.findOne({ id: productId });
-	res.json(product);
+	const product = products.find(_product => _product.id === productId);
+	if (!product) {
+		res.json({
+			error: "Product not found"
+		})
+	} else {
+		// SUCCESS!
+		res.json(product);
+	}
 });
 
 // POST (create) a product 
