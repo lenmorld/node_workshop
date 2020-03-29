@@ -8,7 +8,6 @@ const dateTimeHelper = require('../utils/dateTimeHelper');
 const DbConnection = require('../db');
 const productsCollectionName = "products";
 
-// this is called once for the entire server
 DbConnection.connectWithCallback(dbObject => { // successCallback
 	const dbCollection = dbObject.collection(productsCollectionName);
 	// TESTING: get all products and log
