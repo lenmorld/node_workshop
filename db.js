@@ -59,10 +59,8 @@ class DbConnection {
 
 	async getCollection(collectionName) {
 		if (this.collections[collectionName]) {
-			console.log("CACHED!");
 			return this.collections[collectionName];
 		} else {
-			console.log("NOPE");
 			let dbObject;
 			try {
 				dbObject = await this.connectWithPromise();
