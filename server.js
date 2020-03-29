@@ -18,22 +18,19 @@ const foodsRouter = require('./routes/foods');
 const port = process.env.PORT;
 
 // db setup
-const db = require('./db');
-const dbName = "data";
-const collectionName = "products";
+const DbConnection = require('./db');
+const productsCollectionName = "products";
 
-// db init
-db.initialize(dbName, collectionName, dbCollection => { // successCallback
-	// get all items
-	dbCollection.find().toArray(function (err, result) {
+// this is called once for the entire server
+DbConnection.connectWithCallback(dbObject => { // successCallback
+	const dbCollection = dbObject.collection(productsCollectionName);
+	// get all products
+	dbCollection.find().toArray((err, result) => {
 		if (err) throw err;
 		console.log(result);
 	});
-
-	// << db CRUD routes >>
-
-}, err => { // failureCallback
-	throw (err);
+}, db_error => { // failureCallback
+	throw db_error;
 });
 
 // ### HTML routes ###
