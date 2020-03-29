@@ -17,36 +17,6 @@ const foodsRouter = require('./routes/foods');
 
 const port = process.env.PORT;
 
-// db setup
-const DbConnection = require('./db');
-const productsCollectionName = "products";
-
-// this is called once for the entire server
-DbConnection.connectWithCallback(dbObject => { // successCallback
-	const dbCollection = dbObject.collection(productsCollectionName);
-	// get all products
-	dbCollection.find().toArray((err, result) => {
-		if (err) throw err;
-		console.log(result);
-	});
-}, db_error => { // failureCallback
-	throw db_error;
-});
-
-// this is called once for the entire server
-DbConnection.connectWithPromise()
-	.then(dbObject => {
-		const dbCollection = dbObject.collection(productsCollectionName);
-		// get all products
-		dbCollection.find().toArray((err, result) => {
-			if (err) throw err;
-			console.log(result);
-		});
-	})
-	.catch(db_error => { // failureCallback
-		throw db_error;
-	});
-
 // ### HTML routes ###
 server.get("/", (req, res) => {
 	res.sendFile(__dirname + '/index.html');

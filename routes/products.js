@@ -4,8 +4,21 @@ const router = express.Router();
 // import modules
 const dateTimeHelper = require('../utils/dateTimeHelper');
 
-// import data
-let products = require('../products');
+// db setup
+const DbConnection = require('../db');
+const productsCollectionName = "products";
+
+// this is called once for the entire server
+DbConnection.connectWithCallback(dbObject => { // successCallback
+	const dbCollection = dbObject.collection(productsCollectionName);
+	// TESTING: get all products and log
+	dbCollection.find().toArray((err, result) => {
+		if (err) throw err;
+		console.log(result);
+	});
+}, db_error => { // failureCallback
+	throw db_error;
+});
 
 // GET all products
 router.get("/products", (req, res) => {
