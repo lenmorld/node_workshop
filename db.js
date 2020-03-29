@@ -14,6 +14,7 @@ class DbConnection {
 			useNewUrlParser: true,
 			useUnifiedTopology: true
 		};
+		this.collections = {};
 	}
 
 	connectWithCallback(successCallback, failureCallback) {
@@ -57,22 +58,29 @@ class DbConnection {
 	}
 
 	async getCollection(collectionName) {
-		let dbObject;
-		try {
-			dbObject = await this.connectWithPromise();
-		} catch (db_error) {
-			throw db_error;
+		if (this.collections[collectionName]) {
+			console.log("CACHED!");
+			return this.collections[collectionName];
+		} else {
+			console.log("NOPE");
+			let dbObject;
+			try {
+				dbObject = await this.connectWithPromise();
+			} catch (db_error) {
+				throw db_error;
+			}
+
+			const dbCollection = dbObject.collection(collectionName);
+
+			// TESTING: get all items in this collection and log
+			dbCollection.find().toArray((err, result) => {
+				if (err) throw err;
+				console.log(result);
+			});
+
+			this.collections[collectionName] = dbCollection;
+			return dbCollection;
 		}
-
-		const dbCollection = dbObject.collection(collectionName);
-
-		// TESTING: get all items in this collection and log
-		dbCollection.find().toArray((err, result) => {
-			if (err) throw err;
-			console.log(result);
-		});
-
-		return dbCollection;
 	};
 };
 
