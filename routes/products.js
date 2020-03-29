@@ -4,6 +4,9 @@ const router = express.Router();
 // import modules
 const dateTimeHelper = require('../utils/dateTimeHelper');
 
+// import data
+let products = require('../products');
+
 // db setup
 const DbConnection = require('../db');
 
