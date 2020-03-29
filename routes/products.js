@@ -8,18 +8,24 @@ const dateTimeHelper = require('../utils/dateTimeHelper');
 const DbConnection = require('../db');
 const productsCollectionName = "products";
 
-DbConnection.connectWithPromise()
-	.then(dbObject => {
-		const dbCollection = dbObject.collection(productsCollectionName);
-		// TESTING: get all products and log
-		dbCollection.find().toArray((err, result) => {
-			if (err) throw err;
-			console.log(result);
-		});
-	})
-	.catch(db_error => {
+const connectToDBCollection = async () => {
+	let dbObject;
+	try {
+		dbObject = await DbConnection.connectWithPromise();
+	} catch (db_error) {
 		throw db_error;
+	}
+
+	const dbCollection = dbObject.collection(productsCollectionName);
+
+	// TESTING: get all products and log
+	dbCollection.find().toArray((err, result) => {
+		if (err) throw err;
+		console.log(result);
 	});
+};
+
+connectToDBCollection();
 
 // GET all products
 router.get("/products", (req, res) => {
