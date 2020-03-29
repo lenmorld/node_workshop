@@ -4,9 +4,11 @@ const router = express.Router();
 // import modules
 const dateTimeHelper = require('../utils/dateTimeHelper');
 
+// import data
+let products = require('../products');
+
 // db setup
 const DbConnection = require('../db');
-const productsCollectionName = "products";
 
 const connectToDBCollection = async () => {
 	let dbObject;
@@ -16,7 +18,7 @@ const connectToDBCollection = async () => {
 		throw db_error;
 	}
 
-	const dbCollection = dbObject.collection(productsCollectionName);
+	const dbCollection = dbObject.collection("products");
 
 	// TESTING: get all products and log
 	dbCollection.find().toArray((err, result) => {
