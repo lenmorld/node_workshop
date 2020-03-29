@@ -33,6 +33,28 @@ class DbConnection {
 			});
 		}
 	}
+
+	connectWithPromise() {
+		if (this.db) {
+			Promise.resolve(this.db);
+		} else {
+			return new Promise((resolve, reject) => {
+				MongoClient.connect(this.url, this.options, (err, dbInstance) => {
+					if (err) {
+						console.log(`[MongoDB connection] ERROR: ${err}`);
+						// failureCallback(err); // caught by the calling function
+						reject(err);
+					} else {
+						const dbObject = dbInstance.db(this.dbName);
+						console.log("[MongoDB connection] SUCCESS");
+						this.db = dbObject;
+						// successCallback(dbObject);
+						resolve(dbObject);
+					}
+				});
+			})
+		}
+	}
 };
 
 const dbConnection = new DbConnection();

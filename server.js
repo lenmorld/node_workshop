@@ -33,6 +33,20 @@ DbConnection.connectWithCallback(dbObject => { // successCallback
 	throw db_error;
 });
 
+// this is called once for the entire server
+DbConnection.connectWithPromise()
+	.then(dbObject => {
+		const dbCollection = dbObject.collection(productsCollectionName);
+		// get all products
+		dbCollection.find().toArray((err, result) => {
+			if (err) throw err;
+			console.log(result);
+		});
+	})
+	.catch(db_error => { // failureCallback
+		throw db_error;
+	});
+
 // ### HTML routes ###
 server.get("/", (req, res) => {
 	res.sendFile(__dirname + '/index.html');
