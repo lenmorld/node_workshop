@@ -53,46 +53,26 @@ router.post("/products", async (req, res) => {
 });
 
 // PUT (update) a product
-router.put("/products/:id", (req, res) => {
+router.put("/products/:id", async (req, res) => {
 	const productId = Number(req.params.id);
 	const updatedProduct = req.body;
 	console.log("Editing product ", productId, " to be ", updatedProduct);
 
-	const updatedListProducts = [];
-	let found = false;
+	const dbCollection = await DbConnection.getCollection("products");
+	const product = await dbCollection.findOne({ id: productId });
 
-	// loop through list to find and replace one product
-	products.forEach(oldProduct => {
-		if (oldProduct.id === productId) {
-			found = true;
-			// spread oldProduct properties
-			// then overwrite with product properties
-			const modifiedProduct = {
-				...oldProduct,
-				...updatedProduct
-			};
-			// updatedListProducts.push(modifiedProduct);
-			updatedListProducts.push({
-				...modifiedProduct,
-				updatedAt: dateTimeHelper.getTimeStamp()
-			});
-		} else {
-			updatedListProducts.push(oldProduct);
-		}
-	});
-
-	if (!found) {
+	if (!product) {
 		res.json({
-			error: 'Product not found'
-		});
-	} else {
-		// SUCCESS!!
-		// replace old list with new one
-		products = updatedListProducts;
-
-		// return updated list
-		res.json(products);
+			error: "Product with given id doesn't exist"
+		})
 	}
+
+	updatedProduct.updatedAt = dateTimeHelper.getTimeStamp();
+	await dbCollection.updateOne({ id: productId }, { $set: updatedProduct });
+
+	// return updated list
+	const products = await dbCollection.find().toArray();
+	res.json(products);
 });
 
 // DELETE a product
