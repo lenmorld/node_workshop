@@ -10,7 +10,7 @@ let products = require('../products');
 // db setup
 const DbConnection = require('../db');
 
-const connectToDBCollection = async () => {
+const getCollection = async () => {
 	let dbObject;
 	try {
 		dbObject = await DbConnection.connectWithPromise();
@@ -29,7 +29,7 @@ const connectToDBCollection = async () => {
 	return dbCollection;
 };
 
-connectToDBCollection();
+getCollection();
 
 // GET all products
 router.get("/products", (req, res) => {
