@@ -23,6 +23,8 @@ const connectToDBCollection = async () => {
 		if (err) throw err;
 		console.log(result);
 	});
+
+	return dbCollection;
 };
 
 connectToDBCollection();
