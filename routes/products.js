@@ -23,27 +23,31 @@ router.get("/products/:id", async (req, res) => {
 });
 
 // POST (create) a product 
-router.post("/products", (req, res) => {
-	const product = req.body;
-	console.log('Adding new product: ', product);
+router.post("/products", async (req, res) => {
+	const newProduct = req.body;
+	console.log('Adding new product: ', newProduct);
 
-	if (!product.id) {
+	if (!newProduct.id) {
 		res.json({
 			error: "id required"
 		})
-	} else if (products.find(_product => _product.id === product.id)) {
+	}
+
+	const dbCollection = await DbConnection.getCollection("products");
+	const product = await dbCollection.findOne({ id: newProduct.id });
+
+	if (product) {
 		res.json({
-			error: "Product already exists"
+			error: "Product with given id already exists"
 		})
 	} else {
-		// SUCCESS!
-		// add new product to products array
-		products.push({
-			...product,
+		await dbCollection.insertOne({
+			...newProduct,
 			createdAt: dateTimeHelper.getTimeStamp()
-		})
+		});
 
 		// return updated list
+		const products = await dbCollection.find().toArray();
 		res.json(products);
 	}
 });
