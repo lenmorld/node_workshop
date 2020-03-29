@@ -4,15 +4,13 @@ const router = express.Router();
 // import modules
 const dateTimeHelper = require('../utils/dateTimeHelper');
 
-// import data
-let products = require('../products');
-
 // db setup
 const DbConnection = require('../db');
-DbConnection.getCollection("products");
 
 // GET all products
-router.get("/products", (req, res) => {
+router.get("/products", async (req, res) => {
+	let dbCollection = await DbConnection.getCollection("products");
+	let products = await dbCollection.find().toArray();
 	res.json(products);
 });
 
