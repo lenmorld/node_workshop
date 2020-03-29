@@ -27,7 +27,7 @@ class DbConnection {
 				} else {
 					const dbObject = dbInstance.db(this.dbName);
 					console.log("[MongoDB connection] SUCCESS");
-
+					this.db = dbObject;
 					successCallback(dbObject);
 				}
 			});
