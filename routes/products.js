@@ -9,27 +9,7 @@ let products = require('../products');
 
 // db setup
 const DbConnection = require('../db');
-
-const getCollection = async () => {
-	let dbObject;
-	try {
-		dbObject = await DbConnection.connectWithPromise();
-	} catch (db_error) {
-		throw db_error;
-	}
-
-	const dbCollection = dbObject.collection("products");
-
-	// TESTING: get all products and log
-	dbCollection.find().toArray((err, result) => {
-		if (err) throw err;
-		console.log(result);
-	});
-
-	return dbCollection;
-};
-
-getCollection();
+DbConnection.getCollection("products");
 
 // GET all products
 router.get("/products", (req, res) => {

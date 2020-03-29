@@ -55,6 +55,25 @@ class DbConnection {
 			})
 		}
 	}
+
+	async getCollection(collectionName) {
+		let dbObject;
+		try {
+			dbObject = await this.connectWithPromise();
+		} catch (db_error) {
+			throw db_error;
+		}
+
+		const dbCollection = dbObject.collection(collectionName);
+
+		// TESTING: get all items in this collection and log
+		dbCollection.find().toArray((err, result) => {
+			if (err) throw err;
+			console.log(result);
+		});
+
+		return dbCollection;
+	};
 };
 
 const dbConnection = new DbConnection();
