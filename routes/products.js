@@ -15,17 +15,11 @@ router.get("/products", async (req, res) => {
 });
 
 // GET one product identified by id
-router.get("/products/:id", (req, res) => {
+router.get("/products/:id", async (req, res) => {
 	const productId = Number(req.params.id);
-	const product = products.find(_product => _product.id === productId);
-	if (!product) {
-		res.json({
-			error: "Product not found"
-		})
-	} else {
-		// SUCCESS!
-		res.json(product);
-	}
+	const dbCollection = await DbConnection.getCollection("products");
+	const product = await dbCollection.findOne({ id: productId });
+	res.json(product);
 });
 
 // POST (create) a product 
