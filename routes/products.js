@@ -76,22 +76,24 @@ router.put("/products/:id", async (req, res) => {
 });
 
 // DELETE a product
-router.delete("/products/:id", (req, res) => {
+router.delete("/products/:id", async (req, res) => {
 	const productId = Number(req.params.id);
 	console.log("Delete product with id: ", productId);
 
-	// filter list copy, by excluding item to delete
-	const filteredList = products.filter(_product => _product.id !== productId);
+	const dbCollection = await DbConnection.getCollection("products");
+	const product = await dbCollection.findOne({ id: productId });
 
-	if (filteredList.length === products.length) {
+	if (!product) {
 		res.json({
-			error: 'Product not found'
+			error: "Product with given id doesn't exist"
 		})
-	} else {
-		// SUCCESS!
-		products = filteredList;
-		res.json(products);
 	}
+
+	await dbCollection.deleteOne({ id: productId });
+
+	// return updated list
+	const products = await dbCollection.find().toArray();
+	res.json(products);
 });
 
 
