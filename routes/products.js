@@ -6,11 +6,10 @@ const dateTimeHelper = require('../utils/dateTimeHelper');
 
 // db setup
 const DbConnection = require('../db');
-const productsCollectionName = "products";
 
 DbConnection.connectWithPromise()
 	.then(dbObject => {
-		const dbCollection = dbObject.collection(productsCollectionName);
+		const dbCollection = dbObject.collection("products");
 		// TESTING: get all products and log
 		dbCollection.find().toArray((err, result) => {
 			if (err) throw err;
