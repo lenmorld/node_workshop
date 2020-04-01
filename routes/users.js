@@ -5,10 +5,6 @@ const router = express.Router();
 const crudHelper = require('../utils/crudHelper');
 const dateTimeHelper = require('../utils/dateTimeHelper');
 
-let users = require('../users');
-
-console.log(users[0]);
-
 // db setup
 const DbConnection = require('../db');
 

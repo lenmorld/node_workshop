@@ -1,42 +1,100 @@
 const express = require('express');
 const router = express.Router();
 
-let foods = require('../foods');
+// import modules
+const dateTimeHelper = require('../utils/dateTimeHelper');
+
+// db setup
+const DbConnection = require('../db');
 
 // GET all foods
-router.get("/foods", (req, res) => {
-
-})
+router.get("/foods", async (req, res) => {
+	const dbCollection = await DbConnection.getCollection("foods");
+	const foods = await dbCollection.find().toArray();
+	res.json(foods);
+});
 
 // GET one food identified by id
-router.get("/foods/:id", (req, res) => {
+router.get("/foods/:id", async (req, res) => {
 	const foodId = Number(req.params.id);
-	// ### C4 CHALLENGE ###
+	const dbCollection = await DbConnection.getCollection("foods");
+	const food = await dbCollection.findOne({ id: foodId });
+	res.json(food);
 });
 
 // POST (create) a food 
-router.post("/foods", (req, res) => {
-	const food = req.body;
-	console.log('Adding new food: ', food);
+router.post("/foods", async (req, res) => {
+	const newFood = req.body;
+	console.log('Adding new food: ', newFood);
 
-	// ### C4 CHALLENGE ###
+	if (!newFood.id) {
+		res.json({
+			error: "id required"
+		})
+	}
+
+	const dbCollection = await DbConnection.getCollection("foods");
+	const food = await dbCollection.findOne({ id: newFood.id });
+
+	if (food) {
+		res.json({
+			error: "Food with given id already exists"
+		})
+	} else {
+		await dbCollection.insertOne({
+			...newFood,
+			createdAt: dateTimeHelper.getTimeStamp()
+		});
+
+		// return updated list
+		const foods = await dbCollection.find().toArray();
+		res.json(foods);
+	}
 });
 
 // PUT (update) a food
-router.put("/foods/:id", (req, res) => {
+router.put("/foods/:id", async (req, res) => {
 	const foodId = Number(req.params.id);
 	const updatedFood = req.body;
 	console.log("Editing food ", foodId, " to be ", updatedFood);
 
-	// ### C4 CHALLENGE ###
+	const dbCollection = await DbConnection.getCollection("foods");
+	const food = await dbCollection.findOne({ id: foodId });
+
+	if (!food) {
+		res.json({
+			error: "Food with given id doesn't exist"
+		})
+	}
+
+	updatedFood.updatedAt = dateTimeHelper.getTimeStamp();
+	await dbCollection.updateOne({ id: foodId }, { $set: updatedFood });
+
+	// return updated list
+	const foods = await dbCollection.find().toArray();
+	res.json(foods);
 });
 
 // DELETE a food
-router.delete("/foods/:id", (req, res) => {
+router.delete("/foods/:id", async (req, res) => {
 	const foodId = Number(req.params.id);
 	console.log("Delete food with id: ", foodId);
 
-	// ### C4 CHALLENGE ###
+	const dbCollection = await DbConnection.getCollection("foods");
+	const food = await dbCollection.findOne({ id: foodId });
+
+	if (!food) {
+		res.json({
+			error: "Food with given id doesn't exist"
+		})
+	}
+
+	await dbCollection.deleteOne({ id: foodId });
+
+	// return updated list
+	const foods = await dbCollection.find().toArray();
+	res.json(foods);
 });
+
 
 module.exports = router; 
