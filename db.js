@@ -37,7 +37,7 @@ class DbConnection {
 
 	connectWithPromise() {
 		if (this.db) {
-			Promise.resolve(this.db);
+			return Promise.resolve(this.db);
 		} else {
 			return new Promise((resolve, reject) => {
 				MongoClient.connect(this.url, this.options, (err, dbInstance) => {
