@@ -20,20 +20,15 @@ let foods = require('./foods');
 const productsRouter = require('./routes/api/products');
 const usersRouter = require('./routes/api/users');
 
+// import routers for HTML views (pages)
+const indexPages = require('./routes/pages/index');
+const productsPages = require('./routes/pages/products');
+
 const port = process.env.PORT || 4000;
 
 // ### HTML routes ###
-server.get("/", (req, res) => {
-	res.sendFile(__dirname + '/index.html');
-});
-
-server.get("/page/products", (req, res) => {
-	res.sendFile(__dirname + '/products.html');
-});
-
-server.get("/page/about", (req, res) => {
-	res.sendFile(__dirname + '/about.html');
-});
+server.use("/", indexPages);
+server.use("/", productsPages);
 
 // ### JSON routes ### 
 server.get("/json", (req, res) => {
