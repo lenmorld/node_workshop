@@ -2,10 +2,10 @@ const express = require('express');
 const router = express.Router();
 
 // import modules
-const dateTimeHelper = require('../utils/dateTimeHelper');
+const dateTimeHelper = require('../../utils/dateTimeHelper');
 
 // db setup
-const DbConnection = require('../db');
+const DbConnection = require('../../db');
 
 // GET all foods
 router.get("/foods", async (req, res) => {

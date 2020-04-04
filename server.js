@@ -1,8 +1,5 @@
-// init. environment variables
-const dotenv = require('dotenv');
-dotenv.config();
-console.log(`**ENV PORT: ${process.env.PORT} **`);
-console.log(`**ENV NODE_ENV: ${process.env.NODE_ENV} **`);
+// import config file
+const config = require('./config');
 
 // import built-in Node packages
 const express = require('express'); // import express
@@ -11,24 +8,19 @@ const body_parser = require('body-parser');
 server.use(body_parser.json()); // parse JSON (application/json content-type)
 
 // import routers
-const productsRouter = require('./routes/products');
-const usersRouter = require('./routes/users');
-const foodsRouter = require('./routes/foods');
+const productsRouter = require('./routes/api/products');
+const usersRouter = require('./routes/api/users');
+const foodsRouter = require('./routes/api/foods');
 
-const port = process.env.PORT;
+// import routers for HTML views (pages)
+const indexPages = require('./routes/pages/index');
+const productsPages = require('./routes/pages/products');
+
+const port = config.port || 4000;
 
 // ### HTML routes ###
-server.get("/", (req, res) => {
-	res.sendFile(__dirname + '/index.html');
-});
-
-server.get("/page/products", (req, res) => {
-	res.sendFile(__dirname + '/products.html');
-});
-
-server.get("/page/about", (req, res) => {
-	res.sendFile(__dirname + '/about.html');
-});
+server.use("/", indexPages);
+server.use("/", productsPages);
 
 // ### JSON routes ### 
 server.get("/json", (req, res) => {
