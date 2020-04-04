@@ -21,7 +21,7 @@ let foods = require('./foods');
 const crudHelper = require('./utils/crudHelper');
 
 // import routers
-const productsRouter = require('./routes/products');
+const productsRouter = require('./routes/api/products');
 
 const port = process.env.PORT || 4000;
 
