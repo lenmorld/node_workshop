@@ -1,7 +1,5 @@
-// init. environment variables
-const dotenv = require('dotenv');
-dotenv.config();
-console.log(`**ENV PORT: ${process.env.PORT} **`);
+// import config file
+const config = require('./config');
 
 // import built-in Node packages
 const express = require('express'); // import express
@@ -13,23 +11,18 @@ server.use(body_parser.json()); // parse JSON (application/json content-type)
 let foods = require('./foods');
 
 // import routers
-const productsRouter = require('./routes/products');
-const usersRouter = require('./routes/users');
+const productsRouter = require('./routes/api/products');
+const usersRouter = require('./routes/api/users');
 
-const port = process.env.PORT;
+// import routers for HTML views (pages)
+const indexPages = require('./routes/pages/index');
+const productsPages = require('./routes/pages/products');
+
+const port = config.port || 4000;
 
 // ### HTML routes ###
-server.get("/", (req, res) => {
-	res.sendFile(__dirname + '/index.html');
-});
-
-server.get("/page/products", (req, res) => {
-	res.sendFile(__dirname + '/products.html');
-});
-
-server.get("/page/about", (req, res) => {
-	res.sendFile(__dirname + '/about.html');
-});
+server.use("/", indexPages);
+server.use("/", productsPages);
 
 // ### JSON routes ### 
 server.get("/json", (req, res) => {

@@ -2,11 +2,9 @@ const express = require('express');
 const router = express.Router();
 
 // import modules
-const crudHelper = require('../utils/crudHelper');
+const crudHelper = require('../../utils/crudHelper');
 
-let users = require('../users');
-
-console.log(users[0]);
+let users = require('../../users');
 
 // GET all users
 router.get("/users", (req, res) => {
