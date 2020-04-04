@@ -1,7 +1,11 @@
 // init. environment variables
 const dotenv = require('dotenv');
 dotenv.config();
-console.log(`**ENV PORT: ${process.env.PORT} **`);
+if (!process.env.PORT) {
+	console.error("*****.env file missing! See README.md *****")
+} else {
+	console.log(`*****ENV PORT: ${process.env.PORT} *****`);
+}
 
 // import built-in Node packages
 const express = require('express'); // import express
@@ -16,7 +20,7 @@ let foods = require('./foods');
 const productsRouter = require('./routes/products');
 const usersRouter = require('./routes/users');
 
-const port = process.env.PORT;
+const port = process.env.PORT || 4000;
 
 // ### HTML routes ###
 server.get("/", (req, res) => {
