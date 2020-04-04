@@ -10,5 +10,6 @@ if (!process.env.PORT) {
 
 module.exports = {
 	node_env: process.env.NODE_ENV,
-	port: process.env.PORT
+	port: process.env.PORT,
+	mongo_db_connection_string: process.env.MONGO_DB_CONNECTION_STRING
 };

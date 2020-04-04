@@ -8,7 +8,7 @@ const dateTimeHelper = require('../../utils/dateTimeHelper');
 let products = require('../../products');
 
 // db setup
-const DbConnection = require('../db');
+const DbConnection = require('../../db');
 
 DbConnection.connectWithCallback(dbObject => { // successCallback
 	const dbCollection = dbObject.collection("products");

@@ -5,6 +5,6 @@
 ```
 NODE_ENV=development
 PORT=4000
-# Database connection goes here
+MONGO_DB_CONNECTION_STRING=YOUR_CONNECTION_STRING_HERE
 # API keys go here
 ```
