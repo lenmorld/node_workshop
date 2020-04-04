@@ -17,8 +17,8 @@ server.use(body_parser.json()); // parse JSON (application/json content-type)
 let foods = require('./foods');
 
 // import routers
-const productsRouter = require('./routes/products');
-const usersRouter = require('./routes/users');
+const productsRouter = require('./routes/api/products');
+const usersRouter = require('./routes/api/users');
 
 const port = process.env.PORT || 4000;
 
