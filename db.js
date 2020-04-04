@@ -1,8 +1,11 @@
+// import config file
+const config = require('./config');
+
 // mongodb driver
 const MongoClient = require("mongodb").MongoClient;
 
-if (!process.env.MONGO_DB_CONNECTION_STRING) {
-	throw Error("⚠ ⚠ ⚠ Put connection string from MongoDB Atlas in dbConnectionUrl ⚠ ⚠ ⚠")
+if (!config.mongo_db_connection_string) {
+	throw Error("⚠ ⚠ ⚠ Put connection string from MongoDB Atlas in .env file ⚠ ⚠ ⚠")
 }
 
 class DbConnection {

@@ -2,15 +2,13 @@ const express = require('express');
 const router = express.Router();
 
 // import modules
-const crudHelper = require('../utils/crudHelper');
-const dateTimeHelper = require('../utils/dateTimeHelper');
+const crudHelper = require('../../utils/crudHelper');
+const dateTimeHelper = require('../../utils/dateTimeHelper');
 
-let users = require('../users');
-
-console.log(users[0]);
+let users = require('../../users');
 
 // db setup
-const DbConnection = require('../db');
+const DbConnection = require('../../db');
 
 // GET all users
 router.get("/users", (req, res) => {
