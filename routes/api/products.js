@@ -2,13 +2,13 @@ const express = require('express');
 const router = express.Router();
 
 // import modules
-const dateTimeHelper = require('../utils/dateTimeHelper');
+const dateTimeHelper = require('../../utils/dateTimeHelper');
 
 // import data
-let products = require('../products');
+let products = require('../../products');
 
 // db setup
-const DbConnection = require('../db');
+const DbConnection = require('../../db');
 DbConnection.getCollection("products");
 
 // GET all products
