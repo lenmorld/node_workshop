@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-let foods = require('../foods');
+let foods = require('../../foods');
 
 // GET all foods
 router.get("/foods", (req, res) => {
