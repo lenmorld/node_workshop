@@ -10,6 +10,9 @@ server.use(body_parser.json()); // parse JSON (application/json content-type)
 // set the view engine to ejs
 server.set('view engine', 'ejs');
 
+// expose static assets: CSS, JS files, images
+server.use(express.static(__dirname + '/public'));
+
 // import routers
 const productsRouter = require('./routes/api/products');
 const usersRouter = require('./routes/api/users');
