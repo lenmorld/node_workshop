@@ -7,7 +7,6 @@ const DbConnection = require('../../db');
 router.get("/page/users", async (req, res) => {
 	const dbCollection = await DbConnection.getCollection("users");
 	const users = await dbCollection.find().toArray();
-	// res.json(products);
 
 	res.render('users/index', {
 		users: users

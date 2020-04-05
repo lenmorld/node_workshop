@@ -21,12 +21,14 @@ const foodsRouter = require('./routes/api/foods');
 // import routers for HTML views (pages)
 const indexPages = require('./routes/pages/index');
 const productsPages = require('./routes/pages/products');
+const usersPages = require('./routes/pages/users');
 
 const port = config.port || 4000;
 
-// ### HTML routes ###
+// ### HTML and EJS routes ###
 server.use("/", indexPages);
 server.use("/", productsPages);
+server.use("/", usersPages);
 
 // ### JSON routes ### 
 server.get("/json", (req, res) => {
