@@ -6,7 +6,7 @@ const express = require('express'); // import express
 const server = express();
 const body_parser = require('body-parser');
 server.use(body_parser.json()); // parse JSON (application/json content-type)
-// server.use(body_parser.urlencoded()) // parse HTML form data
+server.use(body_parser.urlencoded()) // parse HTML form data
 
 // set the view engine to ejs
 server.set('view engine', 'ejs');
