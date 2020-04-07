@@ -14,6 +14,19 @@ router.get("/page/users", async (req, res) => {
 	})
 });
 
+// Detail page
+router.get("/page/users/:id", async (req, res) => {
+	const userId = Number(req.params.id);
+	const dbCollection = await DbConnection.getCollection("users");
+	const user = await dbCollection.findOne({ id: userId });
+
+	console.log(`Loading detail page of user ${userId}`);
+
+	res.render('users/show', {
+		user: user
+	});
+});
+
 // Create page
 router.get("/page/users/new", async (req, res) => {
 	res.render('users/new');
