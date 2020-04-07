@@ -7,6 +7,9 @@ const server = express();
 const body_parser = require('body-parser');
 server.use(body_parser.json()); // parse JSON (application/json content-type)
 
+// set the view engine to ejs
+server.set('view engine', 'ejs');
+
 // import routers
 const productsRouter = require('./routes/api/products');
 const usersRouter = require('./routes/api/users');
