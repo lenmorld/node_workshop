@@ -7,7 +7,7 @@
 <body>
 	<nav>
 		<h1>Users</h1>
-		<a href="./new" class="btn btn-primary" role="button">New User</a>
+		<a href="/page/users/new" class="btn btn-primary" role="button">New User</a>
 	</nav>
 	<hr />
 	<main>
@@ -27,7 +27,7 @@
 				<div class="col"></div>
 				<div class="col"></div>
 				<div class="col button-container">
-					<a href="./edit/<%= user.id %>" class="btn btn-info" role="button">Edit</a>
+					<a href="/page/users/edit/<%= user.id %>" class="btn btn-info" role="button">Edit</a>
 					<form method="POST" action="/users/<%= user.id %>?_method=DELETE">
 						<button type="submit" class="btn btn-danger" role="button">Delete</button>
 					</form>
