@@ -1,0 +1,39 @@
+<meta charset="UTF-8">
+<title>Super Awesome Website</title>
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+<link rel="stylesheet" href="/styles.css" type="text/css">
+
+<body>
+	<nav>
+		<h1>Users</h1>
+		<a href="./new" class="btn btn-primary" role="button">New User</a>
+	</nav>
+	<hr />
+	<main>
+		<ul class="container">
+			<% users.forEach(function(user) { %>
+			<li class="row">
+				<div class="col">
+					<div>
+						user <%= user.id %>:
+					</div>
+					<ul>
+						<li><%= user.name %></li>
+						<li><%= user.email %></li>
+						<li><%= user.phone %></li>
+					</ul>
+				</div>
+				<div class="col"></div>
+				<div class="col"></div>
+				<div class="col button-container">
+					<a href="./edit/<%= user.id %>" class="btn btn-info" role="button">Edit</a>
+					<form method="POST" action="/users/<%= user.id %>?_method=DELETE">
+						<button type="submit" class="btn btn-danger" role="button">Delete</button>
+					</form>
+				</div>
+			</li>
+			<% }); %>
+		</ul>
+	</main>
+</body>
