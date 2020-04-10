@@ -84,8 +84,8 @@ router.put("/users/:id", async (req, res) => {
 	renderUsersJsonOrView(req, res, users);
 });
 
-// PUT (update) a user
-router.put("/users/:id", async (req, res) => {
+// DELETE a user
+router.delete("/users/:id", async (req, res) => {
 	const userId = Number(req.params.id);
 	console.log("Delete user with id: ", userId);
 
