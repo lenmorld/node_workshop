@@ -1,0 +1,21 @@
+<%- include('../partials/_head'); %>
+
+<body>
+	<h2>Editing food <%= food.id %></h2>
+	<form method="post" action="/foods">
+		<div class="form-group">
+			<label for="name">Name</label>
+			<input type="text" name="name" value="<%= food.name %>" class="form-control" placeholder="Name">
+		</div>
+		<div class="form-group">
+			<label for="email">Picture</label>
+			<input type="text" name="picture" value="<%= food.picture %>" class="form-control" placeholder="Enter picture">
+		</div>
+		<div class="form-group">
+			<label for="price">Price</label>
+			<input type="text" name="price" value="<%= food.price %>" class="form-control" placeholder="$0.00">
+		</div>
+		<button type="submit" class="btn btn-primary">Submit</button>
+	</form>
+
+</body>

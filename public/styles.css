@@ -18,6 +18,10 @@ body {
 	justify-content: space-between;
 }
 
+.button-container * {
+	margin-right: 10px;
+}
+
 form {
-	margin: 0 10px;
+	margin: 0;
 }

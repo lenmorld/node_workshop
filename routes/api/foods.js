@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 // import modules
+const crudHelper = require('../../utils/crudHelper');
 const dateTimeHelper = require('../../utils/dateTimeHelper');
 
 // db setup
@@ -27,29 +28,18 @@ router.post("/foods", async (req, res) => {
 	const newFood = req.body;
 	console.log('Adding new food: ', newFood);
 
-	if (!newFood.id) {
-		res.json({
-			error: "id required"
-		})
-	}
-
 	const dbCollection = await DbConnection.getCollection("foods");
-	const food = await dbCollection.findOne({ id: newFood.id });
+	let foods = await dbCollection.find().toArray();
 
-	if (food) {
-		res.json({
-			error: "Food with given id already exists"
-		})
-	} else {
-		await dbCollection.insertOne({
-			...newFood,
-			createdAt: dateTimeHelper.getTimeStamp()
-		});
+	await dbCollection.insertOne({
+		...newFood,
+		id: crudHelper.getNextId(foods),
+		createdAt: dateTimeHelper.getTimeStamp(),
+	});
 
-		// return updated list
-		const foods = await dbCollection.find().toArray();
-		res.json(foods);
-	}
+	// return updated list
+	foods = await dbCollection.find().toArray();
+	res.json(foods);
 });
 
 // PUT (update) a food
