@@ -2,7 +2,7 @@
 
 <body>
 	<h2>Editing food <%= food.id %></h2>
-	<form method="post" action="/foods">
+	<form method="POST" action="/foods/<%= food.id %>?_method=PUT">
 		<div class="form-group">
 			<label for="name">Name</label>
 			<input type="text" name="name" value="<%= food.name %>" class="form-control" placeholder="Name">
