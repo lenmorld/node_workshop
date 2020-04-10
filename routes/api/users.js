@@ -8,11 +8,22 @@ const dateTimeHelper = require('../../utils/dateTimeHelper');
 // db setup
 const DbConnection = require('../../db');
 
+// render either JSON or EJS view depending on client's request headers
+const renderUsersJsonOrView = (req, res, users) => {
+	if (req.headers.accept.includes("html") || req.headers['user-agent'].includes("Mozilla")) {
+		res.render('users/index', {
+			users: users
+		})
+	} else {
+		res.json(users);
+	}
+}
+
 // GET all users
 router.get("/users", async (req, res) => {
 	const dbCollection = await DbConnection.getCollection("users");
 	const users = await dbCollection.find().toArray();
-	res.json(users);
+	renderUsersJsonOrView(req, res, users);
 });
 
 // GET one user identified by id
@@ -46,7 +57,7 @@ router.post("/users", async (req, res) => {
 
 		// return updated list
 		users = await dbCollection.find().toArray();
-		res.json(users);
+		renderUsersJsonOrView(req, res, users);
 	}
 });
 
@@ -70,7 +81,7 @@ router.put("/users/:id", async (req, res) => {
 
 	// return updated list
 	const users = await dbCollection.find().toArray();
-	res.json(users);
+	renderUsersJsonOrView(req, res, users);
 });
 
 // DELETE a user
@@ -91,7 +102,7 @@ router.delete("/users/:id", async (req, res) => {
 
 	// return updated list
 	const users = await dbCollection.find().toArray();
-	res.json(users);
+	renderUsersJsonOrView(req, res, users);
 });
 
 module.exports = router; 
