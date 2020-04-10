@@ -7,6 +7,19 @@ const server = express();
 const body_parser = require('body-parser');
 const methodOverride = require('method-override');
 
+const mongoose = require('mongoose');
+mongoose.connect(config.mongo_db_connection_string);
+
+var Bear = require('./bear');
+var bear = new Bear();
+bear.name = "Lenny";
+bear.save(function (err) {
+	if (err) {
+		console.log(err);
+	}
+	console.log('bear!!', bear.name)
+});
+
 server.use(body_parser.json()); // parse JSON (application/json content-type)
 server.use(body_parser.urlencoded()) // parse HTML form data
 
