@@ -28,6 +28,7 @@ const foodsRouter = require('./routes/api/foods');
 const indexPages = require('./routes/pages/index');
 const productsPages = require('./routes/pages/products');
 const usersPages = require('./routes/pages/users');
+const foodsPages = require('./routes/pages/foods');
 
 const port = config.port || 4000;
 
@@ -35,6 +36,7 @@ const port = config.port || 4000;
 server.use("/", indexPages);
 server.use("/", productsPages);
 server.use("/", usersPages);
+server.use("/", foodsPages);
 
 // ### JSON routes ### 
 server.get("/json", (req, res) => {
