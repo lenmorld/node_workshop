@@ -29,12 +29,15 @@ router.post('/register', async (req, res) => {
 		res.json({
 			error: "User with given id already exists"
 		})
-	} else if (!newUser.username || !newUser.password || !newUser.name) {
+	} else if (!newUser.username || !newUser.password || !newUser.confirm_password || !newUser.name) {
 		res.json({
 			error: "Username, Password and Name are required fields"
 		})
-	}
-	else {
+	} else if (newUser.password !== newUser.confirm_password) {
+		res.json({
+			error: "Password and confirmation don't match"
+		})
+	} else {
 		console.log('Registering new user: ', newUser);
 
 		let users = await dbCollection.find().toArray();
