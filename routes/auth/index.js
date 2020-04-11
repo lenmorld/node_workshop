@@ -18,7 +18,7 @@ router.get("/login", async (req, res) => {
 	res.render('auth/login');
 });
 
-// Registration API
+// Registration handler
 router.post('/register', async (req, res) => {
 	const newUser = req.body;
 
@@ -51,6 +51,13 @@ router.post('/register', async (req, res) => {
 		// redirect to login page
 		res.redirect('login');
 	}
+});
+
+// Login handler
+router.post('/login', async (req, res) => {
+	const userToAuth = req.body;
+	console.log(userToAuth);
+	res.json(userToAuth);
 });
 
 module.exports = router; 
