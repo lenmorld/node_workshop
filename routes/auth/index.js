@@ -53,4 +53,9 @@ router.post('/register', async (req, res) => {
 	}
 });
 
+// Login API
+router.post('/login', async (req, res) => {
+
+});
+
 module.exports = router; 
