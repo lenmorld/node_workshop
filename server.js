@@ -23,6 +23,7 @@ server.use(express.static(__dirname + '/public'));
 const productsRouter = require('./routes/api/products');
 const usersRouter = require('./routes/api/users');
 const foodsRouter = require('./routes/api/foods');
+const authRouter = require('./routes/auth/index');
 
 // import routers for HTML views (pages)
 const indexPages = require('./routes/pages/index');
@@ -51,6 +52,9 @@ server.use("/", foodsRouter);
 
 // # Users REST API
 server.use("/", usersRouter);
+
+// # Auth
+server.use("/", authRouter);
 
 server.listen(port, () => { // Callback function in ES6
 	console.log(`Server listening at ${port}`);

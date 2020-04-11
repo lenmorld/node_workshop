@@ -76,7 +76,7 @@ class DbConnection {
 			// TESTING: get all items in this collection and log
 			dbCollection.find().toArray((err, result) => {
 				if (err) throw err;
-				console.log(result);
+				// console.log(result);
 			});
 
 			this.collections[collectionName] = dbCollection;
