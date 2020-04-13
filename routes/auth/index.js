@@ -46,12 +46,15 @@ router.post('/register', async (req, res) => {
 			error: "Password and confirmation don't match"
 		})
 	} else {
-		console.log('Registering new user: ', newUser);
+		// remove confirm_password from object using ES6 rest operator
+		const { confirm_password, ..._newUser } = newUser;
+
+		console.log('Registering new user: ', _newUser);
 
 		let users = await dbCollection.find().toArray();
 
 		await dbCollection.insertOne({
-			...newUser,
+			..._newUser,
 			id: crudHelper.getNextId(users),
 			createdAt: dateTimeHelper.getTimeStamp(),
 		});
