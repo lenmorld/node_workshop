@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const cookieSession = require('cookie-session');
 
 // import modules
 const crudHelper = require('../../utils/crudHelper');
@@ -7,6 +8,13 @@ const dateTimeHelper = require('../../utils/dateTimeHelper');
 
 // db setup
 const DbConnection = require('../../db');
+
+// configure session
+router.use(cookieSession({
+	name: 'nodeapp_session',
+	secret: 'my_secret_key_1234',   // secret to sign and verify cookie values
+	httpOnly: true,   // false allows access using `document.cookie` but is not secure
+}));
 
 // Registration Page for Customers
 router.get("/register", async (req, res) => {
@@ -56,8 +64,38 @@ router.post('/register', async (req, res) => {
 // Login handler
 router.post('/login', async (req, res) => {
 	const userToAuth = req.body;
-	console.log(userToAuth);
-	res.json(userToAuth);
+
+	if (!userToAuth.username || !userToAuth.password) {
+		return res.json({
+			error: "Username and password required"
+		})
+	}
+
+	console.log(`Authenticating ${userToAuth.username}`)
+
+	// find user from DB
+	// const userId = Number(userToAuth.id);
+	const dbCollection = await DbConnection.getCollection("users");
+	const user = await dbCollection.findOne({
+		username: userToAuth.username,
+		password: userToAuth.password
+	});
+
+	if (!user) {
+		return res.json({
+			error: "Login failed"
+		})
+	}
+
+	// SUCCESSFUL LOGIN
+	// set session to userId
+	req.session.loggedInUser = {
+		id: user.id,
+		username: userToAuth.username
+		// DONT put password in session
+	}
+
+	res.redirect('/page/foods');
 });
 
 module.exports = router; 
