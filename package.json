@@ -19,6 +19,7 @@
 	},
 	"homepage": "https://github.com/lenmorld/node_workshop#readme",
 	"dependencies": {
+		"bcrypt": "^4.0.1",
 		"body-parser": "^1.19.0",
 		"cookie-session": "^1.4.0",
 		"dotenv": "^8.2.0",

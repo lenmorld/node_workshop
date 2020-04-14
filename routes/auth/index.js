@@ -1,6 +1,10 @@
 const express = require('express');
 const router = express.Router();
+<<<<<<< HEAD
 const cookieSession = require('cookie-session');
+=======
+const bcrypt = require('bcrypt');
+>>>>>>> c6.2
 
 // import modules
 const crudHelper = require('../../utils/crudHelper');
@@ -47,14 +51,19 @@ router.post('/register', async (req, res) => {
 		})
 	} else {
 		// remove confirm_password from object using ES6 rest operator
-		const { confirm_password, ..._newUser } = newUser;
+		const { confirm_password, password, ..._newUser } = newUser;
 
 		console.log('Registering new user: ', _newUser);
+
+		// generate password with salt
+		const salt = await bcrypt.genSalt(10); // salt rounds
+		const hashedPassword = await bcrypt.hash(password, salt);
 
 		let users = await dbCollection.find().toArray();
 
 		await dbCollection.insertOne({
 			..._newUser,
+			password: hashedPassword,
 			id: crudHelper.getNextId(users),
 			createdAt: dateTimeHelper.getTimeStamp(),
 		});
@@ -77,11 +86,9 @@ router.post('/login', async (req, res) => {
 	console.log(`Authenticating ${userToAuth.username}`)
 
 	// find user from DB
-	// const userId = Number(userToAuth.id);
 	const dbCollection = await DbConnection.getCollection("users");
 	const user = await dbCollection.findOne({
 		username: userToAuth.username,
-		password: userToAuth.password
 	});
 
 	if (!user) {
@@ -90,15 +97,31 @@ router.post('/login', async (req, res) => {
 		})
 	}
 
-	// SUCCESSFUL LOGIN
-	// set session to userId
-	req.session.loggedInUser = {
-		id: user.id,
-		username: userToAuth.username
-		// DONT put password in session
-	}
+	// check if given password's hash matches the user password hash in the DB
+	const isMatch = await bcrypt.compare(userToAuth.password, user.password);
+	console.log(`Plain text: ${userToAuth.password}`)
+	console.log(`Hash: ${user.password}`)
+	console.log(`match: ${isMatch}`)
 
-	res.redirect('/page/foods');
+	if (isMatch) {
+		// res.json({
+		// 	message: "Login successful"
+		// })
+
+		// SUCCESSFUL LOGIN
+		// set session to userId
+		req.session.loggedInUser = {
+			id: user.id,
+			username: userToAuth.username
+			// DONT put password in session
+		}
+
+		res.redirect('/page/foods');
+	} else {
+		res.json({
+			message: "Login failed"
+		})
+	}
 });
 
 module.exports = router; 
