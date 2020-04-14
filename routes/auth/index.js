@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const bcrypt = require('bcrypt');
 
 // import modules
 const crudHelper = require('../../utils/crudHelper');
@@ -39,14 +40,19 @@ router.post('/register', async (req, res) => {
 		})
 	} else {
 		// remove confirm_password from object using ES6 rest operator
-		const { confirm_password, ..._newUser } = newUser;
+		const { confirm_password, password, ..._newUser } = newUser;
 
 		console.log('Registering new user: ', _newUser);
+
+		// generate password with salt
+		const salt = await bcrypt.genSalt(10); // salt rounds
+		const hashedPassword = await bcrypt.hash(password, salt);
 
 		let users = await dbCollection.find().toArray();
 
 		await dbCollection.insertOne({
 			..._newUser,
+			password: hashedPassword,
 			id: crudHelper.getNextId(users),
 			createdAt: dateTimeHelper.getTimeStamp(),
 		});
@@ -60,7 +66,40 @@ router.post('/register', async (req, res) => {
 router.post('/login', async (req, res) => {
 	const userToAuth = req.body;
 	console.log(userToAuth);
-	res.json(userToAuth);
+
+	if (!userToAuth.username || !userToAuth.password) {
+		return res.json({
+			error: "Username and password required"
+		})
+	}
+
+	console.log(`Authenticating ${userToAuth.username}`)
+
+	// find user from DB
+	const dbCollection = await DbConnection.getCollection("users");
+	const user = await dbCollection.findOne({
+		username: userToAuth.username,
+		password: userToAuth.password
+	});
+
+	if (!user) {
+		return res.json({
+			error: "Login failed"
+		})
+	}
+
+	// compare incoming password with saved hashed password
+	const isMatch = await bcrypt.compare(userToAuth.password, user.password);
+	console.log(isMatch, userToAuth.password, user.password);
+	if (isMatch) {
+		res.json({
+			message: "Login successful"
+		})
+	} else {
+		res.json({
+			message: "Login failed"
+		})
+	}
 });
 
 module.exports = router; 
