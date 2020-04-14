@@ -59,8 +59,32 @@ router.post('/register', async (req, res) => {
 // Login handler
 router.post('/login', async (req, res) => {
 	const userToAuth = req.body;
-	console.log(userToAuth);
-	res.json(userToAuth);
+
+	if (!userToAuth.username || !userToAuth.password) {
+		return res.json({
+			error: "Username and password required"
+		})
+	}
+
+	console.log(`Authenticating ${userToAuth.username}`)
+
+	// find user from DB
+	const dbCollection = await DbConnection.getCollection("users");
+	const user = await dbCollection.findOne({
+		username: userToAuth.username,
+		password: userToAuth.password
+	});
+
+	if (!user) {
+		return res.json({
+			error: "Login failed"
+		})
+	}
+
+	// SUCCESSFUL LOGIN
+	res.json({
+		message: `successful login for ${user.username}`
+	});
 });
 
 module.exports = router; 
