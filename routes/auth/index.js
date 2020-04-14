@@ -65,10 +65,6 @@ router.post('/register', async (req, res) => {
 // Login handler
 router.post('/login', async (req, res) => {
 	const userToAuth = req.body;
-<<<<<<< HEAD
-	console.log(userToAuth);
-=======
->>>>>>> c6.1
 
 	if (!userToAuth.username || !userToAuth.password) {
 		return res.json({
@@ -82,7 +78,6 @@ router.post('/login', async (req, res) => {
 	const dbCollection = await DbConnection.getCollection("users");
 	const user = await dbCollection.findOne({
 		username: userToAuth.username,
-		password: userToAuth.password
 	});
 
 	if (!user) {
@@ -91,9 +86,12 @@ router.post('/login', async (req, res) => {
 		})
 	}
 
-	// compare incoming password with saved hashed password
+	// check if given password's hash matches the user password hash in the DB
 	const isMatch = await bcrypt.compare(userToAuth.password, user.password);
-	console.log(isMatch, userToAuth.password, user.password);
+	console.log(`Plain text: ${userToAuth.password}`)
+	console.log(`Hash: ${user.password}`)
+	console.log(`match: ${isMatch}`)
+
 	if (isMatch) {
 		res.json({
 			message: "Login successful"
