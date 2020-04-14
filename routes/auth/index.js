@@ -65,7 +65,10 @@ router.post('/register', async (req, res) => {
 // Login handler
 router.post('/login', async (req, res) => {
 	const userToAuth = req.body;
+<<<<<<< HEAD
 	console.log(userToAuth);
+=======
+>>>>>>> c6.1
 
 	if (!userToAuth.username || !userToAuth.password) {
 		return res.json({
