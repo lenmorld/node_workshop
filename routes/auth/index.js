@@ -1,10 +1,7 @@
 const express = require('express');
 const router = express.Router();
-<<<<<<< HEAD
-const cookieSession = require('cookie-session');
-=======
 const bcrypt = require('bcrypt');
->>>>>>> c6.2
+const cookieSession = require('cookie-session');
 
 // import modules
 const crudHelper = require('../../utils/crudHelper');
@@ -104,10 +101,6 @@ router.post('/login', async (req, res) => {
 	console.log(`match: ${isMatch}`)
 
 	if (isMatch) {
-		// res.json({
-		// 	message: "Login successful"
-		// })
-
 		// SUCCESSFUL LOGIN
 		// set session to userId
 		req.session.loggedInUser = {
