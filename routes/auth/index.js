@@ -3,6 +3,9 @@ const router = express.Router();
 const bcrypt = require('bcrypt');
 const cookieSession = require('cookie-session');
 
+// import config file
+const config = require('../../config');
+
 // import modules
 const crudHelper = require('../../utils/crudHelper');
 const dateTimeHelper = require('../../utils/dateTimeHelper');
@@ -13,7 +16,7 @@ const DbConnection = require('../../db');
 // configure session
 router.use(cookieSession({
 	name: 'nodeapp_session',
-	secret: 'my_secret_key_1234',   // secret to sign and verify cookie values
+	secret: config.secret_key,   // secret to sign and verify cookie values
 	httpOnly: true,   // false allows access using `document.cookie` but is not secure
 }));
 
