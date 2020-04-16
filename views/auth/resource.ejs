@@ -1,0 +1,26 @@
+<%- include('../partials/_head'); %>
+
+<body>
+	<nav>
+		<h1>Foods</h1>
+	</nav>
+	<hr />
+	<main>
+		<ul class="container">
+			<% foods.forEach(function(food) { %>
+			<li class="row">
+				<div class="col">
+					<div>
+						food <%= food.id %>
+					</div>
+					<ul>
+						<li><%= food.name %></li>
+						<li><%= food.picture %></li>
+						<li><%= food.price %></li>
+					</ul>
+				</div>
+			</li>
+			<% }); %>
+		</ul>
+	</main>
+</body>
