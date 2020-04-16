@@ -2,6 +2,10 @@ const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcrypt');
 const cookieSession = require('cookie-session');
+const jwt = require('jsonwebtoken');
+
+// import config file
+const config = require('../../config');
 
 // import modules
 const crudHelper = require('../../utils/crudHelper');
@@ -13,7 +17,7 @@ const DbConnection = require('../../db');
 // configure session
 router.use(cookieSession({
 	name: 'nodeapp_session',
-	secret: 'my_secret_key_1234',   // secret to sign and verify cookie values
+	secret: config.secret_key,   // secret to sign and verify cookie values
 	httpOnly: true,   // false allows access using `document.cookie` but is not secure
 }));
 
@@ -115,6 +119,80 @@ router.post('/login', async (req, res) => {
 			message: "Login failed"
 		})
 	}
+});
+
+// ### API auth ###
+// POST credentials for API auth
+router.post("/api/token", async (req, res) => {
+	// credentials passed as POST body
+	const userToAuth = req.body;
+
+	if (!userToAuth.username || !userToAuth.password) {
+		return res.json({
+			error: "Username and password required"
+		})
+	}
+
+	console.log(`Authenticating ${userToAuth.username}`)
+
+	// find user from DB
+	const dbCollection = await DbConnection.getCollection("users");
+	const user = await dbCollection.findOne({
+		username: userToAuth.username,
+	});
+
+	if (!user) {
+		return res.json({
+			error: "Login failed"
+		})
+	}
+
+	// check if given password's hash matches the user password hash in the DB
+	const isMatch = await bcrypt.compare(userToAuth.password, user.password);
+	console.log(`Plain text: ${userToAuth.password}`)
+	console.log(`Hash: ${user.password}`)
+	console.log(`match: ${isMatch}`)
+
+	if (isMatch) {
+		// JWT: create token from user details
+		const payload = { username: userToAuth.username };
+		const token_expiry = '24h';
+		const token = jwt.sign(payload, config.secret_key, {
+			expiresIn: token_expiry
+		});
+
+		res.json({ message: "Auth successful", auth: true, token: token, expiry: token_expiry });
+	} else {
+		res.json({
+			message: "Login failed"
+		})
+	}
+});
+
+// GET all foods
+router.get("/api/foods", async (req, res) => {
+	// console.log(req.headers);
+	const token = req.headers['x-access-token'] || req.headers['authorization'];
+	if (!token) {
+		// 401 = unauthorized
+		return res.status(401).json({
+			message: "No token specified"
+		})
+	}
+
+	jwt.verify(token, config.secret_key, async (err, decoded) => {
+		if (err) {
+			// 401 = unauthorized
+			res.status(401).json({
+				message: "Invalid token. Auth failed"
+			});
+		} else {
+			// SUCCESSFUL AUTH
+			const dbCollection = await DbConnection.getCollection("foods");
+			const foods = await dbCollection.find().toArray();
+			res.json(foods);
+		}
+	});
 });
 
 module.exports = router; 
