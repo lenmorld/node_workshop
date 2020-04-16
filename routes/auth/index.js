@@ -7,9 +7,6 @@ const jwt = require('jsonwebtoken');
 // import config file
 const config = require('../../config');
 
-// import config file
-const config = require('../../config');
-
 // import modules
 const crudHelper = require('../../utils/crudHelper');
 const dateTimeHelper = require('../../utils/dateTimeHelper');
