@@ -32,13 +32,16 @@ router.get("/login", async (req, res) => {
 
 // Protected page - only for Authenticated users' access
 router.get("/resource", async (req, res) => {
-	const dbCollection = await DbConnection.getCollection("foods");
-	const foods = await dbCollection.find().toArray();
+	if (!req.session.loggedInUser) {
+		res.redirect('/login');
+	} else {
+		const dbCollection = await DbConnection.getCollection("foods");
+		const foods = await dbCollection.find().toArray();
 
-	// TODO: this page must only be seen by auth. users
-	res.render('auth/resource', {
-		foods: foods
-	})
+		res.render('auth/resource', {
+			foods: foods
+		})
+	}
 });
 
 // Registration handler
