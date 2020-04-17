@@ -123,7 +123,7 @@ router.post('/login', async (req, res) => {
 			// DONT put password in session
 		}
 
-		res.redirect('/page/foods');
+		res.redirect('/resource');
 	} else {
 		res.json({
 			message: "Login failed"
