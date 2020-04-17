@@ -138,10 +138,11 @@ router.post('/login', async (req, res) => {
 router.get('/logout', (req, res) => {
 	if (req.session.loggedInUser) {
 		// destroy cookie
-		req.session.loggedInUser = null;
+		// req.session.loggedInUser = null;
+		req.session = null;
 	}
 
-	res.render('auth/login');
+	res.redirect('login');
 });
 
 module.exports = router; 
