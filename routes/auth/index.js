@@ -30,6 +30,17 @@ router.get("/login", async (req, res) => {
 	res.render('auth/login');
 });
 
+// Protected page - only for Authenticated users' access
+router.get("/resource", async (req, res) => {
+	const dbCollection = await DbConnection.getCollection("foods");
+	const foods = await dbCollection.find().toArray();
+
+	// TODO: this page must only be seen by auth. users
+	res.render('auth/resource', {
+		foods: foods
+	})
+});
+
 // Registration handler
 router.post('/register', async (req, res) => {
 	const newUser = req.body;
@@ -112,7 +123,7 @@ router.post('/login', async (req, res) => {
 			// DONT put password in session
 		}
 
-		res.redirect('/page/foods');
+		res.redirect('/resource');
 	} else {
 		res.json({
 			message: "Login failed"
