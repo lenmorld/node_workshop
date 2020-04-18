@@ -194,8 +194,8 @@ router.post("/api/token", async (req, res) => {
 	}
 });
 
-// GET all foods
-router.get("/api/foods", async (req, res) => {
+// GET authenticated resource
+router.get("/api/resource", async (req, res) => {
 	// console.log(req.headers);
 	const token = req.headers['x-access-token'] || req.headers['authorization'];
 	if (!token) {
@@ -207,9 +207,10 @@ router.get("/api/foods", async (req, res) => {
 
 	jwt.verify(token, config.secret_key, async (err, decoded) => {
 		if (err) {
-			// 401 = unauthorized
+			// 401 = unauthorized then return token validation error
 			res.status(401).json({
-				message: "Invalid token. Auth failed"
+				error: err.name,
+				message: err.message,
 			});
 		} else {
 			// SUCCESSFUL AUTH
