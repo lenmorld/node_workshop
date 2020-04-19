@@ -3,6 +3,7 @@ const router = express.Router();
 const bcrypt = require('bcrypt');
 const cookieSession = require('cookie-session');
 const jwt = require('jsonwebtoken');
+const cors = require('cors');
 
 // import config file
 const config = require('../../config');
@@ -13,6 +14,9 @@ const dateTimeHelper = require('../../utils/dateTimeHelper');
 
 // db setup
 const DbConnection = require('../../db');
+
+// allow CORS for all routes under this router
+router.use(cors());
 
 // configure session
 router.use(cookieSession({
