@@ -8,6 +8,16 @@ const dateTimeHelper = require('../../utils/dateTimeHelper');
 // db setup
 const DbConnection = require('../../db');
 
+// allow CORS for all routes under this router
+router.use((req, res, next) => {
+	// allow only our known client :8000
+	// res.header('Access-Control-Allow-Origin', 'http://localhost:8000');
+
+	// allow all domains
+	res.header('Access-Control-Allow-Origin', '*');
+	next();
+});
+
 // GET all foods
 router.get("/foods", async (req, res) => {
 	const dbCollection = await DbConnection.getCollection("foods");
