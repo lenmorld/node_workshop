@@ -1,0 +1,35 @@
+<html>
+
+<head>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+	<link rel="stylesheet" href="main.css" type="text/css" />
+	<!-- <meta name="google-signin-client_id" -->
+	<!-- content="190581810989-7lk4aftlnsuljs204cc8u7338ct78nps.apps.googleusercontent.com"> -->
+</head>
+
+<body>
+	<h1>Google sign-in</h1>
+
+	<!-- BASIC -->
+	<!-- <div id="login" class="g-signin2" data-onsuccess="onSignIn"></div>
+	<a id="logout" href="#">Sign out</a> -->
+
+	<!-- CUSTOM -->
+	<div id="sign-in"></div>
+
+	<div>
+		<button id="sign-out" class="btn btn-danger" role="button" style="display: none">Sign out</button>
+	</div>
+
+	<hr />
+	<div id="auth-data"></div>
+
+	<script src="https://apis.google.com/js/platform.js"></script>
+
+	<!-- async defer doesnt work, investigate! -->
+	<!-- <script src="https://apis.google.com/js/platform.js" async defer></script> -->
+	<script src="./index.js"></script>
+</body>
+
+
+</html>
