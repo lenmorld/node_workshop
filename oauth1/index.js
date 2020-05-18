@@ -1,5 +1,9 @@
 const port = 3001
 
+const path = require('path')
+
+const session = require('express-session')
+
 // import built-in Node packages
 const express = require('express'); // import express
 const server = express();
@@ -14,13 +18,25 @@ server.use(body_parser.urlencoded()) // parse HTML form data
 
 server.set('view engine', 'ejs')
 
+// expose static assets: CSS, JS files, images
+server.use(express.static(__dirname + '/public'));
+
+// session
+server.use(session({
+	secret: 'MY_SECRET_1234',
+	resave: false,
+	saveUninitialized: true
+ }))
+
 // STEP 1
 const request_url = `https://api.twitter.com/oauth/request_token`
 // STEP 3
 const access_token_url = 'https://api.twitter.com/oauth/access_token'
 
-// Possible requests
+// STEP 4 - Possible requests
+// user info
 const show_user_url = 'https://api.twitter.com/1.1/users/show.json'
+const show_user_timeline_url = 'https://api.twitter.com/1.1/statuses/user_timeline.json'
 
 const consumer_key = '8ZWnKZhuS6PGbGhizrGFVOy54'
 const consumer_secret = 'WhDUjBtypCVfhEUt5T5Wp9T875JfEqjcFfGKKKc5S05MJScg0v'
@@ -30,9 +46,53 @@ const consumer_secret = 'WhDUjBtypCVfhEUt5T5Wp9T875JfEqjcFfGKKKc5S05MJScg0v'
 // const request_token_callback = 'https://8c2545a5.ngrok.io/callback'
 const request_token_callback = 'http://localhost:3001/callback'
 
+function cacheSet(key, value, req) {
+	server.set(key, value);
+
+	// save in session
+	if (!req.session[key]) {
+		req.session[key] = {}
+	}
+
+	req.session[key] = value
+}
+
+function cacheGet(key, req) {
+	return (req.session[key] || server.get(key))
+}
+
 server.get("/", (req, res) => {
 	res.render('step1')
 })
+
+server.get("/embeds", (req, res) => {
+	res.render('embeds')
+})
+
+server.get("/ui", (req, res) => {
+	// same as /user
+	const access_token = cacheGet('access_token', req)
+	const access_token_secret = cacheGet('access_token_secret' , req)
+	const screen_name = cacheGet('screen_name', req)
+	const user_id = cacheGet('user_id', req)
+	const access_token_available_message = cacheGet('access_token_available_message', req)
+
+	const authorized_user_creds = {
+		name: "User credentials for making requests",
+		access_token,
+		access_token_secret,
+		screen_name,
+		user_id,
+	}
+
+	res.render('ui', {
+		// authorized_user_creds: JSON.stringify(authorized_user_creds)
+		authorized_user_creds: JSON.stringify(authorized_user_creds)
+	})
+	// res.sendFile(__dirname + '/index.html');
+	// res.sendFile(path.join(__dirname, '/public', 'index.html'))
+})
+
 
 /**
  * STEP 1: POST oauth/request_token
@@ -120,8 +180,8 @@ server.get("/request_token", (req, res) => {
  * ✅ wORKS FOR STEP 1
  */
 server.get("/request_token_2", (req, res) => {
-	const access_token = server.get('access_token')
-	const access_token_secret = server.get('access_token_secret')
+	const access_token = cacheGet('access_token', req)
+	const access_token_secret = cacheGet('access_token_secret', req)
 	// const screen_name = server.get('screen_name')
 	// const user_id = server.get('user_id')
 
@@ -130,14 +190,14 @@ server.get("/request_token_2", (req, res) => {
 
 		res.redirect('/user')
 
-		server.set('access_token_available_message', "Access token still good 👍🏽👍🏽👍🏽")
+		cacheSet('access_token_available_message', "Access token still good 👍🏽👍🏽👍🏽", req)
 
 		return
 	}
 
 	// if cached oauth_token and oauth_token_secret
-	const oauth_token = server.get('oauth_token')
-	const oauth_token_secret = server.get('oauth_token_secret')
+	const oauth_token = cacheGet('oauth_token', req)
+	const oauth_token_secret = cacheGet('oauth_token_secret', req)
 
 	if (oauth_token && oauth_token_secret) {
 		console.log("CACHE exists for oauth_token && oauth_token_secret 🎉. Skip STEP 1")
@@ -174,8 +234,8 @@ server.get("/request_token_2", (req, res) => {
 			})
 
 			// CACHE these in server
-			server.set('oauth_token', req_data.oauth_token)
-			server.set('oauth_token_secret', req_data.oauth_token_secret)
+			cacheSet('oauth_token', req_data.oauth_token, req)
+			cacheSet('oauth_token_secret', req_data.oauth_token_secret, req)
 
 			res.render('step2', {
 				message: JSON.stringify(req_data),
@@ -203,7 +263,7 @@ server.get("/callback", (req, res) => {
 	const { oauth_token, oauth_verifier } = req.query;
 
 	// this oauth_token should be same with token we got before
-	if (oauth_token !== server.get('oauth_token')) {
+	if (oauth_token !== cacheGet('oauth_token', req)) {
 		res.json({
 			error: 'oauth_token from step 2 not same with step 1'
 		})
@@ -212,7 +272,7 @@ server.get("/callback", (req, res) => {
 		// res.json({
 		// 	"message": req.query
 		// })
-		exchangeRequestTokenToAccessToken({ oauth_token, oauth_verifier, res })
+		exchangeRequestTokenToAccessToken({ oauth_token, oauth_verifier, req, res })
 	}
 
 	/*
@@ -225,7 +285,7 @@ server.get("/callback", (req, res) => {
  * exchange request token into an access token
  */
 function exchangeRequestTokenToAccessToken({
-	oauth_token, oauth_verifier, res
+	oauth_token, oauth_verifier, req, res
 }) {
 	/*
 	this one fails =(
@@ -245,7 +305,7 @@ function exchangeRequestTokenToAccessToken({
 			consumer_key: consumer_key,
 			consumer_secret: consumer_secret,
 			token: oauth_token,
-			token_secret: server.get('oauth_token_secret'),
+			token_secret: cacheGet('oauth_token_secret', req),
 			verifier: oauth_verifier
 		}
 	}, function (e, r, body) {
@@ -258,10 +318,10 @@ function exchangeRequestTokenToAccessToken({
 			const req_data = qs.parse(body)
 
 			// CACHE user's access_token and authorization details
-			server.set('access_token', req_data.oauth_token)
-			server.set('access_token_secret', req_data.oauth_token_secret)
-			server.set('screen_name', req_data.screen_name)
-			server.set('user_id', req_data.user_id)
+			cacheSet('access_token', req_data.oauth_token, req)
+			cacheSet('access_token_secret', req_data.oauth_token_secret, req)
+			cacheSet('screen_name', req_data.screen_name, req)
+			cacheSet('user_id', req_data.user_id, req)
 
 			// showUserPageWithDetails(req_data, res);
 
@@ -280,11 +340,12 @@ function exchangeRequestTokenToAccessToken({
 
 // STEP 4 - Make a request! ==============
 server.get('/user', (req, res) => {
-	const access_token = server.get('access_token')
-	const access_token_secret = server.get('access_token_secret')
-	const screen_name = server.get('screen_name')
-	const user_id = server.get('user_id')
-	const access_token_available_message = server.get('access_token_available_message')
+	// GET STUFF FROM "cache"
+	const access_token = cacheGet('access_token', req)
+	const access_token_secret = cacheGet('access_token_secret', req)
+	const screen_name = cacheGet('screen_name', req)
+	const user_id = cacheGet('user_id', req)
+	const access_token_available_message = cacheGet('access_token_available_message', req)
 
 	const user_details = {
 		access_token,
@@ -307,29 +368,6 @@ server.get('/user', (req, res) => {
 		})
 	})
 })
-
-// function showUserPageWithDetails(user_data, res, additional_message) {
-// 	const user_details = {
-// 		screen_name: user_data.screen_name,
-// 		user_id: user_data.user_id
-// 	}
-
-// 	requestWithAccessToken(user_details, show_user_url).then(
-// 		user_info => {
-// 			res.render('user', {
-// 				user_info: user_info,
-// 				additional_message: additional_message
-// 			})
-// 		}
-// 	).catch(e => {
-// 		res.json({
-// 			message: `Error in request on ${show_user_url}`,
-// 			error: e
-// 		})
-// 	})
-// 	// =======================================
-// }
-
 
 function requestWithAccessToken(user_details, request_url) {
 	return new Promise((resolve, reject) => {
@@ -363,7 +401,7 @@ function requestWithAccessToken(user_details, request_url) {
 				if (result.errors) {
 					reject(result.errors)
 				} else {
-					console.log(result)
+					// console.log(result)
 					// TODO: render user info in a page
 					resolve(result)
 				}
@@ -372,8 +410,6 @@ function requestWithAccessToken(user_details, request_url) {
 		})
 	})
 }
-
-
 
 server.listen(port, () => { // Callback function in ES6
 	console.log(`Server listening at ${port}`);
