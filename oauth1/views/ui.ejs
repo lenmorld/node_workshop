@@ -2,11 +2,13 @@
 
 <div id="app"></div>
 
-<!-- embed OAuth1 authz variables to be used by the script -->
-
 <script>
-	const user_creds = JSON.parse(`<%- authorized_user_creds %>`)
+	console.log(`<%- user_timeline_info %>`)
 </script>
 
+<h2>results from backend fetch</h2>
 
-<script src="./user_info.js"></script>
+<h3>User Timeline Info:</h3>
+<pre>
+	<%= user_timeline_info %>
+</pre>
