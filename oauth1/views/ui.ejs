@@ -3,7 +3,15 @@
 <div id="app"></div>
 
 <script>
-	console.log(`<%- user_timeline_info %>`)
+	const a = `<%- user_timeline_info %>`
+
+	debugger
+	// workaround for URL breaking JSON.parse 😢
+	const no_bad_url = a.split(`"source":"<a href="https://mobile.twitter.com" rel="nofollow">Twitter Web App</a>",`).join("")
+
+	const no_bad_url_2 = no_bad_url.split(`"source":"<a href="http://8c2545a5.ngrok.io/" rel="nofollow">lennythedev</a>",`).join("")
+
+	let user_timeline_info_obj = JSON.parse(no_bad_url_2)
 </script>
 
 <h2>results from backend fetch</h2>
@@ -12,3 +20,14 @@
 <pre>
 	<%= user_timeline_info %>
 </pre>
+
+<h3>Tweet using API</h3>
+<!-- <button id="tweet">Tweet</button> -->
+
+<form action="/tweet" method="post">
+	<button type="submit">TWEET 🐦</button>
+</form>
+
+<script>
+	console.log(user_timeline_info_obj)
+</script>

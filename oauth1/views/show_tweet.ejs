@@ -1,0 +1,9 @@
+<script>
+	// const raw = `<%- tweet %>`
+	// debugger;
+	// console.log(tweet)
+	// const tweet = JSON.parse(raw)
+</script>
+
+
+<blockquote class="twitter-tweet"><p lang="en" dir="ltr"><%= tweet.text %></p>&mdash; <%= tweet.name %> (@<%= tweet.screen_name %>) <a href="https://twitter.com/<%= tweet.screen_name %>/status/<%= tweet.id_str %>"><%= tweet.created_at %></a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>

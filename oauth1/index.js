@@ -325,6 +325,38 @@ server.get('/user', (req, res) => {
 	})
 })
 
+server.post('/tweet', (req, res) => {
+  const tweet = 'stuck at home'
+  const tweet_url = `https://api.twitter.com/1.1/statuses/update.json?status=${tweet}`
+
+  const access_token = cacheGet('access_token')
+  const access_token_secret = cacheGet('access_token_secret')
+  const screen_name = cacheGet('screen_name')
+  const user_id = cacheGet('user_id')
+  const access_token_available_message = cacheGet('access_token_available_message')
+
+  const user_details = {
+	  access_token,
+	  access_token_secret,
+	  screen_name,
+	  user_id,
+  }
+
+  requestWithAccessTokenPost(user_details, tweet_url).then(response => {
+	  console.log("SENT TWEET!")
+	  console.log(response)
+
+	  res.render('show_tweet', {
+		 tweet: response,
+	  })
+  })
+//   .catch(err => {
+// 	  res.json({
+// 		  error: err
+// 	  })
+//   })
+})
+
 function requestWithAccessToken(user_details, request_url) {
 	return new Promise((resolve, reject) => {
 		const {
@@ -337,6 +369,49 @@ function requestWithAccessToken(user_details, request_url) {
 		console.log(`>>> send request to ${request_url} using access token`)
 
 		request.get({
+			url: request_url,
+			oauth: {
+				consumer_key: consumer_key,
+				consumer_secret: consumer_secret,
+				token: access_token,
+				token_secret: access_token_secret
+			},
+			qs: {
+				screen_name: screen_name,
+				user_id: user_id
+			},
+			json: true,
+		}, function (e, r, result) {
+			if (e) {
+				reject(e)
+			} else {
+				// request-lib might have the errors here
+				if (result.errors) {
+					reject(result.errors)
+				} else {
+					// console.log(result)
+					// TODO: render user info in a page
+					resolve(result)
+				}
+			}
+
+		})
+	})
+}
+
+// TODO: DRY with requestWithAccessToken
+function requestWithAccessTokenPost(user_details, request_url) {
+	return new Promise((resolve, reject) => {
+		const {
+			access_token,
+			access_token_secret,
+			screen_name,
+			user_id
+		} = user_details
+
+		console.log(`>>> send request to ${request_url} using access token`)
+
+		request.post({
 			url: request_url,
 			oauth: {
 				consumer_key: consumer_key,

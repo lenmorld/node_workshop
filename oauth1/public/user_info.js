@@ -8,3 +8,7 @@ const placeholder = 'https://jsonplaceholder.typicode.com/todos/1'
 fetch(show_user_timeline_url)
   .then(response => response.json())
   .then(json => console.log(json))
+
+document.querySelector("#tweet").addEventListener('click', function() {
+	alert("123")
+});
