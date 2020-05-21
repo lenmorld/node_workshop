@@ -1,7 +1,5 @@
 const port = 3001
 
-const path = require('path')
-
 // const session = require('express-session')
 const storage = require('node-persist');
 
@@ -14,6 +12,9 @@ const body_parser = require('body-parser');
 const oauth_sign = require('oauth-sign')
 const axios = require('axios')
 const request = require('request')
+// debug request
+require('request-debug')(request);
+
 const qs = require('querystring')
 
 server.use(body_parser.json()); // parse JSON (application/json content-type)
@@ -49,6 +50,11 @@ const consumer_secret = 'WhDUjBtypCVfhEUt5T5Wp9T875JfEqjcFfGKKKc5S05MJScg0v'
 // const request_token_callback = 'https://8c2545a5.ngrok.io/callback'
 const request_token_callback = 'http://localhost:3001/callback'
 
+// function spyOnRequest(req, res, next) {
+// 	console.log(req)
+// 	next()
+// }
+
 function cacheSet(key, value) {
 	server.set(key, value);
 
@@ -68,6 +74,10 @@ function cacheGet(key) {
 	let storage_value = storage.getItemSync(key);
 
 	return (storage_value || server.get(key))
+}
+
+function cacheDeleteAll(key) {
+	storage.clearSync()
 }
 
 server.get("/", (req, res) => {
@@ -121,6 +131,11 @@ server.get("/ui", (req, res) => {
 		})
 	})
 
+})
+
+server.get("/logout", (req, res) => {
+	cacheDeleteAll()
+	res.redirect('/')
 })
 
 
@@ -326,7 +341,7 @@ server.get('/user', (req, res) => {
 })
 
 server.post('/tweet', (req, res) => {
-  const tweet = 'stuck at home'
+  const tweet = `This is my message: ${Date.now()} `
   const tweet_url = `https://api.twitter.com/1.1/statuses/update.json?status=${tweet}`
 
   const access_token = cacheGet('access_token')
