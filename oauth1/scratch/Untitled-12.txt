@@ -1,0 +1,729 @@
+{
+  request: {
+    debugId: 1,
+    uri: 'https://api.twitter.com/1.1/users/show.json?screen_name=TheBotofLenny1&user_id=1261716580687400966',
+    method: 'GET',
+    headers: {
+      host: 'api.twitter.com',
+      accept: 'application/json',
+      Authorization: 'OAuth oauth_consumer_key="8ZWnKZhuS6PGbGhizrGFVOy54",oauth_nonce="2b188525e8074c0d852b4b4598b1aeef",oauth_signature_method="HMAC-SHA1",oauth_timestamp="1589975754",oauth_token="1261716580687400966-TNhdJG6XDCfJmty0tw6QYGEq420zQA",oauth_version="1.0",oauth_signature="7VO8L3xYjeTJkSfCW9c90nh4zyI%3D"'
+    }
+  }
+}
+{
+  response: {
+    debugId: 1,
+    headers: {
+      'cache-control': 'no-cache, no-store, must-revalidate, pre-check=0, post-check=0',
+      connection: 'close',
+      'content-disposition': 'attachment; filename=json.json',
+      'content-length': '2007',
+      'content-type': 'application/json;charset=utf-8',
+      date: 'Wed, 20 May 2020 11:55:54 GMT',
+      expires: 'Tue, 31 Mar 1981 05:00:00 GMT',
+      'last-modified': 'Wed, 20 May 2020 11:55:54 GMT',
+      pragma: 'no-cache',
+      server: 'tsa_b',
+      'set-cookie': [Array],
+      status: '200 OK',
+      'strict-transport-security': 'max-age=631138519',
+      'x-access-level': 'read-write',
+      'x-connection-hash': '8fe5aedae08be19c79d78ae515fe9698',
+      'x-content-type-options': 'nosniff',
+      'x-frame-options': 'SAMEORIGIN',
+      'x-rate-limit-limit': '900',
+      'x-rate-limit-remaining': '898',
+      'x-rate-limit-reset': '1589976313',
+      'x-response-time': '35',
+      'x-transaction': '000b712300b0cc45',
+      'x-twitter-response-tags': 'BouncerCompliant',
+      'x-xss-protection': '0'
+    },
+    statusCode: 200,
+    body: {
+      id: 1261716580687401000,
+      id_str: '1261716580687400966',
+      name: 'The Bot of Lenny',
+      screen_name: 'TheBotofLenny1',
+      location: '',
+      profile_location: null,
+      description: 'hey do you want some chocolate?',
+      url: null,
+      entities: [Object],
+      protected: false,
+      followers_count: 0,
+      friends_count: 0,
+      listed_count: 0,
+      created_at: 'Sat May 16 17:54:15 +0000 2020',
+      favourites_count: 1,
+      utc_offset: null,
+      time_zone: null,
+      geo_enabled: false,
+      verified: false,
+      statuses_count: 10,
+      lang: null,
+      status: [Object],
+      contributors_enabled: false,
+      is_translator: false,
+      is_translation_enabled: false,
+      profile_background_color: 'F5F8FA',
+      profile_background_image_url: null,
+      profile_background_image_url_https: null,
+      profile_background_tile: false,
+      profile_image_url: 'http://pbs.twimg.com/profile_images/1262146507005923331/x8AOPPMV_normal.jpg',
+      profile_image_url_https: 'https://pbs.twimg.com/profile_images/1262146507005923331/x8AOPPMV_normal.jpg',
+      profile_link_color: '1DA1F2',
+      profile_sidebar_border_color: 'C0DEED',
+      profile_sidebar_fill_color: 'DDEEF6',
+      profile_text_color: '333333',
+      profile_use_background_image: true,
+      has_extended_profile: false,
+      default_profile: true,
+      default_profile_image: false,
+      following: false,
+      follow_request_sent: false,
+      notifications: false,
+      translator_type: 'none',
+      suspended: false,
+      needs_phone_verification: false
+    }
+  }
+}
+>>> CACHE exists for access_token && access_token_secret �. Skip STEP 1,2,3. Go straight to API request
+>>> send request to https://api.twitter.com/1.1/users/show.json using access token
+{
+  request: {
+    debugId: 2,
+    uri: 'https://api.twitter.com/1.1/users/show.json?screen_name=TheBotofLenny1&user_id=1261716580687400966',
+    method: 'GET',
+    headers: {
+      host: 'api.twitter.com',
+      accept: 'application/json',
+      Authorization: 'OAuth oauth_consumer_key="8ZWnKZhuS6PGbGhizrGFVOy54",oauth_nonce="ed1b59582a074d8f8c27849f1a19670f",oauth_signature_method="HMAC-SHA1",oauth_timestamp="1590010909",oauth_token="1261716580687400966-TNhdJG6XDCfJmty0tw6QYGEq420zQA",oauth_version="1.0",oauth_signature="dzJqk70XjoDkkkkWrN%2Fw7zt7qBs%3D"'
+    }
+  }
+}
+{
+  response: {
+    debugId: 2,
+    headers: {
+      'cache-control': 'no-cache, no-store, must-revalidate, pre-check=0, post-check=0',
+      connection: 'close',
+      'content-disposition': 'attachment; filename=json.json',
+      'content-length': '2007',
+      'content-type': 'application/json;charset=utf-8',
+      date: 'Wed, 20 May 2020 21:41:50 GMT',
+      expires: 'Tue, 31 Mar 1981 05:00:00 GMT',
+      'last-modified': 'Wed, 20 May 2020 21:41:50 GMT',
+      pragma: 'no-cache',
+      server: 'tsa_b',
+      'set-cookie': [Array],
+      status: '200 OK',
+      'strict-transport-security': 'max-age=631138519',
+      'x-access-level': 'read-write',
+      'x-connection-hash': '9dccedb99ca3b5f3b342f74e0aa1670f',
+      'x-content-type-options': 'nosniff',
+      'x-frame-options': 'SAMEORIGIN',
+      'x-rate-limit-limit': '900',
+      'x-rate-limit-remaining': '899',
+      'x-rate-limit-reset': '1590011810',
+      'x-response-time': '40',
+      'x-transaction': '00e2b1580072fc8b',
+      'x-twitter-response-tags': 'BouncerCompliant',
+      'x-xss-protection': '0'
+    },
+    statusCode: 200,
+    body: {
+      id: 1261716580687401000,
+      id_str: '1261716580687400966',
+      name: 'The Bot of Lenny',
+      screen_name: 'TheBotofLenny1',
+      location: '',
+      profile_location: null,
+      description: 'hey do you want some chocolate?',
+      url: null,
+      entities: [Object],
+      protected: false,
+      followers_count: 0,
+      friends_count: 0,
+      listed_count: 0,
+      created_at: 'Sat May 16 17:54:15 +0000 2020',
+      favourites_count: 1,
+      utc_offset: null,
+      time_zone: null,
+      geo_enabled: false,
+      verified: false,
+      statuses_count: 10,
+      lang: null,
+      status: [Object],
+      contributors_enabled: false,
+      is_translator: false,
+      is_translation_enabled: false,
+      profile_background_color: 'F5F8FA',
+      profile_background_image_url: null,
+      profile_background_image_url_https: null,
+      profile_background_tile: false,
+      profile_image_url: 'http://pbs.twimg.com/profile_images/1262146507005923331/x8AOPPMV_normal.jpg',
+      profile_image_url_https: 'https://pbs.twimg.com/profile_images/1262146507005923331/x8AOPPMV_normal.jpg',
+      profile_link_color: '1DA1F2',
+      profile_sidebar_border_color: 'C0DEED',
+      profile_sidebar_fill_color: 'DDEEF6',
+      profile_text_color: '333333',
+      profile_use_background_image: true,
+      has_extended_profile: false,
+      default_profile: true,
+      default_profile_image: false,
+      following: false,
+      follow_request_sent: false,
+      notifications: false,
+      translator_type: 'none',
+      suspended: false,
+      needs_phone_verification: false
+    }
+  }
+}
+[nodemon] restarting due to changes...
+[nodemon] starting `node index.js`
+body-parser deprecated undefined extended: provide extended option index.js:21:24
+Server listening at 3001
+[nodemon] restarting due to changes...
+[nodemon] starting `node index.js`
+body-parser deprecated undefined extended: provide extended option index.js:21:24
+Server listening at 3001
+[nodemon] restarting due to changes...
+[nodemon] starting `node index.js`
+body-parser deprecated undefined extended: provide extended option index.js:21:24
+Server listening at 3001
+[nodemon] restarting due to changes...
+[nodemon] starting `node index.js`
+body-parser deprecated undefined extended: provide extended option index.js:21:24
+Server listening at 3001
+>>> send request to https://api.twitter.com/1.1/users/show.json using access token
+{
+  request: {
+    debugId: 1,
+    uri: 'https://api.twitter.com/1.1/users/show.json?screen_name=TheBotofLenny1&user_id=1261716580687400966',
+    method: 'GET',
+    headers: {
+      host: 'api.twitter.com',
+      accept: 'application/json',
+      Authorization: 'OAuth oauth_consumer_key="8ZWnKZhuS6PGbGhizrGFVOy54",oauth_nonce="394679d85ef5471881ba4bcef5a807c6",oauth_signature_method="HMAC-SHA1",oauth_timestamp="1590011095",oauth_token="1261716580687400966-TNhdJG6XDCfJmty0tw6QYGEq420zQA",oauth_version="1.0",oauth_signature="3yXpQM5h1By0iFapsY5%2F8FY1jSQ%3D"'
+    }
+  }
+}
+{
+  response: {
+    debugId: 1,
+    headers: {
+      'cache-control': 'no-cache, no-store, must-revalidate, pre-check=0, post-check=0',
+      connection: 'close',
+      'content-disposition': 'attachment; filename=json.json',
+      'content-length': '2007',
+      'content-type': 'application/json;charset=utf-8',
+      date: 'Wed, 20 May 2020 21:44:57 GMT',
+      expires: 'Tue, 31 Mar 1981 05:00:00 GMT',
+      'last-modified': 'Wed, 20 May 2020 21:44:57 GMT',
+      pragma: 'no-cache',
+      server: 'tsa_b',
+      'set-cookie': [Array],
+      status: '200 OK',
+      'strict-transport-security': 'max-age=631138519',
+      'x-access-level': 'read-write',
+      'x-connection-hash': '2f69047f42db7d3beab909d7e5386c7d',
+      'x-content-type-options': 'nosniff',
+      'x-frame-options': 'SAMEORIGIN',
+      'x-rate-limit-limit': '900',
+      'x-rate-limit-remaining': '898',
+      'x-rate-limit-reset': '1590011810',
+      'x-response-time': '41',
+      'x-transaction': '00d5f92b00448387',
+      'x-twitter-response-tags': 'BouncerCompliant',
+      'x-xss-protection': '0'
+    },
+    statusCode: 200,
+    body: {
+      id: 1261716580687401000,
+      id_str: '1261716580687400966',
+      name: 'The Bot of Lenny',
+      screen_name: 'TheBotofLenny1',
+      location: '',
+      profile_location: null,
+      description: 'hey do you want some chocolate?',
+      url: null,
+      entities: [Object],
+      protected: false,
+      followers_count: 0,
+      friends_count: 0,
+      listed_count: 0,
+      created_at: 'Sat May 16 17:54:15 +0000 2020',
+      favourites_count: 1,
+      utc_offset: null,
+      time_zone: null,
+      geo_enabled: false,
+      verified: false,
+      statuses_count: 10,
+      lang: null,
+      status: [Object],
+      contributors_enabled: false,
+      is_translator: false,
+      is_translation_enabled: false,
+      profile_background_color: 'F5F8FA',
+      profile_background_image_url: null,
+      profile_background_image_url_https: null,
+      profile_background_tile: false,
+      profile_image_url: 'http://pbs.twimg.com/profile_images/1262146507005923331/x8AOPPMV_normal.jpg',
+      profile_image_url_https: 'https://pbs.twimg.com/profile_images/1262146507005923331/x8AOPPMV_normal.jpg',
+      profile_link_color: '1DA1F2',
+      profile_sidebar_border_color: 'C0DEED',
+      profile_sidebar_fill_color: 'DDEEF6',
+      profile_text_color: '333333',
+      profile_use_background_image: true,
+      has_extended_profile: false,
+      default_profile: true,
+      default_profile_image: false,
+      following: false,
+      follow_request_sent: false,
+      notifications: false,
+      translator_type: 'none',
+      suspended: false,
+      needs_phone_verification: false
+    }
+  }
+}
+POST request_token - Step 1 - data: {
+  callback: 'http://localhost:3001/callback',
+  consumer_key: '8ZWnKZhuS6PGbGhizrGFVOy54',
+  consumer_secret: 'WhDUjBtypCVfhEUt5T5Wp9T875JfEqjcFfGKKKc5S05MJScg0v'
+}
+{
+  request: {
+    debugId: 2,
+    uri: 'https://api.twitter.com/oauth/request_token',
+    method: 'POST',
+    headers: {
+      host: 'api.twitter.com',
+      Authorization: 'OAuth oauth_callback="http%3A%2F%2Flocalhost%3A3001%2Fcallback",oauth_consumer_key="8ZWnKZhuS6PGbGhizrGFVOy54",oauth_nonce="5071a6e7a00c4973ae87301ffc39ac0b",oauth_signature_method="HMAC-SHA1",oauth_timestamp="1590011208",oauth_version="1.0",oauth_signature="CesX0w0r763ZXmsMbEk%2BuUu0lGw%3D"',
+      'content-length': 0
+    }
+  }
+}
+{
+  response: {
+    debugId: 2,
+    headers: {
+      'cache-control': 'no-cache, no-store, must-revalidate, pre-check=0, post-check=0',
+      connection: 'close',
+      'content-length': '121',
+      'content-security-policy': "default-src 'none'; connect-src 'self'; font-src https://abs.twimg.com https://abs-0.twimg.com data:; frame-src 'self' twitter:; img-src https://abs.twimg.com https://*.twimg.com https://pbs.twimg.com data:; media-src 'none'; object-src 'none'; script-src https://abs.twimg.com https://abs-0.twimg.com https://twitter.com https://mobile.twitter.com; style-src https://abs.twimg.com https://abs-0.twimg.com; report-uri https://twitter.com/i/csp_report?a=NVQWGYLXFVWG6Z3JNY%3D%3D%3D%3D%3D%3D&ro=false;",
+      'content-type': 'text/html;charset=utf-8',
+      date: 'Wed, 20 May 2020 21:46:50 GMT',
+      expires: 'Tue, 31 Mar 1981 05:00:00 GMT',
+      'last-modified': 'Wed, 20 May 2020 21:46:50 GMT',
+      ml: 'A',
+      pragma: 'no-cache',
+      server: 'tsa_b',
+      'set-cookie': [Array],
+      status: '200 OK',
+      'strict-transport-security': 'max-age=631138519',
+      'x-connection-hash': '7facbdaacbf7ee036273e5ecdcdced70',
+      'x-content-type-options': 'nosniff',
+      'x-frame-options': 'SAMEORIGIN',
+      'x-response-time': '23',
+      'x-transaction': '00a2378b00752023',
+      'x-twitter-response-tags': 'BouncerCompliant',
+      'x-ua-compatible': 'IE=edge,chrome=1',
+      'x-xss-protection': '0'
+    },
+    statusCode: 200,
+    body: 'oauth_token=ZsbCMQAAAAABEanCAAABcjQNqUE&oauth_token_secret=r9YUY6IsHF36fBj1ilHwPULiapxV3OJ9&oauth_callback_confirmed=true'
+  }
+}
+ZsbCMQAAAAABEanCAAABcjQNqUE
+CACHE exists for oauth_token && oauth_token_secret �. Skip STEP 1
+CACHE exists for oauth_token && oauth_token_secret �. Skip STEP 1
+CACHE exists for oauth_token && oauth_token_secret �. Skip STEP 1
+CACHE exists for oauth_token && oauth_token_secret �. Skip STEP 1
+[nodemon] restarting due to changes...
+[nodemon] starting `node index.js`
+body-parser deprecated undefined extended: provide extended option index.js:21:24
+Server listening at 3001
+POST request_token - Step 1 - data: {
+  callback: 'http://localhost:3001/callback',
+  consumer_key: '8ZWnKZhuS6PGbGhizrGFVOy54',
+  consumer_secret: 'WhDUjBtypCVfhEUt5T5Wp9T875JfEqjcFfGKKKc5S05MJScg0v'
+}
+{
+  request: {
+    debugId: 1,
+    uri: 'https://api.twitter.com/oauth/request_token',
+    method: 'POST',
+    headers: {
+      host: 'api.twitter.com',
+      Authorization: 'OAuth oauth_callback="http%3A%2F%2Flocalhost%3A3001%2Fcallback",oauth_consumer_key="8ZWnKZhuS6PGbGhizrGFVOy54",oauth_nonce="e91e7a0c351b4c57bde68a079498946c",oauth_signature_method="HMAC-SHA1",oauth_timestamp="1590011432",oauth_version="1.0",oauth_signature="cit7K91rGQ%2B9qb5YPL06eSZ43CU%3D"',
+      'content-length': 0
+    }
+  }
+}
+{
+  response: {
+    debugId: 1,
+    headers: {
+      'cache-control': 'no-cache, no-store, must-revalidate, pre-check=0, post-check=0',
+      connection: 'close',
+      'content-length': '121',
+      'content-security-policy': "default-src 'none'; connect-src 'self'; font-src https://abs.twimg.com https://abs-0.twimg.com data:; frame-src 'self' twitter:; img-src https://abs.twimg.com https://*.twimg.com https://pbs.twimg.com data:; media-src 'none'; object-src 'none'; script-src https://abs.twimg.com https://abs-0.twimg.com https://twitter.com https://mobile.twitter.com; style-src https://abs.twimg.com https://abs-0.twimg.com; report-uri https://twitter.com/i/csp_report?a=NVQWGYLXFVWG6Z3JNY%3D%3D%3D%3D%3D%3D&ro=false;",
+      'content-type': 'text/html;charset=utf-8',
+      date: 'Wed, 20 May 2020 21:50:34 GMT',
+      expires: 'Tue, 31 Mar 1981 05:00:00 GMT',
+      'last-modified': 'Wed, 20 May 2020 21:50:34 GMT',
+      ml: 'A',
+      pragma: 'no-cache',
+      server: 'tsa_b',
+      'set-cookie': [Array],
+      status: '200 OK',
+      'strict-transport-security': 'max-age=631138519',
+      'x-connection-hash': '7574fbb9ac146ea7f61150c0a72cd01e',
+      'x-content-type-options': 'nosniff',
+      'x-frame-options': 'SAMEORIGIN',
+      'x-response-time': '135',
+      'x-transaction': '007656d6006f8fd3',
+      'x-twitter-response-tags': 'BouncerCompliant',
+      'x-ua-compatible': 'IE=edge,chrome=1',
+      'x-xss-protection': '0'
+    },
+    statusCode: 200,
+    body: 'oauth_token=glEUeAAAAAABEanCAAABcjQRE9k&oauth_token_secret=Y2VNrrFg7maoY3nXdWOwBbzj4KYGhFjX&oauth_callback_confirmed=true'
+  }
+}
+glEUeAAAAAABEanCAAABcjQRE9k
+params from Step 2 callback {
+  oauth_token: 'glEUeAAAAAABEanCAAABcjQRE9k',
+  oauth_verifier: '2Lam08DRa5LuMPwwe0ylZrJkjHAjXAT1'
+}
+POST: exchange oauth_token for access_token
+{
+  request: {
+    debugId: 2,
+    uri: 'https://api.twitter.com/oauth/access_token',
+    method: 'POST',
+    headers: {
+      host: 'api.twitter.com',
+      Authorization: 'OAuth oauth_consumer_key="8ZWnKZhuS6PGbGhizrGFVOy54",oauth_nonce="9f95047358474024b4071f8cd0833607",oauth_signature_method="HMAC-SHA1",oauth_timestamp="1590011445",oauth_token="glEUeAAAAAABEanCAAABcjQRE9k",oauth_verifier="2Lam08DRa5LuMPwwe0ylZrJkjHAjXAT1",oauth_version="1.0",oauth_signature="%2BNemYNk5lzw1GkyE6ZbTSFC0oCI%3D"',      'content-length': 0
+    }
+  }
+}
+{
+  response: {
+    debugId: 2,
+    headers: {
+      'cache-control': 'no-cache, no-store, must-revalidate, pre-check=0, post-check=0',
+      connection: 'close',
+      'content-length': '182',
+      'content-security-policy': "default-src 'none'; connect-src 'self'; font-src https://abs.twimg.com https://abs-0.twimg.com data:; frame-src 'self' twitter:; img-src https://abs.twimg.com https://*.twimg.com https://pbs.twimg.com data:; media-src 'none'; object-src 'none'; script-src https://abs.twimg.com https://abs-0.twimg.com https://twitter.com https://mobile.twitter.com; style-src https://abs.twimg.com https://abs-0.twimg.com; report-uri https://twitter.com/i/csp_report?a=NVQWGYLXFVWG6Z3JNY%3D%3D%3D%3D%3D%3D&ro=false;",
+      'content-type': 'text/html;charset=utf-8',
+      date: 'Wed, 20 May 2020 21:50:47 GMT',
+      expires: 'Tue, 31 Mar 1981 05:00:00 GMT',
+      'last-modified': 'Wed, 20 May 2020 21:50:47 GMT',
+      ml: 'A',
+      pragma: 'no-cache',
+      server: 'tsa_b',
+      'set-cookie': [Array],
+      status: '200 OK',
+      'strict-transport-security': 'max-age=631138519',
+      'x-connection-hash': '890bc4fcd824873d3c13cc1e570739b5',
+      'x-content-type-options': 'nosniff',
+      'x-frame-options': 'SAMEORIGIN',
+      'x-response-time': '645',
+      'x-transaction': '008a4aeb000384bb',
+      'x-twitter-response-tags': 'BouncerCompliant',
+      'x-ua-compatible': 'IE=edge,chrome=1',
+      'x-xss-protection': '0'
+    },
+    statusCode: 200,
+    body: 'oauth_token=1261716580687400966-TNhdJG6XDCfJmty0tw6QYGEq420zQA&oauth_token_secret=6mKaJKXUfQRiIYu7vyzz1eJIeMXVB0mWulGWb9j1FDQ8X&user_id=1261716580687400966&screen_name=TheBotofLenny1'
+  }
+}
+>>> send request to https://api.twitter.com/1.1/users/show.json using access token
+{
+  request: {
+    debugId: 3,
+    uri: 'https://api.twitter.com/1.1/users/show.json?screen_name=TheBotofLenny1&user_id=1261716580687400966',
+    method: 'GET',
+    headers: {
+      host: 'api.twitter.com',
+      accept: 'application/json',
+      Authorization: 'OAuth oauth_consumer_key="8ZWnKZhuS6PGbGhizrGFVOy54",oauth_nonce="ded7b42be2a54d9fac08bff65b2e6177",oauth_signature_method="HMAC-SHA1",oauth_timestamp="1590011446",oauth_token="1261716580687400966-TNhdJG6XDCfJmty0tw6QYGEq420zQA",oauth_version="1.0",oauth_signature="obSEx9O7gIqEx%2BKL64RtEsHeom0%3D"'
+    }
+  }
+}
+{
+  response: {
+    debugId: 3,
+    headers: {
+      'cache-control': 'no-cache, no-store, must-revalidate, pre-check=0, post-check=0',
+      connection: 'close',
+      'content-disposition': 'attachment; filename=json.json',
+      'content-length': '2007',
+      'content-type': 'application/json;charset=utf-8',
+      date: 'Wed, 20 May 2020 21:50:47 GMT',
+      expires: 'Tue, 31 Mar 1981 05:00:00 GMT',
+      'last-modified': 'Wed, 20 May 2020 21:50:47 GMT',
+      pragma: 'no-cache',
+      server: 'tsa_b',
+      'set-cookie': [Array],
+      status: '200 OK',
+      'strict-transport-security': 'max-age=631138519',
+      'x-access-level': 'read-write',
+      'x-connection-hash': 'af7dee8f3bc4d9dccc50ee3c29a848b0',
+      'x-content-type-options': 'nosniff',
+      'x-frame-options': 'SAMEORIGIN',
+      'x-rate-limit-limit': '900',
+      'x-rate-limit-remaining': '897',
+      'x-rate-limit-reset': '1590011810',
+      'x-response-time': '40',
+      'x-transaction': '0032807800e156ca',
+      'x-twitter-response-tags': 'BouncerCompliant',
+      'x-xss-protection': '0'
+    },
+    statusCode: 200,
+    body: {
+      id: 1261716580687401000,
+      id_str: '1261716580687400966',
+      name: 'The Bot of Lenny',
+      screen_name: 'TheBotofLenny1',
+      location: '',
+      profile_location: null,
+      description: 'hey do you want some chocolate?',
+      url: null,
+      entities: [Object],
+      protected: false,
+      followers_count: 0,
+      friends_count: 0,
+      listed_count: 0,
+      created_at: 'Sat May 16 17:54:15 +0000 2020',
+      favourites_count: 1,
+      utc_offset: null,
+      time_zone: null,
+      geo_enabled: false,
+      verified: false,
+      statuses_count: 10,
+      lang: null,
+      status: [Object],
+      contributors_enabled: false,
+      is_translator: false,
+      is_translation_enabled: false,
+      profile_background_color: 'F5F8FA',
+      profile_background_image_url: null,
+      profile_background_image_url_https: null,
+      profile_background_tile: false,
+      profile_image_url: 'http://pbs.twimg.com/profile_images/1262146507005923331/x8AOPPMV_normal.jpg',
+      profile_image_url_https: 'https://pbs.twimg.com/profile_images/1262146507005923331/x8AOPPMV_normal.jpg',
+      profile_link_color: '1DA1F2',
+      profile_sidebar_border_color: 'C0DEED',
+      profile_sidebar_fill_color: 'DDEEF6',
+      profile_text_color: '333333',
+      profile_use_background_image: true,
+      has_extended_profile: false,
+      default_profile: true,
+      default_profile_image: false,
+      following: false,
+      follow_request_sent: false,
+      notifications: false,
+      translator_type: 'none',
+      suspended: false,
+      needs_phone_verification: false
+    }
+  }
+}
+>>> send request to https://api.twitter.com/1.1/statuses/user_timeline.json using access token
+{
+  request: {
+    debugId: 4,
+    uri: 'https://api.twitter.com/1.1/statuses/user_timeline.json?screen_name=TheBotofLenny1&user_id=1261716580687400966',
+    method: 'GET',
+    headers: {
+      host: 'api.twitter.com',
+      accept: 'application/json',
+      Authorization: 'OAuth oauth_consumer_key="8ZWnKZhuS6PGbGhizrGFVOy54",oauth_nonce="b77eca68c2674e2e83ff92954677e6ec",oauth_signature_method="HMAC-SHA1",oauth_timestamp="1590011449",oauth_token="1261716580687400966-TNhdJG6XDCfJmty0tw6QYGEq420zQA",oauth_version="1.0",oauth_signature="JRl%2FNIk6Q%2FKpaldlfAWvBCZ3JtE%3D"'
+    }
+  }
+}
+{
+  response: {
+    debugId: 4,
+    headers: {
+      'cache-control': 'no-cache, no-store, must-revalidate, pre-check=0, post-check=0',
+      connection: 'close',
+      'content-disposition': 'attachment; filename=json.json',
+      'content-length': '22056',
+      'content-type': 'application/json;charset=utf-8',
+      date: 'Wed, 20 May 2020 21:50:50 GMT',
+      expires: 'Tue, 31 Mar 1981 05:00:00 GMT',
+      'last-modified': 'Wed, 20 May 2020 21:50:50 GMT',
+      pragma: 'no-cache',
+      server: 'tsa_b',
+      'set-cookie': [Array],
+      status: '200 OK',
+      'strict-transport-security': 'max-age=631138519',
+      'x-access-level': 'read-write',
+      'x-app-rate-limit-limit': '100000',
+      'x-app-rate-limit-remaining': '99974',
+      'x-app-rate-limit-reset': '1590022897',
+      'x-connection-hash': 'b8f9d8ec10b2ec883dc8a20964c9b8a8',
+      'x-content-type-options': 'nosniff',
+      'x-frame-options': 'SAMEORIGIN',
+      'x-rate-limit-limit': '900',
+      'x-rate-limit-remaining': '899',
+      'x-rate-limit-reset': '1590012350',
+      'x-response-time': '66',
+      'x-transaction': '00272c88002b7a52',
+      'x-twitter-response-tags': 'BouncerCompliant',
+      'x-xss-protection': '0'
+    },
+    statusCode: 200,
+    body: [
+      [Object], [Object],
+      [Object], [Object],
+      [Object], [Object],
+      [Object], [Object],
+      [Object], [Object]
+    ]
+  }
+}
+>>> send request to https://api.twitter.com/1.1/statuses/update.json?status=This is my message: 1590011452417  using access token
+{
+  request: {
+    debugId: 5,
+    uri: 'https://api.twitter.com/1.1/statuses/update.json?status=This%20is%20my%20message%3A%201590011452417&screen_name=TheBotofLenny1&user_id=1261716580687400966',
+    method: 'POST',
+    headers: {
+      host: 'api.twitter.com',
+      accept: 'application/json',
+      Authorization: 'OAuth oauth_consumer_key="8ZWnKZhuS6PGbGhizrGFVOy54",oauth_nonce="af80aa52a9a0419c964858b3310da864",oauth_signature_method="HMAC-SHA1",oauth_timestamp="1590011452",oauth_token="1261716580687400966-TNhdJG6XDCfJmty0tw6QYGEq420zQA",oauth_version="1.0",oauth_signature="3TfQbcJmr5i9T%2F9sLgpCqsKSzbs%3D"',
+      'content-length': 0
+    }
+  }
+}
+{
+  response: {
+    debugId: 5,
+    headers: {
+      'cache-control': 'no-cache, no-store, must-revalidate, pre-check=0, post-check=0',
+      connection: 'close',
+      'content-disposition': 'attachment; filename=json.json',
+      'content-length': '1930',
+      'content-type': 'application/json;charset=utf-8',
+      date: 'Wed, 20 May 2020 21:50:53 GMT',
+      expires: 'Tue, 31 Mar 1981 05:00:00 GMT',
+      'last-modified': 'Wed, 20 May 2020 21:50:53 GMT',
+      pragma: 'no-cache',
+      server: 'tsa_b',
+      'set-cookie': [Array],
+      status: '200 OK',
+      'strict-transport-security': 'max-age=631138519',
+      'x-access-level': 'read-write',
+      'x-connection-hash': '605b6751dda13717f9bfea14b71f558d',
+      'x-content-type-options': 'nosniff',
+      'x-frame-options': 'SAMEORIGIN',
+      'x-response-time': '74',
+      'x-transaction': '0029a2db0057a7f9',
+      'x-twitter-response-tags': 'BouncerCompliant',
+      'x-xss-protection': '0'
+    },
+    statusCode: 200,
+    body: {
+      created_at: 'Wed May 20 21:50:53 +0000 2020',
+      id: 1263225709872459800,
+      id_str: '1263225709872459776',
+      text: 'This is my message: 1590011452417',
+      truncated: false,
+      entities: [Object],
+      source: '<a href="http://8c2545a5.ngrok.io/" rel="nofollow">lennythedev</a>',
+      in_reply_to_status_id: null,
+      in_reply_to_status_id_str: null,
+      in_reply_to_user_id: null,
+      in_reply_to_user_id_str: null,
+      in_reply_to_screen_name: null,
+      user: [Object],
+      geo: null,
+      coordinates: null,
+      place: null,
+      contributors: null,
+      is_quote_status: false,
+      retweet_count: 0,
+      favorite_count: 0,
+      favorited: false,
+      retweeted: false,
+      lang: 'en'
+    }
+  }
+}
+SENT TWEET!
+{
+  created_at: 'Wed May 20 21:50:53 +0000 2020',
+  id: 1263225709872459800,
+  id_str: '1263225709872459776',
+  text: 'This is my message: 1590011452417',
+  truncated: false,
+  entities: { hashtags: [], symbols: [], user_mentions: [], urls: [] },
+  source: '<a href="http://8c2545a5.ngrok.io/" rel="nofollow">lennythedev</a>',
+  in_reply_to_status_id: null,
+  in_reply_to_status_id_str: null,
+  in_reply_to_user_id: null,
+  in_reply_to_user_id_str: null,
+  in_reply_to_screen_name: null,
+  user: {
+    id: 1261716580687401000,
+    id_str: '1261716580687400966',
+    name: 'The Bot of Lenny',
+    screen_name: 'TheBotofLenny1',
+    location: '',
+    description: 'hey do you want some chocolate?',
+    url: null,
+    entities: { description: [Object] },
+    protected: false,
+    followers_count: 0,
+    friends_count: 0,
+    listed_count: 0,
+    created_at: 'Sat May 16 17:54:15 +0000 2020',
+    favourites_count: 1,
+    utc_offset: null,
+    time_zone: null,
+    geo_enabled: false,
+    verified: false,
+    statuses_count: 11,
+    lang: null,
+    contributors_enabled: false,
+    is_translator: false,
+    is_translation_enabled: false,
+    profile_background_color: 'F5F8FA',
+    profile_background_image_url: null,
+    profile_background_image_url_https: null,
+    profile_background_tile: false,
+    profile_image_url: 'http://pbs.twimg.com/profile_images/1262146507005923331/x8AOPPMV_normal.jpg',
+    profile_image_url_https: 'https://pbs.twimg.com/profile_images/1262146507005923331/x8AOPPMV_normal.jpg',
+    profile_link_color: '1DA1F2',
+    profile_sidebar_border_color: 'C0DEED',
+    profile_sidebar_fill_color: 'DDEEF6',
+    profile_text_color: '333333',
+    profile_use_background_image: true,
+    has_extended_profile: false,
+    default_profile: true,
+    default_profile_image: false,
+    following: false,
+    follow_request_sent: false,
+    notifications: false,
+    translator_type: 'none'
+  },
+  geo: null,
+  coordinates: null,
+  place: null,
+  contributors: null,
+  is_quote_status: false,
+  retweet_count: 0,
+  favorite_count: 0,
+  favorited: false,
+  retweeted: false,
+  lang: 'en'
+}
+

@@ -1,0 +1,1 @@
+"OAuth oauth_nonce="1c7eETfUcoj2U4krhdl24w==",oauth_callback="http%3A%2F%2Flocalhost%3A3001%2Fcallback",oauth_signature_method="HMAC-SHA1",oauth_timestamp="1589684277074", oauth_consumer_key="8ZWnKZhuS6PGbGhizrGFVOy54",oauth_signature="kJxOkpfwsRvWuwT2Ixf20syjdCM%3D",oauth_version="1.0""

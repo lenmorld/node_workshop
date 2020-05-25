@@ -1,0 +1,18 @@
+oa
+
+oauth_callback:"http://localhost:3001/callback"
+oauth_consumer_key:"8ZWnKZhuS6PGbGhizrGFVOy54"
+oauth_nonce:"581279a7d0d94d0390b56e20fb3a22c7"
+oauth_signature:"Wz2pkPB/nq+xUvDVidSGrMwZMqE="
+oauth_signature_method:"HMAC-SHA1"
+oauth_timestamp:"1589715605"
+oauth_version:"1.0"
+
+params.map(function (i) {
+    return i + '=' + wrap + oauth.rfc3986(oa[i]) + wrap
+  }).join(sep)
+"oauth_callback="http%3A%2F%2Flocalhost%3A3001%2Fcallback",oauth_consumer_key="8ZWnKZhuS6PGbGhizrGFVOy54",oauth_nonce="581279a7d0d94d0390b56e20fb3a22c7",oauth_signature_method="HMAC-SHA1",oauth_timestamp="1589715605",oauth_version="1.0",oauth_signature="Wz2pkPB%2Fnq%2BxUvDVidSGrMwZMqE%3D""
+
+self.request.setHeader('Authorization', 'OAuth ' + self.concatParams(oa, ',', '"'))
+
+"oauth_callback="http%3A%2F%2Flocalhost%3A3001%2Fcallback",oauth_consumer_key="8ZWnKZhuS6PGbGhizrGFVOy54",oauth_nonce="581279a7d0d94d0390b56e20fb3a22c7",oauth_signature_method="HMAC-SHA1",oauth_timestamp="1589715605",oauth_version="1.0",oauth_signature="Wz2pkPB%2Fnq%2BxUvDVidSGrMwZMqE%3D""

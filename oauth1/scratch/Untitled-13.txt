@@ -1,0 +1,78 @@
+    uri: 'https://api.twitter.com/oauth/request_token',
+    method: 'POST',
+    headers: {
+      oauth_callback   http://localhost:3001/callback
+								http%3A%2F%2Flocalhost%3A3001%2Fcallback
+
+		oauth_consumer_key	8ZWnKZhuS6PGbGhizrGFVOy54	
+		
+		oauth_nonce 		5071a6e7a00c4973ae87301ffc39ac0b
+		
+		oauth_signature_method		HMAC-SHA1
+		
+		oauth_timestamp				1590011208 
+		
+		oauth_version 					1.0
+    }
+		oauth_signature="CesX0w0r763ZXmsMbEk%2BuUu0lGw%3D"
+
+	 how?
+	 CesX0w0r763ZXmsMbEk%2BuUu0lGw%3D
+
+Parameter string
+
+1. percent encode every key and value
+2. sort alphabetically
+3. for each : key=value&
+
+oauth_callback=http%3A%2F%2Flocalhost%3A3001%2Fcallback&
+oauth_consumer_key=8ZWnKZhuS6PGbGhizrGFVOy54&
+oauth_nonce=5071a6e7a00c4973ae87301ffc39ac0b&	
+oauth_signature_method=HMAC-SHA1&
+oauth_timestamp=1590011208&
+oauth_version=1.0
+
+oauth_callback=http%3A%2F%2Flocalhost%3A3001%2Fcallback&oauth_consumer_key=8ZWnKZhuS6PGbGhizrGFVOy54&oauth_nonce=5071a6e7a00c4973ae87301ffc39ac0b&oauth_signature_method=HMAC-SHA1&oauth_timestamp=1590011208&oauth_version=1.0
+
+=============
+Base string
+=============
+
+POST https://api.twitter.com/oauth/request_token
+
+1. HTTP method uppercase --> POST
+2. URL : % encoded --> https%3A%2F%2Fapi.twitter.com%2Foauth%2Frequest_token
+3. % encode parameter string from before: 
+oauth_callback%3Dhttp%253A%252F%252Flocalhost%253A3001%252Fcallback%26oauth_consumer_key%3D8ZWnKZhuS6PGbGhizrGFVOy54%26oauth_nonce%3D5071a6e7a00c4973ae87301ffc39ac0b%26oauth_signature_method%3DHMAC-SHA1%26oauth_timestamp%3D1590011208%26oauth_version%3D1.0
+
+combine with &
+
+
+POST&https%3A%2F%2Fapi.twitter.com%2Foauth%2Frequest_token&oauth_callback%3Dhttp%253A%252F%252Flocalhost%253A3001%252Fcallback%26oauth_consumer_key%3D8ZWnKZhuS6PGbGhizrGFVOy54%26oauth_nonce%3D5071a6e7a00c4973ae87301ffc39ac0b%26oauth_signature_method%3DHMAC-SHA1%26oauth_timestamp%3D1590011208%26oauth_version%3D1.0
+
+
+================
+Get signing key
+================
+- consumer secret
+8ZWnKZhuS6PGbGhizrGFVOy54
+
+1. if only consumer secret
+
+percent_encoded_consumer_secret&
+
+8ZWnKZhuS6PGbGhizrGFVOy54&
+
+2. if Oauth token secret available
+- this is the account our app is acting on behalf of
+(used later during requests)
+
+percent_encoded_consumer_secret&oauth_token_secret
+
+==============
+hmac_sha1(base_string, signing_key)
+==============
+
+
+crypto.createHmac("sha1", "8ZWnKZhuS6PGbGhizrGFVOy54&").update("POST&https%3A%2F%2Fapi.twitter.com%2Foauth%2Frequest_token&oauth_callback%3Dhttp%253A%252F%252Flocalhost%253A3001%252Fcallback%26oauth_consumer_key%3D8ZWnKZhuS6PGbGhizrGFVOy54%26oauth_nonce%3D5071a6e7a00c4973ae87301ffc39ac0b%26oauth_signature_method%3DHMAC-SHA1%26oauth_timestamp%3D1590011208%26oauth_version%3D1.0").digest().toString('base64')
+

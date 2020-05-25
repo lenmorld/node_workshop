@@ -1,0 +1,1 @@
+Authorization: 'OAuth oauth_consumer_key="8ZWnKZhuS6PGbGhizrGFVOy54",oauth_nonce="2b188525e8074c0d852b4b4598b1aeef",oauth_signature_method="HMAC-SHA1",oauth_timestamp="1589975754",oauth_token="1261716580687400966-TNhdJG6XDCfJmty0tw6QYGEq420zQA",oauth_version="1.0",oauth_signature="7VO8L3xYjeTJkSfCW9c90nh4zyI%3D"'
