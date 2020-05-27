@@ -55,15 +55,15 @@ router.post('/register', async (req, res) => {
 
 		console.log('Registering new user: ', _newUser);
 
-		// generate password with salt
+		// generate password hash with salt
 		const salt = await bcrypt.genSalt(10); // salt rounds
-		const hashedPassword = await bcrypt.hash(password, salt);
+		const passwordHash = await bcrypt.hash(password, salt);
 
 		let users = await dbCollection.find().toArray();
 
 		await dbCollection.insertOne({
 			..._newUser,
-			password: hashedPassword,
+			password: passwordHash,
 			id: crudHelper.getNextId(users),
 			createdAt: dateTimeHelper.getTimeStamp(),
 		});
