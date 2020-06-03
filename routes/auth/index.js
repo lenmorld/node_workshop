@@ -1,6 +1,10 @@
 const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcrypt');
+const cookieSession = require('cookie-session');
+
+// import config file
+const config = require('../../config');
 
 // import modules
 const crudHelper = require('../../utils/crudHelper');
@@ -8,6 +12,14 @@ const dateTimeHelper = require('../../utils/dateTimeHelper');
 
 // db setup
 const DbConnection = require('../../db');
+
+// configure session
+router.use(cookieSession({
+	name: 'nodeapp_session',
+	secret: config.secret_key,   // secret to sign and verify cookie values
+	httpOnly: true,   // false allows access using `document.cookie` but is not secure
+}));
+
 
 // Registration Page for Customers
 router.get("/register", async (req, res) => {
@@ -104,9 +116,15 @@ router.post('/login', async (req, res) => {
 	console.log(`match: ${isMatch}`)
 
 	if (isMatch) {
-		res.json({
-			message: "Login successful"
-		})
+		// SUCCESSFUL LOGIN
+		// set session to userId
+		req.session.loggedInUser = {
+			id: user.id,
+			username: userToAuth.username
+			// DONT put password in session
+		}
+
+		res.redirect('/resource');
 	} else {
 		res.json({
 			message: "Login failed"
