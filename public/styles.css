@@ -10,3 +10,14 @@ body {
 
 	font-family: Arial, Helvetica, sans-serif;
 }
+
+.button-container {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: space-between;
+}
+
+form {
+	margin: 0 10px;
+}

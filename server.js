@@ -5,8 +5,13 @@ const config = require('./config');
 const express = require('express'); // import express
 const server = express();
 const body_parser = require('body-parser');
+const methodOverride = require('method-override');
+
 server.use(body_parser.json()); // parse JSON (application/json content-type)
 server.use(body_parser.urlencoded()) // parse HTML form data
+
+// method override to allow PUT, DELETE in HTML forms
+server.use(methodOverride('_method'))
 
 // set the view engine to ejs
 server.set('view engine', 'ejs');
