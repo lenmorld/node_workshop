@@ -52,12 +52,16 @@ router.get("/resource", async (req, res) => {
 
 // Protected page - only for Authenticated users' access
 router.get("/resource2", async (req, res) => {
-	const dbCollection = await DbConnection.getCollection("products");
-	const products = await dbCollection.find().toArray();
-
-	res.render('auth/resource2', {
-		products: products
-	})
+	if (!req.session.loggedInUser) {
+		res.redirect('/login');
+	} else {
+		const dbCollection = await DbConnection.getCollection("products");
+		const products = await dbCollection.find().toArray();
+	
+		res.render('auth/resource2', {
+			products: products
+		})
+	}
 });
 
 // Registration handler
@@ -142,7 +146,7 @@ router.post('/login', async (req, res) => {
 			// DONT put password in session
 		}
 
-		res.redirect('/resource');
+		res.redirect('/resource2');
 	} else {
 		res.json({
 			message: "Login failed"
@@ -196,7 +200,7 @@ router.post("/api/token", async (req, res) => {
 	if (isMatch) {
 		// JWT: create token from user details
 		const payload = { username: userToAuth.username };
-		const token_expiry = '24h';
+		const token_expiry = '30s';
 		const token = jwt.sign(payload, config.secret_key, {
 			expiresIn: token_expiry
 		});
