@@ -8,3 +8,4 @@ fetch('http://localhost:4000/foods')
 		console.log(json)
 		document.getElementById('app').innerHTML = JSON.stringify(json);
 	})
+	
