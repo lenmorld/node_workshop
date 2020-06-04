@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const cors = require('cors');
 
 // import modules
 const crudHelper = require('../../utils/crudHelper');
@@ -7,6 +8,9 @@ const dateTimeHelper = require('../../utils/dateTimeHelper');
 
 // db setup
 const DbConnection = require('../../db');
+
+// allow CORS for all routes under this router
+router.use(cors());
 
 // GET all foods
 router.get("/foods", async (req, res) => {
