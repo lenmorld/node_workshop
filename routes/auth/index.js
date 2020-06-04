@@ -50,6 +50,16 @@ router.get("/resource", async (req, res) => {
 	}
 });
 
+// Protected page - only for Authenticated users' access
+router.get("/resource2", async (req, res) => {
+	const dbCollection = await DbConnection.getCollection("products");
+	const products = await dbCollection.find().toArray();
+
+	res.render('auth/resource2', {
+		products: products
+	})
+});
+
 // Registration handler
 router.post('/register', async (req, res) => {
 	const newUser = req.body;

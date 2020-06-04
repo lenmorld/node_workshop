@@ -1,0 +1,28 @@
+<%- include('../partials/_head'); %>
+
+<body>
+	<nav>
+		<h1>Products</h1>
+		<a href="/logout" class="btn btn-danger" role="button">Logout</a>
+	</nav>
+	<hr />
+	<main>
+		<ul class="container">
+			<% products.forEach(function(product) { %>
+			<li class="row">
+				<div class="col">
+					<div>
+						product <%= product.id %>
+					</div>
+					<ul>
+						<li><%= product.id %></li>
+						<li><%= product.name %></li>
+						<li><%= product.brand %></li>
+						<li><%= product.price %></li>
+					</ul>
+				</div>
+			</li>
+			<% }); %>
+		</ul>
+	</main>
+</body>
