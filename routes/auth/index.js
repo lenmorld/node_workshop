@@ -3,6 +3,10 @@ const router = express.Router();
 const bcrypt = require('bcrypt');
 const cookieSession = require('cookie-session');
 const jwt = require('jsonwebtoken');
+const cors = require('cors');
+
+// allow CORS for all routes under this router
+router.use(cors());
 
 // import config file
 const config = require('../../config');
