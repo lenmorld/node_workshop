@@ -47,13 +47,30 @@ const getAccessToken = () => {
 // /songs?search=bad+guy
 router.get("/services/songs", (req, res) => {
 	const search = req.query.search;
-	console.log(`[SPOTIFY] : searching ${search}...`);
+	console.log(`[SPOTIFY] searching ${search}...`);
 	getAccessToken().then((access_token) => {
-		// TODO: send a GET request for search, attaching the access_token
-		//				to prove we are verified API user
+		// send a GET request for search, attaching the access_token
+		// to prove we are verified API user
 
-		// testing: send search, access_token to client
-		res.send({ search: search, access_token: access_token });
+		const _url = `https://api.spotify.com/v1/search?query=${search}&type=track`;
+
+		axios({
+			method: 'GET',
+			url: _url,
+			headers: {
+				"Authorization": `Bearer ${access_token}`,
+				"Accept": "application/json"
+			}
+		}).then(result => {
+			// inspect response data
+			console.log(">>>>>> search response <<<<<<<<")
+			console.log(JSON.stringify(result.data));
+			res.send(result.data.tracks.items);
+			console.log(">>>> end of response <<<<<<")
+		}).catch(err => {
+			console.log(`[SPOTIFY ERROR]: ${err}`);
+			throw err;
+		});
 	});
 });
 
