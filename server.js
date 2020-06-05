@@ -25,6 +25,7 @@ const usersRouter = require('./routes/api/users');
 const foodsRouter = require('./routes/api/foods');
 const authRouter = require('./routes/auth/index');
 const servicesRouter = require('./routes/services/api1');
+const servicesRouter2 = require('./routes/services/api2');
 
 // import routers for HTML views (pages)
 const indexPages = require('./routes/pages/index');
@@ -59,6 +60,7 @@ server.use("/", authRouter);
 
 // # services
 server.use("/", servicesRouter);
+server.use("/", servicesRouter2);
 
 server.listen(port, () => { // Callback function in ES6
 	console.log(`Server listening at ${port}`);
