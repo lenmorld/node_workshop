@@ -16,17 +16,28 @@ router.get("/services/posts/:id", function (req, res) {
 });
 
 // Github Jobs API
+//http://localhost:4000/services/jobs?location=new%20york&
+//description=javascript&titleContains=developer&year=2018
 router.get("/services/jobs", function (req, res) {
-	const { description, location } = req.query;
+	const { description, location, titleContains, year } = req.query;
 	let requestUrl = "https://jobs.github.com/positions.json";
+
 	if (description || location) {
 		const descriptionParam = description ? `description=${description}&` : '';
 		const locationParam = location ? `location=${location}&` : '';
 		requestUrl = `${requestUrl}?${descriptionParam}${locationParam}`;
 	}
-	console.log(`Request: ${requestUrl}`);
+
 	axios(requestUrl).then(result => {
-		res.json(result.data);
+		// post-processing of results
+		const results = result.data;
+		const matches = results.filter(r => {
+			const { title, created_at } = r;
+			const titleParam = titleContains ? titleContains.toLowerCase() : '';
+			const yearParam = year || '';
+			return title.toLowerCase().includes(titleParam) && created_at.includes(yearParam);
+		});
+		res.json(matches);
 	}).catch(err => {
 		throw err;
 	});
