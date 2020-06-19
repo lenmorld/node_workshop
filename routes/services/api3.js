@@ -84,4 +84,47 @@ router.get("/services/songs", (req, res) => {
 	});
 });
 
+
+// /artists?search=billie
+router.get("/services/artists", (req, res) => {
+	const search = req.query.search;
+	console.log(`[SPOTIFY] searching ${search}...`);
+	getAccessToken().then((access_token) => {
+		// send a GET request for search, attaching the access_token
+		// to prove we are verified API user
+
+		const _url = `https://api.spotify.com/v1/search?query=${search}&type=artist`;
+
+		axios({
+			method: 'GET',
+			url: _url,
+			headers: {
+				"Authorization": `Bearer ${access_token}`,
+				"Accept": "application/json"
+			}
+		}).then(result => {
+			// "clean" data so we only get the attributes we need
+			// console.log(result.data)
+			const search_results = result.data.artists.items;
+			const squashed_results = search_results.map(artist => {
+				return {
+					id: artist.id,
+					name: artist.name,
+					genres: artist.genres,
+					href: artist.href,
+					image: artist.images && artist.images[0]
+				};
+
+			});
+			console.log(">>>>>> search response <<<<<<<<")
+			console.log(squashed_results);
+			console.log(">>>> end of response <<<<<<")
+			res.json(squashed_results);
+		})
+	}).catch(err => {
+		console.log(`[SPOTIFY ERROR]: ${err}`);
+		throw err;
+	});
+});
+
 module.exports = router;
