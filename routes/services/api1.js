@@ -43,4 +43,32 @@ router.get("/services/jobs", function (req, res) {
 	});
 });
 
+// JSON typicode: sample blog posts
+router.get("/services/recipes", function (req, res) {
+	const { i, q, t } = req.query;
+
+	const ingredients = i ? `i=${i}` : ''
+	const meal = q ? `q=${q}` : ''
+
+	const query_params = [ingredients, meal].join('&')
+
+	axios(`http://www.recipepuppy.com/api/?${query_params}`)
+		.then(result => {
+			const recipes = result.data.results;
+
+			// if t is supplied
+			// only show recipe w/ thumbnails if t="true"
+			// case-insensitive using toLowerCase
+			const filter_thumbnails = (t && t.toLowerCase() === "true")
+			if (filter_thumbnails) {
+				const items_with_thumbnail = recipes.filter(item => item.thumbnail)
+				res.json(items_with_thumbnail)
+			} else {
+				res.json(recipes);
+			}
+		}).catch(err => {
+			throw err;
+		});
+});
+
 module.exports = router;
