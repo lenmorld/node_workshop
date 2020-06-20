@@ -16,14 +16,14 @@
 					</div>
 					<ul>
 						<li><%= food.name %></li>
-						<li><%= food.picture %></li>
+						<li></li>
 						<li><%= food.price %></li>
 					</ul>
 				</div>
 				<div class="col"></div>
 				<div class="col"></div>
 				<div class="col button-container">
-					<a href="/page/foods/<%= food.id %>" class="btn btn-primary" role="button">Show</a>
+					<a class="btn btn-primary" role="button">Show</a>
 					<a href="/page/foods/edit/<%= food.id %>" class="btn btn-info" role="button">Edit</a>
 					<form method="POST" action="/foods/<%= food.id %>?_method=DELETE">
 						<button type="submit" class="btn btn-danger" role="button">Delete</button>

@@ -12,7 +12,7 @@
 			<li class="row">
 				<div class="col">
 					<div>
-						<a href="/page/users/<%= user.id %>">user <%= user.id %></a>
+						user <%= user.id %>
 					</div>
 					<ul>
 						<li><%= user.name %></li>
@@ -23,7 +23,6 @@
 				<div class="col"></div>
 				<div class="col"></div>
 				<div class="col button-container">
-					<a href="/page/users/<%= user.id %>" class="btn btn-primary" role="button">Show</a>
 					<a href="/page/users/edit/<%= user.id %>" class="btn btn-info" role="button">Edit</a>
 					<form method="POST" action="/users/<%= user.id %>?_method=DELETE">
 						<button type="submit" class="btn btn-danger" role="button">Delete</button>

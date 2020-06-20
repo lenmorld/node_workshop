@@ -16,7 +16,7 @@ router.get("/page/foods", async (req, res) => {
 
 // Create page
 router.get("/page/foods/new", async (req, res) => {
-	res.render('foods/new');
+	// <<< C5 Challenge >>>
 });
 
 // Edit page
@@ -34,15 +34,7 @@ router.get("/page/foods/edit/:id", async (req, res) => {
 
 // Detail page
 router.get("/page/foods/:id", async (req, res) => {
-	const foodId = Number(req.params.id);
-	const dbCollection = await DbConnection.getCollection("foods");
-	const food = await dbCollection.findOne({ id: foodId });
-
-	console.log(`Loading detail page of food ${foodId}`);
-
-	res.render('foods/show', {
-		food: food
-	});
+	// <<< C5 Challenge >>>
 });
 
 module.exports = router; 
