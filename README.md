@@ -1,6 +1,18 @@
 # Node workshop
 
-## Create a .env file on root
+### to follow workshop:
+```
+$ git checkout dev
+$ node server.js
+```
+
+### to dev latest
+```
+$ git checkout master
+$ npm start
+```
+
+### Create a .env file on root
 
 ```
 NODE_ENV=development
