@@ -1,0 +1,18 @@
+<h1><%= user.display_name %>'s Spotify info</h1>
+
+<p>ID: <%= user.id %></p>
+<p>Email: <%= user.email %></p>
+<p>Followers: <%= JSON.stringify(user.followers) %></p>
+<p>URI: <%= user.uri %></p>
+
+<p>
+	<img src="<%= user.images[0].url %>" width="200" />
+</p>
+
+<p>
+	<a href="/auth2/start">Test cached token by going back to /start</a>
+</p>
+
+<p>
+	<a href="/auth2/logout">Logout - remove token and restart login flow</a>
+</p>

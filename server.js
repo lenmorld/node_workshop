@@ -24,6 +24,7 @@ const productsRouter = require('./routes/api/products');
 const usersRouter = require('./routes/api/users');
 const foodsRouter = require('./routes/api/foods');
 const authRouter = require('./routes/auth/index');
+const authRouter2 = require('./routes/auth2/index');
 const servicesRouter = require('./routes/services/api1');
 const servicesRouter2 = require('./routes/services/api2');
 const servicesRouter3 = require('./routes/services/api3');
@@ -58,6 +59,7 @@ server.use("/", usersRouter);
 
 // # Auth
 server.use("/", authRouter);
+server.use("/", authRouter2);
 
 // # services
 server.use("/", servicesRouter);
