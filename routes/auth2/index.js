@@ -3,15 +3,17 @@ const router = express.Router();
 const axios = require('axios');
 const qs = require('qs')
 
+// import env. variables
+const config = require('../../config');
+
 // app credentials
-const CLIENT_ID = "001e278faea54a91b8ab5384bade191b"
-const CLIENT_SECRET = "de2a2b81d4f24f6a9f04745c1596dd65"
+const CLIENT_ID = config.spotify_client_id
+const CLIENT_SECRET = config.spotify_client_secret
 
 // Spotify endpoints
 const authorize_endpoint = "https://accounts.spotify.com/authorize"
 const token_endpoint = 'https://accounts.spotify.com/api/token'
 const user_info_endpoint = 'https://api.spotify.com/v1/me'
-
 
 // --- Authorization code flow params ---
 // this must be whitelisted in the Spotify dev app
@@ -28,13 +30,11 @@ const state = "foo=bar&fizz=buzz"
 // redirect_uri, scope, and state values must be URLencoded
 const authorization_url = `${authorize_endpoint}?client_id=${CLIENT_ID}&response_type=code&redirect_uri=${encodeURIComponent(redirect_uri)}&scope=${encodeURIComponent(scope)}&state=${encodeURIComponent(state)}`
 
-// a= url.format({ protocol: 'http', hostname: 'example.com', pathname: 'auth', query: { a: 'code', b: 'http://haha.com/callback' } })
-// -------------------------------
-
 // cached access token
 // IMPROVEMENT: use a better cache or DB to persist between server reloads
 let saved_access_token_payload = null;
 let user_info;
+let message;
 
 function getAndRenderUserProfile(token_obj, res) {
 	axios({
@@ -49,9 +49,6 @@ function getAndRenderUserProfile(token_obj, res) {
 
 		user_info = result.data
 
-		// res.json({
-		// 	user_info: result.data
-		// })
 		res.redirect('/auth2/user')
 	})
 }
@@ -59,10 +56,12 @@ function getAndRenderUserProfile(token_obj, res) {
 router.get('/auth2/start', (req, res) => {
 	// if token exists already, do the request
 	if (saved_access_token_payload) {
-		console.log(">>> using cached token <<<")
+		message = "Using cached token 🎁"
+		console.log(message)
 		getAndRenderUserProfile(saved_access_token_payload, res)
 	} else {
 		// STEP 1: direct user to Spotify login page
+		message = ""
 		res.render('auth2/start', {
 			auth_url: authorization_url
 		})
@@ -106,6 +105,7 @@ router.get('/auth2/user', (req, res) => {
 	if (user_info) {
 		res.render('auth2/user', {
 			user: user_info,
+			message: message
 		})
 	} else {
 		res.redirect('/auth2/start')

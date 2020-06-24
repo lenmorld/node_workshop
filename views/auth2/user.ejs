@@ -1,3 +1,11 @@
+<%- include('../partials/_head'); %>
+
+<% if (message) { %>
+<div class="alert alert-success" role="alert">
+	<%= message %>
+</div>
+<% } %>
+
 <h1><%= user.display_name %>'s Spotify info</h1>
 
 <p>ID: <%= user.id %></p>
@@ -10,9 +18,9 @@
 </p>
 
 <p>
-	<a href="/auth2/start">Test cached token by going back to /start</a>
+	<a href="/auth2/start" class="btn btn-primary" role="button">Test cached token by going back to /start</a>
 </p>
 
 <p>
-	<a href="/auth2/logout">Logout - remove token and restart login flow</a>
+	<a href="/auth2/logout" class="btn btn-danger" role="button">Logout - remove token and restart login flow</a>
 </p>

@@ -15,5 +15,9 @@ module.exports = {
 	secret_key: process.env.SECRET_KEY,
 	omdb_api_key: process.env.OMDB_API_KEY,
 	giphy_api_key: process.env.GIPHY_API_KEY,
-	spotify_api_key: process.env.SPOTIFY_API_KEY
+	// OAuth2 client credentials flow
+	spotify_api_key: process.env.SPOTIFY_API_KEY,
+	// OAuth2 auth code flow
+	spotify_client_id: process.env.SPOTIFY_CLIENT_ID,
+	spotify_client_secret: process.env.SPOTIFY_CLIENT_SECRET
 };
