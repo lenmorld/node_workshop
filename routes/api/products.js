@@ -7,12 +7,34 @@ const dateTimeHelper = require('../../utils/dateTimeHelper');
 // db setup
 const DbConnection = require('../../db');
 
+// custom Logger middleware
+router.use(function (req, res, next) {
+	console.log(`### [* Logger] Request received to ${req.path} at ${(new Date()).toISOString()}`)
+	next()
+})
+
+// custom Logger middleware 2
+router.use("/products/:id", function (req, res, next) {
+	console.log(`### [/products/:id Logger] Request received to get a product at ${(new Date()).toISOString()}`)
+	next()
+})
+
+router.use(function (req, res, next) {
+	console.log(`### [Logger] 1`)
+	next()
+})
+
 // GET all products
 router.get("/products", async (req, res) => {
 	const dbCollection = await DbConnection.getCollection("products");
 	const products = await dbCollection.find().toArray();
 	res.json(products);
 });
+
+router.use(function (req, res, next) {
+	console.log(`### [Logger] 2`)
+	next()
+})
 
 // GET one product identified by id
 router.get("/products/:id", async (req, res) => {
