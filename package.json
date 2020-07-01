@@ -32,7 +32,8 @@
 		"method-override": "^3.0.0",
 		"mongodb": "^3.5.5",
 		"nodemon": "^1.18.10",
-		"qs": "^6.9.4"
+		"qs": "^6.9.4",
+		"ws": "^7.3.0"
 	},
 	"nodemonConfig": {
 		"ignore": [

@@ -7,6 +7,9 @@ const server = express();
 const body_parser = require('body-parser');
 const methodOverride = require('method-override');
 
+// websocket server
+const webSockets = require("./ws_server")
+
 server.use(body_parser.json()); // parse JSON (application/json content-type)
 server.use(body_parser.urlencoded()) // parse HTML form data
 
@@ -67,3 +70,6 @@ server.use("/", servicesRouter3);
 server.listen(port, () => { // Callback function in ES6
 	console.log(`Server listening at ${port}`);
 });
+
+// web socket
+webSockets.startWebSocket();
