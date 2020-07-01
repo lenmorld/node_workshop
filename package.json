@@ -31,6 +31,7 @@
 		"jsonwebtoken": "^8.5.1",
 		"method-override": "^3.0.0",
 		"mongodb": "^3.5.5",
+		"mongoose": "^5.9.20",
 		"nodemon": "^1.18.10",
 		"qs": "^6.9.4"
 	},
