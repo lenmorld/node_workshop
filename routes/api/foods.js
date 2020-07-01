@@ -42,7 +42,6 @@ router.get("/foods/:id", async (req, res) => {
 });
 
 // POST (create) a food 
-
 router.post("/foods", async (req, res) => {
 	const newFood = req.body;
 	console.log('Adding new food: ', newFood);
@@ -107,7 +106,6 @@ router.delete("/foods/:id", async (req, res) => {
 	try {
 		const result = await Food.deleteOne({ id: foodId })
 
-		console.log(result)
 		// result.deletedCount is number of modified items
 		if (result.deletedCount === 0) {
 			res.json({
