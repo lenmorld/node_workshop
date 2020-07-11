@@ -2,7 +2,12 @@
 const express = require('express'); // import express
 const server = express();
 const body_parser = require('body-parser');
+
+const cors = require('cors')
+
 server.use(body_parser.json()); // parse JSON (application/json content-type)
+
+server.use(cors())
 
 let users = require('./users');
 let products = require('./products');
