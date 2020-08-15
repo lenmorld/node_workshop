@@ -8,11 +8,20 @@ const dateTimeHelper = require('../../utils/dateTimeHelper');
 // db setup
 const DbConnection = require('../../db');
 
+// render either JSON or EJS view depending on client's request headers
+const renderFoodsJsonOrView = (req, res, foods) => {
+	if (req.headers.accept.includes("html") || req.headers['user-agent'].includes("Mozilla")) {
+		res.redirect('/page/foods')
+	} else {
+		res.json(foods);
+	}
+}
+
 // GET all foods
 router.get("/foods", async (req, res) => {
 	const dbCollection = await DbConnection.getCollection("foods");
 	const foods = await dbCollection.find().toArray();
-	res.json(foods);
+	renderFoodsJsonOrView(req, res, foods);
 });
 
 // GET one food identified by id
@@ -39,7 +48,7 @@ router.post("/foods", async (req, res) => {
 
 	// return updated list
 	foods = await dbCollection.find().toArray();
-	res.json(foods);
+	renderFoodsJsonOrView(req, res, foods);
 });
 
 // PUT (update) a food
@@ -62,7 +71,7 @@ router.put("/foods/:id", async (req, res) => {
 
 	// return updated list
 	const foods = await dbCollection.find().toArray();
-	res.json(foods);
+	renderFoodsJsonOrView(req, res, foods);
 });
 
 // DELETE a food
@@ -83,7 +92,7 @@ router.delete("/foods/:id", async (req, res) => {
 
 	// return updated list
 	const foods = await dbCollection.find().toArray();
-	res.json(foods);
+	renderFoodsJsonOrView(req, res, foods);
 });
 
 
