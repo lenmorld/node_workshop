@@ -10,7 +10,7 @@ const DbConnection = require('../../db');
 
 // render either JSON or EJS view depending on client's request headers
 const renderFoodsJsonOrView = (req, res, foods) => {
-	if (req.headers.accept.includes("html") || req.headers['user-agent'].includes("Mozilla")) {
+	if (req.headers.accept.includes("html") && req.headers['user-agent'].includes("Mozilla")) {
 		res.redirect('/page/foods')
 	} else {
 		res.json(foods);
