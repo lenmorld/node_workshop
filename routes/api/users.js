@@ -10,7 +10,7 @@ const DbConnection = require('../../db');
 
 // redirect to index or return JSON depending on client's request headers
 const redirectToIndexOrReturnJson = (req, res, users) => {
-	if (req.headers.accept.includes("html") || req.headers['user-agent'].includes("Mozilla")) {
+	if (req.headers.accept.includes("html") && req.headers['user-agent'].includes("Mozilla")) {
 		res.redirect('/page/users')
 	} else {
 		res.json(users);
