@@ -8,12 +8,10 @@ const dateTimeHelper = require('../../utils/dateTimeHelper');
 // db setup
 const DbConnection = require('../../db');
 
-// render either JSON or EJS view depending on client's request headers
-const renderUsersJsonOrView = (req, res, users) => {
+// redirect to index or return JSON depending on client's request headers
+const redirectToIndexOrReturnJson = (req, res, users) => {
 	if (req.headers.accept.includes("html") || req.headers['user-agent'].includes("Mozilla")) {
-		res.render('users/index', {
-			users: users
-		})
+		res.redirect('/page/users')
 	} else {
 		res.json(users);
 	}
@@ -23,7 +21,7 @@ const renderUsersJsonOrView = (req, res, users) => {
 router.get("/users", async (req, res) => {
 	const dbCollection = await DbConnection.getCollection("users");
 	const users = await dbCollection.find().toArray();
-	renderUsersJsonOrView(req, res, users);
+	redirectToIndexOrReturnJson(req, res, users);
 });
 
 // GET one user identified by id
@@ -57,7 +55,7 @@ router.post("/users", async (req, res) => {
 
 		// return updated list
 		users = await dbCollection.find().toArray();
-		renderUsersJsonOrView(req, res, users);
+		redirectToIndexOrReturnJson(req, res, users);
 	}
 });
 
@@ -80,8 +78,12 @@ router.put("/users/:id", async (req, res) => {
 	await dbCollection.updateOne({ id: userId }, { $set: updatedUser });
 
 	// return updated list
+	// console.log(req.locals)
+	// console.log(res.locals)
+	// console.log(req.data)
+	// console.log(res.data)
 	const users = await dbCollection.find().toArray();
-	renderUsersJsonOrView(req, res, users);
+	redirectToIndexOrReturnJson(req, res, users);
 });
 
 // DELETE a user
@@ -102,7 +104,7 @@ router.delete("/users/:id", async (req, res) => {
 
 	// return updated list
 	const users = await dbCollection.find().toArray();
-	renderUsersJsonOrView(req, res, users);
+	redirectToIndexOrReturnJson(req, res, users);
 });
 
 module.exports = router; 
