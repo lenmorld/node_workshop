@@ -65,14 +65,14 @@ router.put("/products/:id", async (req, res) => {
 		res.json({
 			error: "Product with given id doesn't exist"
 		})
+	} else {
+		updatedProduct.updatedAt = dateTimeHelper.getTimeStamp();
+		await dbCollection.updateOne({ id: productId }, { $set: updatedProduct });
+
+		// return updated list
+		const products = await dbCollection.find().toArray();
+		res.json(products);
 	}
-
-	updatedProduct.updatedAt = dateTimeHelper.getTimeStamp();
-	await dbCollection.updateOne({ id: productId }, { $set: updatedProduct });
-
-	// return updated list
-	const products = await dbCollection.find().toArray();
-	res.json(products);
 });
 
 // DELETE a product
