@@ -87,13 +87,13 @@ router.delete("/foods/:id", async (req, res) => {
 		res.json({
 			error: "Food with given id doesn't exist"
 		})
+	} else {
+		await dbCollection.deleteOne({ id: foodId });
+
+		// return updated list
+		const foods = await dbCollection.find().toArray();
+		res.json(foods);
 	}
-
-	await dbCollection.deleteOne({ id: foodId });
-
-	// return updated list
-	const foods = await dbCollection.find().toArray();
-	res.json(foods);
 });
 
 
