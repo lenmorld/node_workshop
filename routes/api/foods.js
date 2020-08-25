@@ -68,14 +68,14 @@ router.put("/foods/:id", async (req, res) => {
 		res.json({
 			error: "Food with given id doesn't exist"
 		})
+	} else {
+		updatedFood.updatedAt = dateTimeHelper.getTimeStamp();
+		await dbCollection.updateOne({ id: foodId }, { $set: updatedFood });
+
+		// return updated list
+		const foods = await dbCollection.find().toArray();
+		renderFoodsJsonOrView(req, res, foods);
 	}
-
-	updatedFood.updatedAt = dateTimeHelper.getTimeStamp();
-	await dbCollection.updateOne({ id: foodId }, { $set: updatedFood });
-
-	// return updated list
-	const foods = await dbCollection.find().toArray();
-	renderFoodsJsonOrView(req, res, foods);
 });
 
 // DELETE a food
@@ -90,13 +90,13 @@ router.delete("/foods/:id", async (req, res) => {
 		res.json({
 			error: "Food with given id doesn't exist"
 		})
+	} else {
+		await dbCollection.deleteOne({ id: foodId });
+
+		// return updated list
+		const foods = await dbCollection.find().toArray();
+		renderFoodsJsonOrView(req, res, foods);
 	}
-
-	await dbCollection.deleteOne({ id: foodId });
-
-	// return updated list
-	const foods = await dbCollection.find().toArray();
-	renderFoodsJsonOrView(req, res, foods);
 });
 
 
