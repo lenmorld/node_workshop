@@ -72,18 +72,14 @@ router.put("/users/:id", async (req, res) => {
 		res.json({
 			error: "User with given id doesn't exist"
 		})
+	} else {
+		updatedUser.updatedAt = dateTimeHelper.getTimeStamp();
+		await dbCollection.updateOne({ id: userId }, { $set: updatedUser });
+
+		// return updated list
+		const users = await dbCollection.find().toArray();
+		redirectToIndexOrReturnJson(req, res, users);
 	}
-
-	updatedUser.updatedAt = dateTimeHelper.getTimeStamp();
-	await dbCollection.updateOne({ id: userId }, { $set: updatedUser });
-
-	// return updated list
-	// console.log(req.locals)
-	// console.log(res.locals)
-	// console.log(req.data)
-	// console.log(res.data)
-	const users = await dbCollection.find().toArray();
-	redirectToIndexOrReturnJson(req, res, users);
 });
 
 // DELETE a user
@@ -98,13 +94,13 @@ router.delete("/users/:id", async (req, res) => {
 		res.json({
 			error: "User with given id doesn't exist"
 		})
+	} else {
+		await dbCollection.deleteOne({ id: userId });
+
+		// return updated list
+		const users = await dbCollection.find().toArray();
+		redirectToIndexOrReturnJson(req, res, users);
 	}
-
-	await dbCollection.deleteOne({ id: userId });
-
-	// return updated list
-	const users = await dbCollection.find().toArray();
-	redirectToIndexOrReturnJson(req, res, users);
 });
 
 module.exports = router; 
