@@ -1,3 +1,5 @@
+import config from '../config'
+
 // === fetch non-authenticated resource ===
 // console.log("Fetching un-gated resource /foods")
 
@@ -20,7 +22,7 @@ fetch('http://localhost:4000/api/token', {
 	headers: new Headers({
 		'Content-Type': 'application/json',
 	}),
-	body: JSON.stringify({ username: "lenny2", password: 'abcd1234' })
+	body: JSON.stringify({ username: config.sample_ui_username, password: config.sample_ui_password })
 })
 	.then(response => {
 		// console.log(response)
