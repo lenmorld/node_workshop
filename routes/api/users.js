@@ -8,7 +8,7 @@ const dateTimeHelper = require('../../utils/dateTimeHelper');
 // db setup
 const DbConnection = require('../../db');
 
-// render either JSON or EJS view depending on client's request headers
+// redirect to index or return JSON depending on client's request headers
 const redirectToIndexOrReturnJson = (req, res, users) => {
 	if (req.headers.accept.includes("html") && req.headers['user-agent'].includes("Mozilla")) {
 		res.redirect('/page/users')
