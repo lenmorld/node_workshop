@@ -20,7 +20,7 @@ fetch('http://localhost:4000/api/token', {
 	headers: new Headers({
 		'Content-Type': 'application/json',
 	}),
-	body: JSON.stringify({ username: "lenny2", password: 'abcd1234' })
+	body: JSON.stringify({ username: "USERNAME", password: 'PASSWORD' })
 })
 	.then(response => {
 		// console.log(response)
