@@ -20,15 +20,15 @@ server.set('view engine', 'ejs');
 server.use(express.static(__dirname + '/public'));
 
 // custom "firewall" middleware
-server.use(function (req, res, next) {
-	if (req.path.includes("/users")) {
-		res.json({
-			message: "BLOCKED all requests to /users!"
-		})
-	} else {
-		next()
-	}
-});
+// server.use(function (req, res, next) {
+// 	if (req.path.includes("/users")) {
+// 		res.json({
+// 			message: "BLOCKED all requests to /users!"
+// 		})
+// 	} else {
+// 		next()
+// 	}
+// });
 
 // import routers
 const productsRouter = require('./routes/api/products');

@@ -9,22 +9,24 @@ const dateTimeHelper = require('../../utils/dateTimeHelper');
 const DbConnection = require('../../db');
 
 // render either JSON or EJS view depending on client's request headers
-const renderUsersJsonOrView = (req, res, users) => {
-	if (req.headers.accept.includes("html") || req.headers['user-agent'].includes("Mozilla")) {
-		res.render('users/index', {
-			users: users
-		})
+const redirectToIndexOrReturnJson = (req, res, users) => {
+	if (req.headers.accept.includes("html") && req.headers['user-agent'].includes("Mozilla")) {
+		res.redirect('/page/users')
 	} else {
 		res.json(users);
 	}
 }
 
 // GET all users
-router.get("/users", async (req, res) => {
+router.get("/users", async (req, res, next) => {
 	const dbCollection = await DbConnection.getCollection("users");
 	const users = await dbCollection.find().toArray();
-	renderUsersJsonOrView(req, res, users);
-});
+	// redirectToIndexOrReturnJson(req, res, users);
+
+	// user middleware
+	res.locals.users = users;
+	next();
+}, redirectToIndexOrReturnJson);
 
 // GET one user identified by id
 router.get("/users/:id", async (req, res) => {
@@ -57,7 +59,7 @@ router.post("/users", async (req, res) => {
 
 		// return updated list
 		users = await dbCollection.find().toArray();
-		renderUsersJsonOrView(req, res, users);
+		redirectToIndexOrReturnJson(req, res, users);
 	}
 });
 
@@ -74,14 +76,14 @@ router.put("/users/:id", async (req, res) => {
 		res.json({
 			error: "User with given id doesn't exist"
 		})
+	} else {
+		updatedUser.updatedAt = dateTimeHelper.getTimeStamp();
+		await dbCollection.updateOne({ id: userId }, { $set: updatedUser });
+
+		// return updated list
+		const users = await dbCollection.find().toArray();
+		redirectToIndexOrReturnJson(req, res, users);
 	}
-
-	updatedUser.updatedAt = dateTimeHelper.getTimeStamp();
-	await dbCollection.updateOne({ id: userId }, { $set: updatedUser });
-
-	// return updated list
-	const users = await dbCollection.find().toArray();
-	renderUsersJsonOrView(req, res, users);
 });
 
 // DELETE a user
@@ -96,13 +98,13 @@ router.delete("/users/:id", async (req, res) => {
 		res.json({
 			error: "User with given id doesn't exist"
 		})
+	} else {
+		await dbCollection.deleteOne({ id: userId });
+
+		// return updated list
+		const users = await dbCollection.find().toArray();
+		redirectToIndexOrReturnJson(req, res, users);
 	}
-
-	await dbCollection.deleteOne({ id: userId });
-
-	// return updated list
-	const users = await dbCollection.find().toArray();
-	renderUsersJsonOrView(req, res, users);
 });
 
 module.exports = router; 
