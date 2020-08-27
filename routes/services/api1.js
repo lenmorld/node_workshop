@@ -16,8 +16,8 @@ router.get("/services/posts/:id", function (req, res) {
 });
 
 // Github Jobs API
-//http://localhost:4000/services/jobs?location=new%20york&
-//description=javascript&titleContains=developer&year=2018
+// http://localhost:4000/services/jobs?location=remote&description=javascript&
+// titleContains=developer&year=2020
 router.get("/services/jobs", function (req, res) {
 	const { description, location, titleContains, year } = req.query;
 	let requestUrl = "https://jobs.github.com/positions.json";

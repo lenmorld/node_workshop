@@ -8,8 +8,10 @@ const express = require('express');
 const router = express.Router();
 const qs = require('qs');
 
-// generated from Spotify Dev account Client ID, secret
-const base64_auth_string = config.spotify_api_key;
+// base_64_encode (spotify_client_id:spotify_client_secret)
+const base64_auth_string = Buffer.from(`${config.spotify_client_id}:${config.spotify_client_secret}`)
+	.toString('base64')
+
 let saved_access_token = null;
 
 // ES5 version: function getAccessToken() {...
