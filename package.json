@@ -27,7 +27,7 @@
 		"cors": "^2.8.5",
 		"dotenv": "^8.2.0",
 		"ejs": "^3.0.2",
-		"express": "^4.16.4",
+		"express": "^4.17.3",
 		"jsonwebtoken": "^8.5.1",
 		"method-override": "^3.0.0",
 		"mongodb": "^3.5.5",
